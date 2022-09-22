@@ -16,12 +16,16 @@ describe("All Pages should exist", ()=> {
     it('Contact Page Should exists', ()=>{
         cy.visit("/contact")
     })
+
+    it('Login Page Should exists', ()=>{
+        cy.visit("/login")
+    })
 })
 
 describe("Header and Footer exists", ()=> {
 
     it('should show header navigation', ()=>{
-        cy.get('[data-cy="Nav"]')
+        cy.get('[data-cy="header"]')
     })
 
 
