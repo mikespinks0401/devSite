@@ -7,15 +7,15 @@
 
   const links = [
     {to: "Home", href: "/"},
+    {to: "Blog", href: "/blog"},
     {to: "About", href: "/about"},
     {to: "Contact", href: "/contact"},
-    {to: "Blog", href: "/blog"},
 
   ]
 </script>
 
 <template>
-  <header>
+  <header data-cy="header">
     <div
       class="w-full relative flex justify-between p-4 items-center border-b-2 shadow-sm"
     >
@@ -45,8 +45,8 @@
       </button>
     </div>
     <div
-      class="w-full bg-gray-100 border-b-2 transition-all"
-      :class="showNav ? 'flex flex-col divide-x-2' : 'hidden'"
+      class="w-full bg-gray-100 border-b-2 transition-all p-4"
+      :class="showNav ? 'flex flex-col' : 'hidden'"
       data-cy="mobile menu"
     >
       <div class="flex justify-center p-4 gap-2">
@@ -58,9 +58,11 @@
           <p class="text-sm ">Full-Stack Developer</p>
         </div>
       </div>
-      <ul>
+      <ul class="divide-y">
         <li v-for="(link, index) in links" :key="index">
-          <NuxtLink :to="link.href">{{link.to}}</NuxtLink>
+          <div class="flex w-full py-1">
+            <NuxtLink :to="link.href">{{link.to}}</NuxtLink>
+          </div>
         </li>
       </ul>
     </div>
