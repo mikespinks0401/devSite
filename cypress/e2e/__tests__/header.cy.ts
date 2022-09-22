@@ -1,10 +1,12 @@
 /// <reference types="cypress" />
 
 describe('The Header', () => {
-  context('Renders on mobile/small screns', () => {
+  beforeEach(()=>{
+    cy.visit('/')
+  })
+  context('Nav Bar Renders on mobile screens', () => {
     beforeEach(() => {
       cy.viewport('iphone-6')
-      cy.visit('/')
     })
 
     it('hamburger menu shows on mobile', () => {
@@ -22,8 +24,9 @@ describe('The Header', () => {
 
     it('aria-Expanded true when hamburger icon clicked', ()=>{
 
-        cy.get('[data-cy="hamburger"]').click()
-        cy.get('[data-cy="hamburger"]').should('have.attr', 'aria-expanded', 'true')
+        // cy.get('[data-cy="hamburger"]').click().should('have.attr', 'aria-expanded', 'true')
+        // cy.get('[data-cy="hamburger"]').click()
+        cy.get('[data-cy="hamburger"]').wait(50).click().wait(1000).should('have.attr', 'aria-expanded', 'true')
     })
 
     it('contains logo', () => {
@@ -35,12 +38,17 @@ describe('The Header', () => {
     })
 
     it('mobile menu visible when clicked', ()=>{
-      cy.get('[data-cy="hamburger"]').click()
+      cy.visit('/')
+      cy.get('[data-cy="hamburger"]').wait(50).click()
       cy.get('[data-cy="mobile menu"]').should('be.visible')
     })
-
-
   })
 
+  context('Properly renders on medium screens', ()=>{
+    cy.viewport("ipad-2")
+    it('does not contain hamburger menu', ()=>{
+
+    })
+  })
 
 })
