@@ -26,7 +26,7 @@ describe('The Header', () => {
 
         // cy.get('[data-cy="hamburger"]').click().should('have.attr', 'aria-expanded', 'true')
         // cy.get('[data-cy="hamburger"]').click()
-        cy.get('[data-cy="hamburger"]').wait(50).click().wait(1000).should('have.attr', 'aria-expanded', 'true')
+        cy.get('[data-cy="hamburger"]').wait(50).click().should('have.attr', 'aria-expanded', 'true')
     })
 
     it('contains logo', () => {
