@@ -20,6 +20,10 @@ describe("All Pages should exist", ()=> {
     it('Login Page Should exists', ()=>{
         cy.visit("/login")
     })
+    
+    it('Login Page Should exists', ()=>{
+        cy.visit("/register")
+    })
 })
 
 describe("Header and Footer exists", ()=> {
