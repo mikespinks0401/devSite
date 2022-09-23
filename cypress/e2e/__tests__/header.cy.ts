@@ -45,9 +45,11 @@ describe('The Header', () => {
   })
 
   context('Properly renders on medium screens', ()=>{
-    cy.viewport("ipad-2")
+    before(()=>{
+      cy.viewport("ipad-2")
+    })
     it('does not contain hamburger menu', ()=>{
-
+      cy.get('[data-cy="hamburger"').should('not.be.visible')
     })
   })
 
