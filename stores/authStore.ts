@@ -1,6 +1,11 @@
 export const useAuthStore = defineStore('authStore', () => {
-  const name = ref('Michael')
+  const name = ref('John Doe')
   const admin = ref(true)
 
-  return { name, admin }
+  function updateName(newName: string){
+    name.value = newName
+  }
+  
+
+  return { name, admin, updateName }
 })
