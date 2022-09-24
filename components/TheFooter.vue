@@ -13,7 +13,7 @@
   <div data-cy="Footer" class="p-3 w-full border-t">
     <div class="container max-w-7xl mx-auto h-full">
       <div
-        class="flex flex-col gap-2 md:flex-row h-full items-center justify-between"
+        class="flex flex-col gap-2 h-full items-center justify-between"
       >
         <div class="px-2 flex h-full justify-center items-center gap-1">
           <nuxt-link
