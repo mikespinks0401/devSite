@@ -1,8 +1,11 @@
 <script setup lang="ts">
 
-
-const store = useAuthStore();
-
+  
+  const authStore = useAuthStore()
+  const themeStore = useThemeStore()
+  const isDarkMode = computed(()=>{
+    return themeStore.isLightMode === true ? "" : "dark"
+  })
 
 onServerPrefetch(async () => {
   //insert logic to fetch data before app renders
@@ -10,7 +13,7 @@ onServerPrefetch(async () => {
 </script>
 
 <template>
-  <div>
+  <div :class="isDarkMode">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
