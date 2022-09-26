@@ -1,15 +1,9 @@
 <script setup lang="ts">
-  onMounted(() => {
-    window.addEventListener('resize', () => {
-      showNav.value = false
-    })
-  })
+  import { ref, onMounted } from 'vue'
+
+  const themeStore = useThemeStore()
   const loggedIn = ref(false)
   const showNav = ref(false)
-
-  function toggleMenu() {
-    showNav.value = !showNav.value
-  }
 
   const links = [
     { to: 'Home', href: '/' },
@@ -17,83 +11,114 @@
     { to: 'About', href: '/about' },
     { to: 'Contact', href: '/contact' },
   ]
+
+  function closeMenu() {
+    showNav.value = false
+  }
+  function toggleMenu() {
+    showNav.value = !showNav.value
+  }
+
+  onMounted(() => {
+    window.addEventListener('resize', () => {
+      showNav.value = false
+    })
+  })
 </script>
 
 <template>
   <header
     data-cy="header"
-    class="w-full shadow-sm md:shadow-none relative md:border-b"
+    class="w-full shadow-sm md:shadow-none relative md:border-b dark:md:border-b-gray-500 dark:bg-black dark:text-white transition-all"
   >
     <div
-      class="w-full container relative flex justify-between items-center max-w-7xl md:mx-auto md:px-2 border-b md:border-none"
+      class="w-full container relative flex justify-between items-center max-w-7xl md:mx-auto md:px-2 border-b dark:border-b-gray-500 md:border-none"
     >
-      <div class="px-3 py-2">
+      <div class="px-3">
         <div class="inline max-w-8">
           <nuxt-link to="/" data-cy="logo" class="">
             <img
               class="w-8"
-              src="assets/logo.png"
+              src="../assets/logo.png"
               alt="logo links to home page"
             />
           </nuxt-link>
         </div>
       </div>
-      <div class="hidden md:flex py-4">
+      <div class="hidden md:flex">
         <nav>
           <ul class="flex gap-6 items-center">
-            <li v-for="(item, ind) in links" :key="ind">
+            <li v-for="(item, ind) in links" :key="ind" class="overflow-hidden">
               <nuxt-link
-                class="opacity-75 font-medium hover:opacity-100"
+                class="block py-[10px] my-[2px] hover:text-gray-500 bg-opacity-75 dark:text-gray-300 dark:hover:text-white font-medium hover:opacity-100 transition"
                 :to="item.href"
                 >{{ item.to }}</nuxt-link
               >
             </li>
           </ul>
+
         </nav>
       </div>
-      <div class="hidden md:flex items-center gap-4 font-medium">
-        <nuxt-link to="/login">Login</nuxt-link>
-        <nuxt-link class="bg-blue-200 px-4 py-1 rounded-full" to="/register"
+      <div class="hidden md:flex items-center gap-4 font-medium pr-3">
+        
+        <nuxt-link to="/login" class="font-semibold dark:text-gray-100 dark:hover:text-gray-50"
+          >Login</nuxt-link
+        >
+        <nuxt-link
+          class="bg-primaryLight text-white dark:bg-white dark:text-black transition font-semibold px-4 py-1 rounded-full"
+          to="/register"
           >Sign Up</nuxt-link
+        >  
+        <logos-github />
+        <button
+          @click="themeStore.changeLightMode"
+          class="cursor-pointer text-gray-700 dark:text-gray-400 dark:hover:text-gray-100 hover:text-gray-900"
+          aria-labelledby="Toggle Light Mode"
         >
+          <div
+            v-if="themeStore.isLightMode"
+            aria-labelledby="Turn On Dark Mode"
+          >
+            <icons-moon />
+          </div>
+          <div v-else aria-labelledby="Turn On Light Mode"><icons-sun /></div>
+        </button>
+      </div>         
+      <div class="md:hidden flex h-full items-center">
+        <p>hello</p>
+        <button
+          @click.native="toggleMenu"
+          aria-labelledby="toggle nav menu"
+          class="md:hidden px-3 py-2"
+          data-cy="hamburger"
+          :aria-expanded="showNav"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6 -z-10"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+        </button>
+        
       </div>
-      <button
-        @click="toggleMenu"
-        aria-labelledby="toggle nav menu"
-        class="md:hidden px-3 py-2"
-        data-cy="hamburger"
-        :aria-expanded="showNav"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-          />
-        </svg>
-      </button>
     </div>
     <div
       @click=""
       class="transition w-full overflow-hidden"
-      :class="showNav ? 'max-h-full' : 'max-h-0'"
+      :class="showNav ? 'max-h-full ring-1 ring-gray-200 dark:ring-gray-500 dark:md:border-b-gray-500' : 'max-h-0'"
       data-cy="mobile menu"
     >
-      <!-- <div
-      class="relative transition overflow-hidden duration-800"
-      :class="showNav ? ' max-h-auto' : 'max-h-0'"
-      data-cy="mobile menu"
-    > -->
-
       <div
-        class="flex flex-col w-full relative transition duration-500 p-4"
+        class="flex flex-col w-full relative transition duration-500 p-4 dark:bg-gray-800"
         :class="showNav ? 'translate-y-0' : '-translate-y-full'"
       >
         <!-- <div
@@ -116,11 +141,12 @@
           </div>
         </div>
         <nav class="md:hidden">
-          <ul class="divide-y">
+          <ul class="divide-y" data-cy="navList">
             <li v-for="(link, index) in links" :key="index">
-              <div class="flex w-full py-1">
+              <div class="flex w-full py-1 overflow-hidden">
                 <NuxtLink
-                  class="font-medium opacity-100 hover:opacity-50 transition duration-75"
+                  @click="closeMenu"
+                  class="font-medium opacity-100 hover:opacity-50 dark:opacity-70 dark:hover:opacity-100 transition duration-75"
                   :to="link.href"
                   >{{ link.to }}</NuxtLink
                 >
@@ -128,7 +154,7 @@
             </li>
           </ul>
           <div
-            v-if="loggedIn"
+            v-if="!loggedIn"
             class="w-full flex flex-col items-center gap-2 divide-y font-medium"
           >
             <nuxt-link to="/login">Login</nuxt-link>
@@ -140,8 +166,7 @@
             v-else
             class="mt-6 w-full flex flex-col bg-green-100 items-center justify-center"
           >
-            <nuxt-link to="/profile"
-            class="flex gap-1"
+            <nuxt-link to="/profile" class="flex gap-1"
               >Profile
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -182,11 +207,25 @@
   </header>
 </template>
 
-<style scoped>
+<style lang="postcss" scoped>
   ul > li > .router-link-active {
-    color: lightseagreen;
+    @apply shadow-[0_2px_0px_1px_#EA652C];
   }
+  ul > li > .router-link-exact-active {
+    color: rgb(32, 178, 170);
+  }
+  ul > li > .router-link-exact-active:hover {
+    
+    @apply text-opacity-[95];
+  }
+
+</style>
+
+<!-- ul > li > .router-link-active {
+    @apply border-b-2 border-primaryAccent;
+  } 
   ul > li > .router-link-exact-active {
     color: lightseagreen;
   }
-</style>
+
+-->
