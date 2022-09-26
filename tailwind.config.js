@@ -1,9 +1,22 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
-  content: [],
+  content: [
+    `components/**/*.{vue,js}`,
+    `layouts/**/*.vue`,
+    `pages/**/*.vue`,
+    `composables/**/*.{js,ts}`,
+    `plugins/**/*.{js,ts}`,
+    `App.{js,ts,vue}`,
+    `app.{js,ts,vue}`,
+  ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primaryLight: '#C2DEDE',
+        primaryDark: '#1C2230',
+        primaryAccent: '#EA652C',
+        primaryAccentDark: '#FCA47C',
+      },
+    },
   },
-  plugins: [],
 }
