@@ -32,10 +32,10 @@
     class="w-full shadow-sm md:shadow-none relative md:border-b dark:md:border-b-gray-500 dark:bg-black dark:text-white transition-all"
   >
     <div
-      class="w-full container relative flex justify-between items-center max-w-7xl md:mx-auto md:px-2 border-b dark:border-b-gray-500 md:border-none"
+      class="w-full container relative flex justify-between md:justify-start items-center max-w-7xl md:mx-auto md:px-2 border-b dark:border-b-gray-500 md:border-none"
     >
-      <div class="px-3">
-        <div class="inline max-w-8">
+      <div class="px-3 flex-1">
+        <div class="inline-block">
           <nuxt-link to="/" data-cy="logo" class="">
             <img
               class="w-8"
@@ -45,34 +45,40 @@
           </nuxt-link>
         </div>
       </div>
-      <div class="hidden md:flex">
+      <div class="hidden md:flex flex-1 justify-center">
         <nav>
           <ul class="flex gap-6 items-center">
             <li v-for="(item, ind) in links" :key="ind" class="overflow-hidden">
               <nuxt-link
-                class="block py-[10px] my-[2px] hover:text-gray-500 bg-opacity-75 dark:text-gray-300 dark:hover:text-white font-medium hover:opacity-100 transition"
+                class="block py-[10px] my-[2px] text-lg hover:text-gray-500 bg-opacity-75 dark:text-gray-300 dark:hover:text-white font-medium hover:opacity-100 transition"
                 :to="item.href"
                 >{{ item.to }}</nuxt-link
               >
             </li>
           </ul>
-
         </nav>
       </div>
-      <div class="hidden md:flex items-center gap-4 font-medium pr-3">
-        
-        <nuxt-link to="/login" class="font-semibold dark:text-gray-100 dark:hover:text-gray-50"
+      <div class="hidden md:flex flex-1 justify-end items-center gap-4 font-medium pr-3">
+        <nuxt-link
+          to="/login"
+          class="font-semibold dark:text-gray-100 dark:hover:text-gray-50"
           >Login</nuxt-link
         >
         <nuxt-link
           class="bg-primaryLight text-white dark:bg-white dark:text-black transition font-semibold px-4 py-1 rounded-full"
           to="/register"
           >Sign Up</nuxt-link
-        >  
-        <logos-github />
+        >
+        <nuxt-link
+          to="https://github.com/mikespinks0401"
+          aria-labeledby="Link to Michael Spinks Github Profile"
+          class="cursor-pointer"
+        >
+          <logos-github />
+        </nuxt-link>
         <button
           @click="themeStore.changeLightMode"
-          class="cursor-pointer text-gray-700 dark:text-gray-400 dark:hover:text-gray-100 hover:text-gray-900"
+          class="cursor-pointer hidden md:block text-gray-700 dark:text-gray-400 dark:hover:text-gray-100 hover:text-gray-900"
           aria-labelledby="Toggle Light Mode"
         >
           <div
@@ -83,9 +89,24 @@
           </div>
           <div v-else aria-labelledby="Turn On Light Mode"><icons-sun /></div>
         </button>
-      </div>         
-      <div class="md:hidden flex h-full items-center">
-        <p>hello</p>
+      </div>
+
+      <div class="flex h-full items-center gap-1 md:hidden">
+        <div class="flex items-center">
+          <button
+            @click="themeStore.changeLightMode"
+            class="cursor-pointer text-gray-700 dark:text-gray-400 dark:hover:text-white hover:text-gray-900"
+            aria-labelledby="Toggle Light Mode"
+          >
+            <div
+              v-if="themeStore.isLightMode"
+              aria-labelledby="Turn On Dark Mode"
+            >
+              <icons-moon />
+            </div>
+            <div v-else aria-labelledby="Turn On Light Mode"><icons-sun /></div>
+          </button>
+        </div>
         <button
           @click.native="toggleMenu"
           aria-labelledby="toggle nav menu"
@@ -108,23 +129,22 @@
             />
           </svg>
         </button>
-        
       </div>
     </div>
     <div
       @click=""
       class="transition w-full overflow-hidden"
-      :class="showNav ? 'max-h-full ring-1 ring-gray-200 dark:ring-gray-500 dark:md:border-b-gray-500' : 'max-h-0'"
+      :class="
+        showNav
+          ? 'max-h-full ring-1 ring-gray-200 dark:ring-gray-500 dark:md:border-b-gray-500'
+          : 'max-h-0'
+      "
       data-cy="mobile menu"
     >
       <div
         class="flex flex-col w-full relative transition duration-500 p-4 dark:bg-gray-800"
         :class="showNav ? 'translate-y-0' : '-translate-y-full'"
       >
-        <!-- <div
-          class="w-full relative transition-all duration-500"
-          :class="showNav ? '-translate-y-100' : 'translate-y-0'"
-        >  -->
         <div class="flex justify-center p-4 gap-2">
           <div
             class="w-14 h-14 rounded-full overflow-clip relative flex items-center"
@@ -211,21 +231,7 @@
   ul > li > .router-link-active {
     @apply shadow-[0_2px_0px_1px_#EA652C];
   }
-  ul > li > .router-link-exact-active {
+  .router-link-exact-active {
     color: rgb(32, 178, 170);
   }
-  ul > li > .router-link-exact-active:hover {
-    
-    @apply text-opacity-[95];
-  }
-
 </style>
-
-<!-- ul > li > .router-link-active {
-    @apply border-b-2 border-primaryAccent;
-  } 
-  ul > li > .router-link-exact-active {
-    color: lightseagreen;
-  }
-
--->
