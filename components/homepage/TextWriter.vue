@@ -1,6 +1,4 @@
 <script setup lang="ts">
-  import { LOOP_TYPES } from '@babel/types'
-
   const displayText = ref('')
   const currentIndex = ref(0)
 
