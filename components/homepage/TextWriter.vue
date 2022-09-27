@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { LOOP_TYPES } from '@babel/types'
+
   const displayText = ref('')
   const currentIndex = ref(0)
 
@@ -6,6 +8,10 @@
     title: String,
     titles: {
       type: Array<string>,
+    },
+    loop: {
+      type: Boolean,
+      default: false,
     },
   })
 
@@ -15,23 +21,23 @@
       return
     }
     displayText.value = ''
-
     const currentString = stringArray[currentIndex.value]
     const textArray = currentString.split('')
-
     let letter: string
     const write = setInterval(() => {
       if (textArray.length === 0) {
         clearInterval(write)
         currentIndex.value++
-        // if (currentIndex.value === length) {
-        //   clearInterval(write)
-        //   currentIndex.value = 0
-        // }
         if (currentIndex.value === length) {
+          if (props.loop === true) {
+            currentIndex.value = 0
+            writeText(stringArray)
+          }
           return
         } else {
-          writeText(stringArray)
+          setTimeout(() => {
+            writeText(stringArray)
+          }, 500)
         }
       }
       if (textArray.length > 0) {
@@ -48,7 +54,9 @@
 </script>
 
 <template>
-  <div class="inline-block">
-    {{ displayText }}
-  </div>
+  <ClientOnly>
+    <div class="inline-block">
+      {{ displayText }}
+    </div>
+  </ClientOnly>
 </template>
