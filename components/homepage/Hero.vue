@@ -1,15 +1,35 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  const props = defineProps({
+    name: String,
+  })
+  const titles = [
+    'Thinker',
+    'Problem Solver',
+    'Front End Developer',
+    'Back End Developer',
+    'Full Stack Developer',
+  ]
+</script>
 
 <template>
-  <div>
-    <div class="container mx-auto grid md:grid-cols-2 bg-green-200">
-      <div class="mt-10 ml-10 container w-full">
-        <div>
-          <h1 class="text-6xl leading-tight font-semibold">Hello,</h1>
-          <h2 class="text-2xl">My Name is <span class="text-primaryAccent font-medium">Michael Spinks</span></h2>
-          <p>I am a</p>
-          
-        </div>
+  <div class="w-full" data-cy="hero">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 min-h-max">
+      <div
+        class="border-2 dark:border-color-white border-color-black h-96 flex flex-col justify-center p-4"
+        data-cy="hero-left"
+      >
+        <h1 class="text-4xl leading-tight font-medium">
+          <span class="text-7xl font">Hello,</span><br />
+          My Name is
+          <span class="text-primaryAccent font-bold text">{{
+            props.name
+          }}</span>
+        </h1>
+        <p class="text-3xl">
+          I am a <homepage-text-writer :titles="titles"/>
+        </p>
+
+        <div></div>
       </div>
     </div>
   </div>

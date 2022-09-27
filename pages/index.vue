@@ -1,11 +1,10 @@
 <script setup lang="ts">
-const authStore = useAuthStore()
-
 </script>
 
 <template>
-    <div class="">
-        homePage - {{authStore.name}}
-        hello
-    </div>
+  <div class="">
+    <homepage-hero 
+    name="Michael Spinks"
+    />
+  </div>
 </template>
