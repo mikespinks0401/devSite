@@ -15,7 +15,7 @@
   <div class="w-full" data-cy="hero">
     <div class="max-w-7xl mx-auto grid md:grid-cols-2 min-h-max">
       <div
-        class="border-2 dark:border-color-white border-color-black h-96 flex flex-col justify-center p-4"
+        class=" dark:border-color-white border-color-black h-96 flex flex-col justify-center p-4"
         data-cy="hero-left"
       >
         <h1 class="text-4xl leading-tight font-medium">
@@ -26,9 +26,8 @@
           }}</span>
         </h1>
         <p class="text-3xl">
-          I am a <homepage-text-writer :titles="titles"/>
+          I am a <span class="font-semibold"><homepage-text-writer :titles="titles" :loop='false'/></span>
         </p>
-
         <div></div>
       </div>
     </div>
