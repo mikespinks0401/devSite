@@ -17,8 +17,9 @@ module.exports = {
         primaryAccent: '#EA652C',
         primaryAccentDark: '#FCA47C',
         primaryText: 'rgb(17, 24, 39)',
-        primaryTextDark: 'rgb(243, 244, 246)'
+        primaryTextDark: 'rgb(243, 244, 246)',
       },
     },
   },
+  plugins: [require('@tailwindcss/forms')],
 }
