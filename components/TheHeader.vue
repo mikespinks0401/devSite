@@ -36,12 +36,12 @@
     >
       <div class="px-3 flex-1">
         <div class="inline-block">
-          <nuxt-link to="/" data-cy="logo" class="">
+          <nuxt-link to="/" data-cy="logo" class="flex items-end relative">
             <img
               class="w-8"
               src="../assets/logo.png"
               alt="logo links to home page"
-            />
+            /><p class="pl-2 text-2xl tracking-widest relative top-0 hidden md:block text-primaryText dark:text-primaryTextDark">Mike<span class="text-primaryAccent">Spinks</span></p>
           </nuxt-link>
         </div>
       </div>
@@ -65,7 +65,7 @@
           >Login</nuxt-link
         >
         <nuxt-link
-          class="bg-primaryLight text-white dark:bg-white dark:text-black transition font-semibold px-4 py-1 rounded-full"
+          class="bg-teal-400 text-white dark:bg-white dark:text-primaryAccent transition font-semibold px-4 py-1 "
           to="/register"
           >Sign Up</nuxt-link
         >
@@ -73,6 +73,7 @@
           to="https://github.com/mikespinks0401"
           aria-labeledby="Link to Michael Spinks Github Profile"
           class="cursor-pointer"
+          target="_blank"
         >
           <logos-github />
         </nuxt-link>
