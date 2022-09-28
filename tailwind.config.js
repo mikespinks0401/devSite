@@ -15,6 +15,7 @@ module.exports = {
         primaryLight: '#C2DEDE',
         primaryDark: '#1C2230',
         primaryAccent: '#EA652C',
+        primaryAccent2: 'rgb(32, 178, 170)',
         primaryAccentDark: '#FCA47C',
         primaryText: 'rgb(17, 24, 39)',
         primaryTextDark: 'rgb(243, 244, 246)',
