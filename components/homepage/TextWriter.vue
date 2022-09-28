@@ -31,11 +31,10 @@
             currentIndex.value = 0
             writeText(stringArray)
           }
-          return
         } else {
           setTimeout(() => {
             writeText(stringArray)
-          }, 500)
+          }, 600)
         }
       }
       if (textArray.length > 0) {
