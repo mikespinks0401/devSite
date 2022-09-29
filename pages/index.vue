@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="">
+  <div class="flex-1 flex flex-col">
     <homepage-hero 
     name="Michael Spinks"
     />
