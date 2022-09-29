@@ -5,7 +5,7 @@
   ]
   const copyright = computed(() => {
     const date = new Date()
-    return `© ${date.getFullYear()} MikeSpinks.dev`
+    return `© ${date.getFullYear()} MikeSpinks.com`
   })
 </script>
 
