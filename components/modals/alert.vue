@@ -19,10 +19,10 @@
         </div>
         <div class="py-2">
           <slot />
-          <div class="flex justify-center py-2 z-20">
+          <div class="flex justify-center py-3 z-20">
             <button
               @click="emits('closeModal')"
-              class="text-white px-4 py-1 bg-slate-600 cursor-pointer hover:bg-slate-500"
+              class="text-white px-4 py-1 bg-slate-600 cursor-pointer hover:bg-slate-500 text-semibold"
             >
               {{props.buttonText}}
             </button>
