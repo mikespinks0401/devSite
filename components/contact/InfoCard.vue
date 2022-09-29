@@ -1,0 +1,31 @@
+<script setup lang="ts">
+  const cardData = [
+    {
+      itemTitle: 'Location',
+      itemIcon: 'marker-bold',
+      itemDescriptions: ['Based in Houston, Texas'],
+    },
+    {
+      itemTitle: 'Email',
+      itemIcon: 'email-bold',
+      itemDescriptions: ['michael.spinks@mikespinks.com'],
+    },
+    {
+      itemTitle: 'Phone Number',
+      itemIcon: 'phone-bold',
+      itemDescriptions: ['(+1) 713 766 8719'],
+    },
+  ]
+</script>
+
+<template>
+  <div class="flex flex-col gap-5 mb-16">
+    <template v-for="(item, index) in cardData" :key="index">
+      <contact-info-card-item
+        :itemTitle="item.itemTitle"
+        :itemIcon="item.itemIcon"
+        :itemDescriptions="item.itemDescriptions"
+      />
+    </template>
+  </div>
+</template>
