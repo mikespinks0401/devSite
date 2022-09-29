@@ -36,9 +36,12 @@
     >
       <div class="px-3 pt-1 md:pt-0 flex-1">
         <div class="inline-block">
-          <nuxt-link 
-          @click="closeMenu"
-          to="/" data-cy="logo" class="flex items-end relative">
+          <nuxt-link
+            @click="closeMenu"
+            to="/"
+            data-cy="logo"
+            class="flex items-end relative"
+          >
             <img class="w-8" src="../assets/logo.png" alt="Go to home page" />
             <p
               class="pl-2 text-2xl tracking-widest relative top-0 hidden md:block text-primaryText dark:text-primaryTextDark"
@@ -52,11 +55,13 @@
         <nav>
           <ul class="flex gap-6 items-center">
             <li v-for="(item, ind) in links" :key="ind" class="overflow-hidden">
-              <nuxt-link
-                class="block py-[10px] my-[2px] text-lg hover:text-gray-500 bg-opacity-75 dark:text-gray-300 dark:hover:text-white font-medium hover:opacity-100 transition"
-                :to="item.href"
-                >{{ item.to }}</nuxt-link
-              >
+              <div>
+                <nuxt-link
+                  class="block py-[10px] border-b-2 border-primaryAccent border-opacity-0 text-lg hover:text-gray-500 bg-opacity-75 dark:text-gray-300 dark:hover:text-white font-medium hover:opacity-100 transition"
+                  :to="item.href"
+                  >{{ item.to }}</nuxt-link
+                >
+              </div>
             </li>
           </ul>
         </nav>
@@ -228,10 +233,14 @@
 </template>
 
 <style scoped>
-  ul > li > .router-link-active {
-    @apply shadow-[0_2px_0px_1px_#EA652C];
+  
+  ul > li > div .router-link-active {
+    @apply border-opacity-100
   }
   .router-link-exact-active {
+    color: rgb(32, 178, 170);
+  }
+  .router-link-exact-active:hover {
     color: rgb(32, 178, 170);
   }
 </style>
