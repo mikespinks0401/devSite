@@ -20,6 +20,7 @@
 
 <template>
   <div class="flex flex-col gap-5 mb-16">
+    <h2 class="text-4xl mb-8 lg:hidden">How To Reach Me</h2>
     <template v-for="(item, index) in cardData" :key="index">
       <contact-info-card-item
         :itemTitle="item.itemTitle"
