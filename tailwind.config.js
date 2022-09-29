@@ -19,6 +19,8 @@ module.exports = {
         primaryAccentDark: '#FCA47C',
         primaryText: 'rgb(17, 24, 39)',
         primaryTextDark: 'rgb(243, 244, 246)',
+        danger: 'rgb(220, 38, 38)',
+        dangerDark: 'rgb(239 68 68)',
       },
     },
   },
