@@ -34,14 +34,17 @@
     <div
       class="w-full container relative flex justify-between md:justify-start items-center max-w-7xl md:mx-auto md:px-2 border-b dark:border-b-gray-500 md:border-none"
     >
-      <div class="px-3 flex-1">
+      <div class="px-3 pt-1 md:pt-0 flex-1">
         <div class="inline-block">
-          <nuxt-link to="/" data-cy="logo" class="flex items-end relative">
-            <img
-              class="w-8"
-              src="../assets/logo.png"
-              alt="logo links to home page"
-            /><p class="pl-2 text-2xl tracking-widest relative top-0 hidden md:block text-primaryText dark:text-primaryTextDark">Mike<span class="text-primaryAccent">Spinks</span></p>
+          <nuxt-link 
+          @click="closeMenu"
+          to="/" data-cy="logo" class="flex items-end relative">
+            <img class="w-8" src="../assets/logo.png" alt="Go to home page" />
+            <p
+              class="pl-2 text-2xl tracking-widest relative top-0 hidden md:block text-primaryText dark:text-primaryTextDark"
+            >
+              Mike<span class="text-primaryAccent">Spinks</span>
+            </p>
           </nuxt-link>
         </div>
       </div>
@@ -58,20 +61,22 @@
           </ul>
         </nav>
       </div>
-      <div class="hidden md:flex flex-1 justify-end items-center gap-4 font-medium pr-3">
+      <div
+        class="hidden md:flex flex-1 justify-end items-center gap-4 font-medium pr-3"
+      >
         <nuxt-link
           to="/login"
           class="font-semibold dark:text-gray-100 dark:hover:text-gray-50"
           >Login</nuxt-link
         >
         <nuxt-link
-          class="bg-teal-400 text-white dark:bg-white dark:text-primaryAccent transition font-semibold px-4 py-1 "
+          class="px-4 py-1 bg-primaryAccent2 text-white transition font-semibold hover:bg-opacity-90"
           to="/register"
           >Sign Up</nuxt-link
         >
         <nuxt-link
           to="https://github.com/mikespinks0401"
-          aria-labeledby="Link to Michael Spinks Github Profile"
+          aria-label="Go to Michael Spinks Github Profile"
           class="cursor-pointer"
           target="_blank"
         >
@@ -80,15 +85,12 @@
         <button
           @click="themeStore.changeLightMode"
           class="cursor-pointer hidden md:block text-gray-700 dark:text-gray-400 dark:hover:text-gray-100 hover:text-gray-900"
-          aria-labelledby="Toggle Light Mode"
+          aria-label="Toggle Light Mode"
         >
-          <div
-            v-if="themeStore.isLightMode"
-            aria-labelledby="Turn On Dark Mode"
-          >
+          <div v-if="themeStore.isLightMode" aria-label="Turn ON Dark Mode">
             <icons-moon />
           </div>
-          <div v-else aria-labelledby="Turn On Light Mode"><icons-sun /></div>
+          <div v-else aria-label="Turn On Light Mode"><icons-sun /></div>
         </button>
       </div>
 
@@ -97,20 +99,17 @@
           <button
             @click="themeStore.changeLightMode"
             class="cursor-pointer text-gray-700 dark:text-gray-400 dark:hover:text-white hover:text-gray-900"
-            aria-labelledby="Toggle Light Mode"
+            aria-label="Toggle Light Mode"
           >
-            <div
-              v-if="themeStore.isLightMode"
-              aria-labelledby="Turn On Dark Mode"
-            >
+            <div v-if="themeStore.isLightMode" aria-label="Turn On Dark Mode">
               <icons-moon />
             </div>
-            <div v-else aria-labelledby="Turn On Light Mode"><icons-sun /></div>
+            <div v-else aria-label="Turn On Light Mode"><icons-sun /></div>
           </button>
         </div>
         <button
           @click.native="toggleMenu"
-          aria-labelledby="toggle nav menu"
+          aria-label="toggle nav menu"
           class="md:hidden px-3 py-2"
           data-cy="hamburger"
           :aria-expanded="showNav"
@@ -228,7 +227,7 @@
   </header>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped>
   ul > li > .router-link-active {
     @apply shadow-[0_2px_0px_1px_#EA652C];
   }
