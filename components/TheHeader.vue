@@ -29,7 +29,7 @@
 <template>
   <header
     data-cy="header"
-    class="w-full shadow-sm md:shadow-none relative md:border-b dark:md:border-b-gray-500 dark:bg-black dark:text-white transition-all"
+    class="w-full shadow-sm md:shadow-none z-30 fixed md:border-b dark:md:border-b-gray-500 dark:bg-black dark:text-white transition-all"
   >
     <div
       class="w-full container relative flex justify-between md:justify-start items-center max-w-7xl md:mx-auto md:px-2 border-b dark:border-b-gray-500 md:border-none"

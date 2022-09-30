@@ -10,9 +10,9 @@
   <div class="">
     <div
       @click="emits('closeModal')"
-      class="absolute bg-black bg-opacity-80 inset-0 z-10"
+      class="absolute bg-black bg-opacity-80 inset-0 z-40"
     ></div>
-    <div class="absolute inset-0 flex flex-col items-center justify-center" aria-modal="true">
+    <div class="absolute z-50 inset-0 flex flex-col items-center justify-center" aria-modal="true">
       <div class="w-full flex flex-col items-center md:min-w-max md:max-w-md   z-20 rounded-sm bg-white cursor-default">
         <div class="flex justify-center w-full border-b-2 border-gray-200">
           <p class="font-bold text-gray-800 py-2">{{props.title}}</p>

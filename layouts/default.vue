@@ -5,7 +5,7 @@
     <div id="modal"></div>
     <the-header />
     <div
-      class="flex flex-col flex-1 dark:bg-gray-900 dark:text-gray-100 transition"
+      class="mt-10 md:mt-12 flex flex-col flex-1 bg-slate-50 dark:bg-gray-900 dark:text-gray-100 transition"
     >
       <slot />
     </div>
