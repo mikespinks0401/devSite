@@ -23,9 +23,10 @@
     <h2 class="text-4xl mb-8 lg:hidden">How To Reach Me</h2>
     <template v-for="(item, index) in cardData" :key="index">
       <contact-info-card-item
-        :itemTitle="item.itemTitle"
-        :itemIcon="item.itemIcon"
-        :itemDescriptions="item.itemDescriptions"
+        :item-title="item.itemTitle"
+        :item-icon="item.itemIcon"
+        :item-descriptions="item.itemDescriptions"
+        :icon-size="5"
       />
     </template>
   </div>
