@@ -21,7 +21,9 @@
 
   onMounted(() => {
     window.addEventListener('resize', () => {
-      showNav.value = false
+      if (showNav.value === true && window.screen.width > 768) {
+        showNav.value = false
+      }
     })
   })
 </script>
@@ -75,7 +77,7 @@
           >Login</nuxt-link
         >
         <nuxt-link
-          class=" auth px-4 py-1 bg-primaryAccent2 text-white transition font-semibold hover:bg-opacity-90"
+          class="auth px-4 py-1 bg-primaryAccent2 text-white transition font-semibold hover:bg-opacity-90"
           to="/register"
           >Sign Up</nuxt-link
         >
@@ -233,9 +235,8 @@
 </template>
 
 <style scoped>
-  
   ul > li > div > .router-link-active {
-    @apply border-opacity-100
+    @apply border-opacity-100;
   }
   .router-link-exact-active:not(.auth) {
     color: rgb(32, 178, 170);
