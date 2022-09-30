@@ -2,6 +2,7 @@
   const displayText = ref('')
   const currentIndex = ref(0)
 
+
   const props = defineProps({
     title: String,
     titles: {
@@ -11,6 +12,8 @@
       type: Boolean,
       default: false,
     },
+    timeToStart: Number,
+    pauseTime: Number
   })
 
   function writeText(stringArray: Array<string>, interval: number = 100) {
@@ -34,7 +37,7 @@
         } else {
           setTimeout(() => {
             writeText(stringArray)
-          }, 600)
+          }, props.pauseTime)
         }
       }
       if (textArray.length > 0) {
@@ -46,7 +49,7 @@
     }, interval)
   }
   onMounted(() => {
-    writeText(props.titles)
+    setTimeout(()=>{writeText(props.titles)}, props.timeToStart)
   })
 </script>
 
