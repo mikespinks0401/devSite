@@ -1,9 +1,12 @@
 <script setup lang="ts">
   const props = defineProps({
     iconName: String,
+    iconSize: Number,
   })
 
   const icon = props.iconName
+  const sizeClass = `w-${props.iconSize} h-${props.iconSize}`
+
 </script>
 
 <template>
@@ -15,7 +18,7 @@
       viewBox="0 0 24 24"
       stroke-width="1.5"
       stroke="currentColor"
-      class="w-6 h-6"
+      :class="sizeClass"
     >
       <path
         stroke-linecap="round"
@@ -28,7 +31,8 @@
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      class="w-6 h-6"
+      
+      v-bind:class="sizeClass"
     >
       <path d="M10.5 18.75a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" />
       <path
@@ -45,7 +49,7 @@
       viewBox="0 0 24 24"
       stroke-width="1.5"
       stroke="currentColor"
-      class="w-6 h-6"
+      :class="sizeClass"
     >
       <path
         stroke-linecap="round"
@@ -58,7 +62,7 @@
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      class="w-6 h-6"
+      :class="sizeClass"
     >
       <path
         d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"
@@ -75,7 +79,7 @@
       viewBox="0 0 24 24"
       stroke-width="1.5"
       stroke="currentColor"
-      class="w-6 h-6"
+      :class="sizeClass"
     >
       <path
         stroke-linecap="round"
@@ -93,7 +97,7 @@
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      class="w-6 h-6"
+      :class="sizeClass"
     >
       <path
         fill-rule="evenodd"
