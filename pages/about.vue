@@ -1,5 +1,9 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="flex flex-col items-center bg-gray-200">about</div>
+  <div class="flex-1 flex flex-col w-full overflow-hidden" data-cy="about">
+    <div class="flex justify-center mt-6">
+      <h1 class="text-5xl text-opacity-80 mb-16">About Me</h1>
+    </div>
+  </div>
 </template>
