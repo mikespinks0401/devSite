@@ -71,11 +71,11 @@
       >
         <nuxt-link
           to="/login"
-          class="font-semibold dark:text-gray-100 dark:hover:text-gray-50"
+          class="auth font-semibold dark:text-gray-100 dark:hover:text-gray-50"
           >Login</nuxt-link
         >
         <nuxt-link
-          class="px-4 py-1 bg-primaryAccent2 text-white transition font-semibold hover:bg-opacity-90"
+          class=" auth px-4 py-1 bg-primaryAccent2 text-white transition font-semibold hover:bg-opacity-90"
           to="/register"
           >Sign Up</nuxt-link
         >
@@ -234,13 +234,13 @@
 
 <style scoped>
   
-  ul > li > div .router-link-active {
+  ul > li > div > .router-link-active {
     @apply border-opacity-100
   }
-  .router-link-exact-active {
+  .router-link-exact-active:not(.auth) {
     color: rgb(32, 178, 170);
   }
-  .router-link-exact-active:hover {
+  .router-link-exact-active:hover:not(.auth) {
     color: rgb(32, 178, 170);
   }
 </style>
