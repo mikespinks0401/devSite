@@ -1,6 +1,6 @@
 <script setup lang="ts"></script>
 <template>
-  <div class="flex-1">
+  <div class="flex-1 container mx-auto max-w-6xl">
     <div class="flex justify-center mt-6">
       <h1 class="text-5xl text-opacity-80 mb-16">Contact</h1>
     </div>
@@ -9,8 +9,8 @@
         <p class="text-2xl font-semibold text-primaryAccent">
           Ready To Collaborate?
         </p>
-        <h2 class="text-3xl pt-5">Let's get to work</h2>
-        <p class="pt-5">
+        <h2 class="text-3xl pt-2">Let's get to work</h2>
+        <p class="pt-3">
           I look forward to connecting with you and will respond within 48 hours
         </p>
         <br />
