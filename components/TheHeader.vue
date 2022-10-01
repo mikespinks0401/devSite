@@ -1,9 +1,13 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
+  import { getHeight } from '~~/composables/utils/useDimensions'
 
+  const emits = defineEmits(['sendMenuHeight', 'menuOpen', 'menuClose'])
   const themeStore = useThemeStore()
-  const loggedIn = ref(false)
   const showNav = ref(false)
+  const loggedIn = ref(false)
+  const mobileMenuHeight = ref(0)
+  const useMobileMenuHeight = ref(0)
 
   const links = [
     { to: 'Home', href: '/' },
@@ -11,15 +15,33 @@
     { to: 'About', href: '/about' },
     { to: 'Contact', href: '/contact' },
   ]
-
   function closeMenu() {
     showNav.value = false
+    useMobileMenuHeight.value = mobileMenuHeight.value
+    emits('menuClose')
+  }
+  function openMenu() {
+    showNav.value = true
+    useMobileMenuHeight.value = 0
+    emits('menuOpen')
   }
   function toggleMenu() {
-    showNav.value = !showNav.value
+    if (showNav.value === false) {
+      openMenu()
+    } else {
+      closeMenu()
+    }
+  }
+
+  function test(event) {
+    console.log(event)
   }
 
   onMounted(() => {
+    const height = getHeight('#mobile-menu')
+    mobileMenuHeight.value = height
+    useMobileMenuHeight.value = mobileMenuHeight.value
+    emits('sendMenuHeight', height)
     window.addEventListener('resize', () => {
       if (showNav.value === true && window.screen.width > 768) {
         showNav.value = false
@@ -29,128 +51,130 @@
 </script>
 
 <template>
-  <header
-    data-cy="header"
-    class="w-full shadow-sm md:shadow-none z-30 fixed md:border-b bg-white dark:md:border-b-gray-500 dark:bg-black dark:text-white transition-all"
-  >
+  <div class="w-full fixed top-0">
     <div
-      class="w-full container relative flex justify-between md:justify-start items-center max-w-7xl md:mx-auto md:px-2 border-b dark:border-b-gray-500 md:border-none"
+      class="z-10 w-full relative border-b bg-white dark:md:border-b-gray-500 dark:bg-black dark:text-white"
     >
-      <div class="px-3 pt-1 md:pt-0 flex-1">
-        <div class="inline-block">
-          <nuxt-link
-            @click="closeMenu"
-            to="/"
-            data-cy="logo"
-            class="flex items-end relative"
-          >
-            <img class="w-8" src="../assets/logo.png" alt="Go to home page" />
-            <p
-              class="pl-2 text-2xl tracking-widest relative top-0 hidden md:block text-primaryText dark:text-primaryTextDark"
-            >
-              Mike<span class="text-primaryAccent">Spinks</span>
-            </p>
-          </nuxt-link>
-        </div>
-      </div>
-      <div class="hidden md:flex flex-1 justify-center">
-        <nav>
-          <ul class="flex gap-6 items-center">
-            <li v-for="(item, ind) in links" :key="ind" class="overflow-hidden">
-              <div>
-                <nuxt-link
-                  class="block py-[10px] border-b-2 border-primaryAccent border-opacity-0 text-lg hover:text-gray-500 bg-opacity-75 dark:text-gray-300 dark:hover:text-white font-medium hover:opacity-100 transition"
-                  :to="item.href"
-                  >{{ item.to }}</nuxt-link
-                >
-              </div>
-            </li>
-          </ul>
-        </nav>
-      </div>
       <div
-        class="hidden md:flex flex-1 justify-end items-center gap-4 font-medium pr-3"
+        class="w-full container relative flex z-30 justify-between md:justify-start items-center max-w-7xl md:mx-auto md:px-2 dark:text-white transition-all"
       >
-        <nuxt-link
-          to="/login"
-          class="auth font-semibold dark:text-gray-100 dark:hover:text-gray-50"
-          >Login</nuxt-link
-        >
-        <nuxt-link
-          class="auth px-4 py-1 bg-primaryAccent2 text-white transition font-semibold hover:bg-opacity-90"
-          to="/register"
-          >Sign Up</nuxt-link
-        >
-        <nuxt-link
-          to="https://github.com/mikespinks0401"
-          aria-label="Go to Michael Spinks Github Profile"
-          class="cursor-pointer"
-          target="_blank"
-        >
-          <logos-github />
-        </nuxt-link>
-        <button
-          @click="themeStore.changeLightMode"
-          class="cursor-pointer hidden md:block text-gray-700 dark:text-gray-400 dark:hover:text-gray-100 hover:text-gray-900"
-          aria-label="Toggle Light Mode"
-        >
-          <div v-if="themeStore.isLightMode" aria-label="Turn ON Dark Mode">
-            <icons-moon />
+        <div class="px-3 pt-1 md:pt-0 flex-1">
+          <div class="inline-block">
+            <nuxt-link
+              @click="closeMenu"
+              to="/"
+              data-cy="logo"
+              class="flex items-end relative"
+            >
+              <img class="w-8" src="../assets/logo.png" alt="Go to home page" />
+              <p
+                class="pl-2 text-2xl tracking-widest relative top-0 hidden md:block text-primaryText dark:text-primaryTextDark"
+              >
+                Mike<span class="text-primaryAccent">Spinks</span>
+              </p>
+            </nuxt-link>
           </div>
-          <div v-else aria-label="Turn On Light Mode"><icons-sun /></div>
-        </button>
-      </div>
-
-      <div class="flex h-full items-center gap-1 md:hidden">
-        <div class="flex items-center">
+        </div>
+        <div class="hidden md:flex flex-1 justify-center">
+          <nav>
+            <ul class="flex gap-6 items-center">
+              <li
+                v-for="(item, ind) in links"
+                :key="ind"
+                class="overflow-hidden"
+              >
+                <div>
+                  <nuxt-link
+                    class="block py-[10px] border-b-2 border-primaryAccent border-opacity-0 text-lg hover:text-gray-500 bg-opacity-75 dark:text-gray-300 dark:hover:text-white font-medium hover:opacity-100 transition"
+                    :to="item.href"
+                    >{{ item.to }}</nuxt-link
+                  >
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div
+          class="hidden md:flex flex-1 justify-end items-center gap-4 font-medium pr-3"
+        >
+          <nuxt-link
+            to="/login"
+            class="auth font-semibold dark:text-gray-100 dark:hover:text-gray-50"
+            >Login</nuxt-link
+          >
+          <nuxt-link
+            class="auth px-4 py-1 bg-primaryAccent2 text-white transition font-semibold hover:bg-opacity-90"
+            to="/register"
+            >Sign Up</nuxt-link
+          >
+          <nuxt-link
+            to="https://github.com/mikespinks0401"
+            aria-label="Go to Michael Spinks Github Profile"
+            class="cursor-pointer"
+            target="_blank"
+          >
+            <logos-github />
+          </nuxt-link>
           <button
             @click="themeStore.changeLightMode"
-            class="cursor-pointer text-gray-700 dark:text-gray-400 dark:hover:text-white hover:text-gray-900"
+            class="cursor-pointer hidden md:block text-gray-700 dark:text-gray-400 dark:hover:text-gray-100 hover:text-gray-900"
             aria-label="Toggle Light Mode"
           >
-            <div v-if="themeStore.isLightMode" aria-label="Turn On Dark Mode">
+            <div v-if="themeStore.isLightMode" aria-label="Turn ON Dark Mode">
               <icons-moon />
             </div>
             <div v-else aria-label="Turn On Light Mode"><icons-sun /></div>
           </button>
         </div>
-        <button
-          @click.native="toggleMenu"
-          aria-label="toggle nav menu"
-          class="md:hidden px-3 py-2"
-          data-cy="hamburger"
-          :aria-expanded="showNav"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="w-6 h-6 -z-10"
+
+        <div class="flex h-full items-center gap-1 md:hidden">
+          <div class="flex items-center">
+            <button
+              @click="themeStore.changeLightMode"
+              class="cursor-pointer text-gray-700 dark:text-gray-400 dark:hover:text-white hover:text-gray-900"
+              aria-label="Toggle Light Mode"
+            >
+              <div v-if="themeStore.isLightMode" aria-label="Turn On Dark Mode">
+                <icons-moon />
+              </div>
+              <div v-else aria-label="Turn On Light Mode"><icons-sun /></div>
+            </button>
+          </div>
+          <button
+            @click.native="toggleMenu"
+            aria-label="toggle nav menu"
+            class="md:hidden px-3 py-2"
+            data-cy="hamburger"
+            :aria-expanded="showNav"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-            />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6 -z-10"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
+    <!--Mobile Menu Starts here-->
     <div
       @click=""
-      class="transition w-full overflow-hidden"
-      :class="
-        showNav
-          ? 'max-h-full ring-1 ring-gray-200 dark:ring-gray-500 dark:md:border-b-gray-500'
-          : 'max-h-0'
-      "
+      class="transition w-full z-30 md:hidden"
       data-cy="mobile menu"
     >
       <div
-        class="flex flex-col w-full relative transition duration-500 p-4 dark:bg-gray-800"
-        :class="showNav ? 'translate-y-0' : '-translate-y-full'"
+        id="mobile-menu"
+        class="flex flex-col w-full relative p-4 bg-gray-100 dark:text-white dark:bg-gray-800 border-b border-gray-200"
+        :style="{top: `-${useMobileMenuHeight}px`}"
       >
         <div class="flex justify-center p-4 gap-2">
           <div
@@ -173,7 +197,7 @@
               <div class="flex w-full py-1 overflow-hidden">
                 <NuxtLink
                   @click="closeMenu"
-                  class="font-medium opacity-100 hover:opacity-50 dark:opacity-70 dark:hover:opacity-100 transition duration-75"
+                  class="font-medium opacity-100 hover:opacity-50 dark:opacity-80 dark:hover:opacity-100 transition duration-75"
                   :to="link.href"
                   >{{ link.to }}</NuxtLink
                 >
@@ -184,8 +208,11 @@
             v-if="!loggedIn"
             class="w-full flex flex-col items-center gap-2 divide-y font-medium"
           >
-            <nuxt-link to="/login">Login</nuxt-link>
-            <nuxt-link class="bg-blue-200 px-4 py-1 rounded-full" to="/register"
+            <nuxt-link @click="closeMenu" to="/login">Login</nuxt-link>
+            <nuxt-link
+              @click="closeMenu"
+              class="bg-blue-200 px-4 py-1 rounded-full"
+              to="/register"
               >Sign Up</nuxt-link
             >
           </div>
@@ -231,10 +258,10 @@
         </nav>
       </div>
     </div>
-  </header>
+  </div>
 </template>
 
-<style scoped>
+<style>
   ul > li > div > .router-link-active {
     @apply border-opacity-100;
   }
