@@ -19,19 +19,23 @@
     >
       <div
         data-cy="hero-left"
-        class="flex flex-col justify-center gap-2 md:p-4 tracking-widest"
+        class="flex flex-col justify-center gap-2 md:p-4 tracking-widest text-center md:text-left"
       >
-        <h1 class="text-3xl font-regular text-gray-800 dark:text-gray-100">
+        <h1
+          class="text-2xl md:text-3xl font-regular text-gray-800 dark:text-gray-100"
+        >
           <span class="">Hello,</span>
           My Name is
           <span
-            class="text-primaryAccent text-5xl font-bold text block md:inline-block"
+            class="text-primaryAccent text-4xl md:text-5xl font-bold block md:inline-block"
             >{{ props.name }}</span
           >
         </h1>
-        <p class="text-3xl -m-1">
+        <p class="text-3xl">
           I am a
-          <span class="block text-4xl font-semibold md:inline-block">
+          <span
+            class="block text-2xl font-black md:text-4xl md:font-semibold md:inline-block"
+          >
             <homepage-text-writer
               :titles="titles"
               :loop="false"
@@ -42,14 +46,14 @@
         </p>
         <div class="leading-none">
           <p class="text-lg opacity-80">
-            I build fast, secure, and user friendly apps
+            I build fast, secure, and user friendly apps.
           </p>
           <p class="text-lg opacity-80">Have something in mind?</p>
         </div>
         <div class="mt-6">
           <nuxt-link
             to="/contact"
-            class="px-4 p-2 bg-primaryAccent2 hover:bg-opacity-90 text-white text-lg font-medium"
+            class="px-4 p-2 bg-primaryAccent2 hover:bg-opacity-90 text-white text-lg font-semibold"
             >Get In Touch</nuxt-link
           >
         </div>
@@ -60,7 +64,7 @@
         >
           <div class="relative">
             <img
-              class="relative top-15 left-20"
+              class="relative -bottom-4 md:left-16 lg:left-10"
               src="/heroImg.png"
               alt="Michael Spinks Hero image"
             />

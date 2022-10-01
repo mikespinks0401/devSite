@@ -1,9 +1,11 @@
 <script setup lang="ts">
   import { ref, onMounted } from 'vue'
+  import { getHeight } from '~~/composables/utils/useDimensions'
 
+  const emits = defineEmits(['sendMenuHeight', 'menuOpen', 'menuClose'])
   const themeStore = useThemeStore()
-  const loggedIn = ref(false)
   const showNav = ref(false)
+  const loggedIn = ref(false)
 
   const links = [
     { to: 'Home', href: '/' },
@@ -14,12 +16,23 @@
 
   function closeMenu() {
     showNav.value = false
+    emits('menuClose')
+  }
+  function openMenu() {
+    showNav.value = true
+    emits('menuOpen')
   }
   function toggleMenu() {
-    showNav.value = !showNav.value
+    if (showNav.value === false) {
+      openMenu()
+    } else {
+      closeMenu()
+    }
   }
 
   onMounted(() => {
+    const height = getHeight('#mobile-menu')
+    emits('sendMenuHeight', height)
     window.addEventListener('resize', () => {
       if (showNav.value === true && window.screen.width > 768) {
         showNav.value = false
@@ -149,6 +162,7 @@
       data-cy="mobile menu"
     >
       <div
+        id="mobile-menu"
         class="flex flex-col w-full relative transition duration-500 p-4 dark:bg-gray-800"
         :class="showNav ? 'translate-y-0' : '-translate-y-full'"
       >
