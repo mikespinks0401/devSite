@@ -43,8 +43,8 @@
     useMobileMenuHeight.value = mobileMenuHeight.value
     emits('sendMenuHeight', height)
     window.addEventListener('resize', () => {
-      if (showNav.value === true && window.screen.width > 768) {
-        showNav.value = false
+      if (window.screen.width > 768) {
+        closeMenu()
       }
     })
   })
