@@ -7,7 +7,7 @@
   })
   const useFloatingDivHeight = computed(() => {
     return navBarOpen.value === true
-      ? `min-height: ${mobileMenuHeight.value + 30}px;`
+      ? `min-height: ${mobileMenuHeight.value + 38}px;`
       : `min-height: 0px;`
   })
   function getMenuHeight(v: number): void {
