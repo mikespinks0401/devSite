@@ -53,7 +53,7 @@
 <template>
   <div class="w-full fixed top-0">
     <div
-      class="z-10 w-full relative border-b bg-white dark:md:border-b-gray-500 dark:bg-black dark:text-white"
+      class="z-10 w-full relative border-b bg-white dark:border-b-gray-500 dark:bg-black dark:text-white"
     >
       <div
         class="w-full container relative flex z-30 justify-between md:justify-start items-center max-w-7xl md:mx-auto md:px-2 dark:text-white transition-all"
@@ -173,7 +173,7 @@
     >
       <div
         id="mobile-menu"
-        class="flex flex-col w-full relative p-4 bg-gray-100 dark:text-white dark:bg-gray-800 border-b border-gray-200"
+        class="flex flex-col w-full relative p-4 bg-gray-100 dark:text-white dark:bg-gray-800 border-b border-gray-500"
         :style="{ top: `-${useMobileMenuHeight}px` }"
       >
         <div class="flex justify-center p-4 gap-2">
