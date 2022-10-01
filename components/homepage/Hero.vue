@@ -34,7 +34,7 @@
         <p class="text-3xl">
           I am a
           <span
-            class="block text-2xl font-black md:text-4xl md:font-semibold md:inline-block"
+            class="block text-3xl font-black md:text-4xl md:font-semibold md:inline-block"
           >
             <homepage-text-writer
               :titles="titles"
@@ -45,10 +45,8 @@
           </span>
         </p>
         <div class="leading-none">
-          <p class="text-lg opacity-80">
-            I build fast, secure, and user friendly apps.
-          </p>
-          <p class="text-lg opacity-80">Have something in mind?</p>
+          <p class="text-lg">I build fast, secure, and user friendly apps.</p>
+          <p class="text-lg o">Have something in mind?</p>
         </div>
         <div class="mt-6">
           <nuxt-link
@@ -58,13 +56,13 @@
           >
         </div>
       </div>
-      <div class="flex flex-col w-full" data-cy="hero-right">
+      <div class="flex flex-col w-full " data-cy="hero-right">
         <div
           class="bg-gradient-radial from-primaryAccent via-inherit w-full h-full"
         >
           <div class="relative">
             <img
-              class="relative -bottom-4 md:left-16 lg:left-10"
+              class="relative -bottom-4 md:left-10 lg:left-6"
               src="/heroImg.png"
               alt="Michael Spinks Hero image"
             />
