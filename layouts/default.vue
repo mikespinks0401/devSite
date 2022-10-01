@@ -5,37 +5,40 @@
   const bodyMarginTopClass = computed(() => {
     return navBarOpen.value === true ? ' ' : 'mt-10 md:mt-12'
   })
-
+  const useFloatingDivHeight = computed(() => {
+    return navBarOpen.value === true
+      ? `min-height: ${mobileMenuHeight.value + 30}px;`
+      : `min-height: 0px;`
+  })
   function getMenuHeight(v: number): void {
     mobileMenuHeight.value = v
   }
-  function createMenuSpace() {
-    if (floatingDivHeight.value === 0) {
-      floatingDivHeight.value = mobileMenuHeight.value
-    }
+  function menuClosed() {
+    console.log(useFloatingDivHeight.value)
+    navBarOpen.value = false
   }
 
-  function removeMenuSpace() {
-    if (floatingDivHeight.value > 0) {
-      floatingDivHeight.value = 0
-    }
+  function menuOpen() {
+    console.log(mobileMenuHeight.value)
+    console.log(useFloatingDivHeight.value)
+    navBarOpen.value = true
   }
 </script>
 
 <template>
-  <div class="flex flex-col min-h-screen w-full relative">
+  <div class="flex flex-col min-h-screen w-full relative min-h">
     <div id="modal"></div>
 
     <div
       aria-hidden="true"
       class="z-0 bg-transparent"
-      :style="{ height: `${floatingDivHeight}px` }"
+      :style="useFloatingDivHeight"
     ></div>
 
     <the-header
       @send-menu-height="getMenuHeight"
-      @menu-open="createMenuSpace"
-      @menu-close="removeMenuSpace"
+      @menu-open="menuOpen"
+      @menu-close="menuClosed"
       class="z-10"
     />
     <div
