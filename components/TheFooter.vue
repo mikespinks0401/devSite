@@ -12,10 +12,10 @@
 <template>
   <div
     data-cy="Footer"
-    class="p-5 w-full border-t dark:border-t-gray-500 dark:bg-black dark:text-white transition"
+    class="py-3 w-full border-t dark:border-t-gray-500 dark:bg-black dark:text-white transition"
   >
     <div class="container max-w-7xl mx-auto h-full">
-      <div class="flex flex-col gap-2 h-full items-center justify-between">
+      <div class="flex flex-col gap-1 h-full items-center justify-between">
         <div class="px-2 flex h-full justify-center items-center gap-2">
           <nuxt-link
             to="https://github.com/mikespinks0401"
