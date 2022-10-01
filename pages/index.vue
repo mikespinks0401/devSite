@@ -3,6 +3,5 @@
 <template>
   <div class="flex-1 flex flex-col">
     <homepage-hero name="Michael Spinks" />
-    <homepage-services />
   </div>
 </template>
