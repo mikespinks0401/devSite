@@ -26,7 +26,7 @@
       <!--Left Side Of Hero-->
       <div
         data-cy="hero-left"
-        class="order-2 md:order-1 py-12 h-full flex flex-col justify-center gap-2 md:p-8tracking-widest text-center md:text-left"
+        class="order-2 md:order-1 py-12 h-full flex flex-col justify-center gap-2 md:p-4 lg:p-0 tracking-widest text-center md:text-left"
       >
         <h1
           class="text-2xl md:text-3xl font-regular text-gray-800 dark:text-gray-100"
