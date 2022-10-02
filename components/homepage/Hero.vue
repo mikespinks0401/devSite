@@ -7,9 +7,9 @@
     'Thinker',
     'Creator',
     'Problem Solver',
-    'Front End Developer',
-    'Back End Developer',
-    'Full Stack Developer',
+    'Front-End Developer',
+    'Back-End Developer',
+    'Full-Stack Developer',
   ]
 
   console.log(props.heroImgUrl)
@@ -53,10 +53,10 @@
           </span>
         </p>
         <div class="leading-none">
-          <p class="text-lg">
+          <p class="text-lg px-2 md:px-0">
             I build fast, secure, and user friendly web apps.
           </p>
-          <p class="text-lg o">Have something in mind?</p>
+          <p class="text-lg">Have something in mind?</p>
         </div>
         <div class="my-6">
           <nuxt-link
