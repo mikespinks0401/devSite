@@ -5,6 +5,10 @@
     ariaLabel: String,
     type: String,
     classes: String,
+    showLabel: {
+      type: Boolean,
+      default: true
+    },
     required: {
       type: Boolean,
       default: false,
@@ -27,6 +31,7 @@
 <template>
   <div class="relative">
     <label
+      
       for="name"
       class="absolute text-gray-700 transition duration-300 block"
       :class="focusedClassStyles"
