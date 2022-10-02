@@ -112,7 +112,7 @@
           <p v-if="showNameRequired" :class="requiredFieldClass">
             Name Required*
           </p>
-          <form-components-input
+          <forms-input
             @update-text="updateName"
             classes="focus:border-primaryAccent2"
             fieldName="Name"
@@ -125,7 +125,7 @@
           <p v-if="showEmailRequired" :class="requiredFieldClass">
             Email Required*
           </p>
-          <form-components-input
+          <forms-input
             @update-text="updateEmail"
             classes="focus:border-primaryAccent2"
             fieldName="Email"
@@ -135,7 +135,7 @@
           />
         </div>
         <div class="md:col-span-2">
-          <form-components-input
+          <forms-input
             @update-text="updatePhoneNumber"
             classes="focus:border-primaryAccent2"
             fieldName="Phone Number"
