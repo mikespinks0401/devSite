@@ -208,10 +208,12 @@
             v-if="!loggedIn"
             class="w-full flex flex-col items-center gap-2 divide-y font-medium"
           >
-            <nuxt-link @click="closeMenu" to="/login">Login</nuxt-link>
+            <nuxt-link @click="closeMenu" class="auth" to="/login"
+              >Login</nuxt-link
+            >
             <nuxt-link
               @click="closeMenu"
-              class="bg-blue-200 px-4 py-1 rounded-full"
+              class="auth bg-blue-200 px-4 py-1 rounded-full"
               to="/register"
               >Sign Up</nuxt-link
             >
