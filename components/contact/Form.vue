@@ -14,8 +14,8 @@
 
   const showAlert = ref(false)
 
-
-  const requiredFieldClass = 'font-medium absolute -top-6 text-danger dark:text-dangerDark transition'
+  const requiredFieldClass =
+    'font-medium absolute -top-6 text-danger dark:text-dangerDark transition'
   const updateName = (v: string) => {
     name.value = v
     if (showNameRequired.value === true && name.value !== '') {
@@ -96,9 +96,13 @@
 <template>
   <div class="w-full mb-8">
     <teleport v-if="showAlert" to="#modal">
-      <modals-alert @closeModal="showAlert = false" title="Alert" buttonText="Got It">
+      <modals-alert
+        @closeModal="showAlert = false"
+        title="Alert"
+        buttonText="Got It"
+      >
         <div v-for="error of inputErrorsList">
-          <p class="block text-center text-danger font-medium">{{error}}</p>
+          <p class="block text-center text-danger font-medium">{{ error }}</p>
         </div>
       </modals-alert>
     </teleport>
