@@ -72,7 +72,7 @@
           class="h-full w-full flex-1 flex flex-col justify-center items-center -mt-4 bg-primaryAccent2 dark:bg-primaryAccentDark transition-all overflow-hidden md:mt-0"
         >
           <div
-            class="h-72 w-full relative bg-contain bg-center bg-no-repeat md:right-4 md:h-full md:-bottom-8"
+            class="h-72 -bottom-4 w-full relative bg-contain bg-bottom bg-no-repeat md:right-4 md:h-full"
             :style="{ backgroundImage: `url(${heroImgUrl})` }"
           ></div>
         </div>
