@@ -166,13 +166,10 @@
       </div>
     </div>
     <!--Mobile Menu Starts here-->
-    <div
-      @click=""
-      class="transition w-full z-30 md:hidden"
-      data-cy="mobile menu"
-    >
+    <div @click="" class="transition w-full z-30 md:hidden">
       <div
         id="mobile-menu"
+        data-cy="mobile menu"
         class="flex flex-col w-full relative p-4 bg-gray-100 dark:text-white dark:bg-gray-800 border-b dark:border-gray-500"
         :style="{ top: `-${useMobileMenuHeight}px` }"
       >
