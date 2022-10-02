@@ -104,6 +104,7 @@
             >Login</nuxt-link
           >
           <nuxt-link
+            data-cy="main sign up"
             class="auth px-4 py-1 bg-primaryAccent2 text-white transition font-semibold hover:bg-opacity-90"
             to="/register"
             >Sign Up</nuxt-link
@@ -211,6 +212,7 @@
             >
             <nuxt-link
               @click="closeMenu"
+              data-cy="mobile sign up"
               class="auth bg-blue-200 px-4 py-1 rounded-full"
               to="/register"
               >Sign Up</nuxt-link
