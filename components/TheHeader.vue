@@ -54,6 +54,7 @@
   <div class="w-full fixed top-0">
     <div
       class="z-10 w-full relative border-b border-gray-200 bg-white dark:border-gray-500 dark:bg-black dark:text-white"
+      data-cy="header"
     >
       <div
         class="w-full container relative flex z-30 justify-between md:justify-start items-center max-w-7xl md:mx-auto md:px-2 dark:text-white transition-all"
