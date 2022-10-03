@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  const props = defineProps({
-    name: String,
-    heroImgUrl: String,
-  })
+  const props = defineProps<{
+    name: String
+    heroImgUrl: String
+  }>()
   const titles = [
     'Thinker',
     'Creator',
@@ -11,8 +11,7 @@
     'Back-End Developer',
     'Full-Stack Developer',
   ]
-
-  console.log(props.heroImgUrl)
+  const loop = true
 </script>
 
 <template>
@@ -45,8 +44,8 @@
           >
             <!--Custom Text Writer Component-->
             <homepage-text-writer
-              :titles="titles"
-              :loop="false"
+              :titles=titles
+              :loop=loop
               :timeToStart="800"
               :pauseTime="900"
             />
