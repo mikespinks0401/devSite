@@ -1,18 +1,18 @@
 <script setup lang="ts">
-interface Props {
-  itemTitle: string
-  itemIcon: string
-  itemDescriptions: Array<string>
-  iconSize: number
-}
+  interface Props {
+    itemTitle: string
+    itemIcon: string
+    itemDescriptions: Array<string>
+    iconSize: number
+  }
 
-const props = withDefaults(defineProps<Props>(), {
-  iconSize: 5,
-})
-const icon = props.itemIcon
-const title = props.itemTitle
-const descriptions = props.itemDescriptions
-const iconSize = props.iconSize
+  const props = withDefaults(defineProps<Props>(), {
+    iconSize: 5,
+  })
+  const icon = props.itemIcon
+  const title = props.itemTitle
+  const descriptions = props.itemDescriptions
+  const iconSize = props.iconSize
 </script>
 
 <template>
