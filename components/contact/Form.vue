@@ -101,7 +101,7 @@
         title="Alert"
         buttonText="Got It"
       >
-        <div v-for="error of inputErrorsList">
+        <div v-for="(error, index) of inputErrorsList" :key="index">
           <p class="block text-center text-danger font-medium">{{ error }}</p>
         </div>
       </modals-alert>
