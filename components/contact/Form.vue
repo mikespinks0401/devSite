@@ -158,7 +158,7 @@
         </div>
         <input
           @click="submitContactForm"
-          class="bg-primaryAccent2 px-4 py-1 font-semibold text-white cursor-pointer"
+          class="bg-primaryAccent2 px-4 py-1 font-semibold text-center text-white cursor-pointer"
           inputType="submit"
           value="Submit Form"
           aria-label="Submit Form"
