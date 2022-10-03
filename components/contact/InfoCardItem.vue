@@ -1,10 +1,10 @@
 <script setup lang="ts">
-  const props = defineProps({
-    itemTitle: String,
-    itemIcon: String,
-    itemDescriptions: Array<string>,
-    iconSize: Number
-  })
+  const props = defineProps<{
+    itemTitle: string
+    itemIcon: string
+    itemDescriptions: Array<string>
+    iconSize: number
+  }>()
   const icon = props.itemIcon
   const title = props.itemTitle
   const descriptions = props.itemDescriptions
@@ -13,7 +13,7 @@
 
 <template>
   <div class="flex relative">
-    <icons-off-center-icon :icon="icon" :size=iconSize />
+    <icons-off-center-icon :icon="icon" :size="iconSize" />
     <div class="relative -top-2">
       <h3 class="font-bold text-xl text-primaryAccent">
         {{ title }}

@@ -1,19 +1,14 @@
 <script setup lang="ts">
+  import { ref, computed } from 'vue'
   const emit = defineEmits(['updateText'])
-  const props = defineProps({
-    fieldName: String,
-    ariaLabel: String,
-    type: String,
-    classes: String,
-    showLabel: {
-      type: Boolean,
-      default: true
-    },
-    required: {
-      type: Boolean,
-      default: false,
-    },
-  })
+  const props = defineProps<{
+    fieldName: string
+    ariaLabel?: string
+    inputType: string
+    classes?: string
+    showLabel?: boolean
+    required?: boolean
+  }>()
   const textValue = ref('')
   const isFocused = ref(false)
 
@@ -31,7 +26,6 @@
 <template>
   <div class="relative">
     <label
-      
       for="name"
       class="absolute text-gray-700 transition duration-300 block"
       :class="focusedClassStyles"
@@ -44,7 +38,7 @@
       @input="emit('updateText', textValue), (isFocused = true)"
       class="w-full focus:ring-0 dark:text-black"
       :class="props.classes"
-      :type="props.type"
+      :type="props.inputType"
       :name="props.fieldName"
       :aria-label="props.ariaLabel"
       v-model="textValue"
