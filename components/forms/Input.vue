@@ -5,7 +5,6 @@
     ariaLabel?: string
     inputType: string
     classes?: string
-    showLabel?: boolean
     required?: boolean
   }>()
   const input = ref(null)
@@ -26,7 +25,7 @@
     isFocused.value = true
     setTimeout(() => {
       input.value.focus()
-    }, 200)
+    }, 150)
   }
 </script>
 
