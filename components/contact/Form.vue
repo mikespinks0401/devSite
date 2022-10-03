@@ -107,7 +107,7 @@
       </modals-alert>
     </teleport>
     <form @submit.prevent autocomplete="off">
-      <div class="grid md:grid-cols-2 gap-6 w-full mt-8">
+      <div class="z-30 grid md:grid-cols-2 gap-6 w-full mt-8">
         <div class="relative">
           <p v-if="showNameRequired" :class="requiredFieldClass">
             Name Required*
@@ -116,7 +116,7 @@
             @update-text="updateName"
             classes="focus:border-primaryAccent2"
             fieldName="Name"
-            type="text"
+            inputType="text"
             ariaLabel="Input your name"
             :required="true"
           />
@@ -129,7 +129,7 @@
             @update-text="updateEmail"
             classes="focus:border-primaryAccent2"
             fieldName="Email"
-            type="email"
+            inputType="email"
             ariaLabel="Input your email"
             :required="true"
           />
@@ -139,7 +139,7 @@
             @update-text="updatePhoneNumber"
             classes="focus:border-primaryAccent2"
             fieldName="Phone Number"
-            type="text"
+            inputType="text"
             ariaLabel="Input your phone number"
             :required="false"
           />
@@ -159,7 +159,7 @@
         <input
           @click="submitContactForm"
           class="bg-primaryAccent2 px-4 py-1 font-semibold text-white cursor-pointer"
-          type="submit"
+          inputType="submit"
           value="Submit Form"
           aria-label="Submit Form"
         />
