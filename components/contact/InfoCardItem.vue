@@ -3,7 +3,7 @@
     itemTitle: string
     itemIcon: string
     itemDescriptions: Array<string>
-    iconSize: number
+    iconSize?: number
   }
 
   const props = withDefaults(defineProps<Props>(), {
