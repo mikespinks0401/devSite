@@ -1,13 +1,17 @@
 <script setup lang="ts">
-  const displayText = ref('')
-  const currentIndex = ref(0)
-
-  const props = defineProps<{
-    titles: Array<string>
-    loop?: boolean
-    timeToStart: number
-    pauseTime: number
-  }>()
+  
+  interface Props{
+     titles: Array<string>
+      loop?: boolean
+      timeToStart?: number
+      pauseTime?: number
+  }  
+  
+  const props = withDefaults(defineProps<Props>(), {
+    loop: false
+  })
+    const displayText = ref('')
+    const currentIndex = ref(0)
 
   function writeText(stringArray: Array<string>, interval: number = 100) {
     const length = stringArray.length
