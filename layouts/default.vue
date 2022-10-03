@@ -14,7 +14,6 @@
     mobileMenuHeight.value = v
   }
   function menuClosed() {
-    console.log(useFloatingDivHeight.value)
     navBarOpen.value = false
   }
 
