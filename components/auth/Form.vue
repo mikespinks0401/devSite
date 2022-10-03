@@ -1,11 +1,22 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+  const props = defineProps<{
+    handleSubmit: Function
+  }>()
+  const emits = defineEmits(['error'])
+  const email = ref('')
+  const password = ref('')
+
+  function submitForm() {
+    props.handleSubmit()
+  }
+</script>
 
 <template>
-  <div>
-    <form @submit.prevent data-cy="auth form">
-      <forms-input field-name="email" />
-      <forms-input field-name="password" />
-      <forms-input field-name="passwordConfirm" />
+  <div class="z-40">
+    <form @submit.prevent="submitForm" data-cy="auth form">
+      <forms-input field-name="email" inputType="string" />
+      <forms-input field-name="password" inputType="string" />
+      <forms-input field-name="passwordConfirm" inputType="string" />
       <input
         data-cy="formSubmit"
         class="cursor-pointer"
