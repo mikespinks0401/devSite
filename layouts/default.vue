@@ -19,8 +19,6 @@
   }
 
   function menuOpen() {
-    console.log(mobileMenuHeight.value)
-    console.log(useFloatingDivHeight.value)
     navBarOpen.value = true
   }
 </script>
