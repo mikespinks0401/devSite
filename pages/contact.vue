@@ -19,9 +19,7 @@
       </div>
         <div data-cy="contact-info" class="w-full flex flex-col justify-center lg:items-center px-4">
         
-          <contact-info-card>
-             <contact-info-card-item /> 
-          </contact-info-card>
+          <contact-info-card/>
         </div>
       </div>
     </div>
