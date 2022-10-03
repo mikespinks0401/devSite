@@ -168,11 +168,14 @@
       </div>
     </div>
     <!--Mobile Menu Starts here-->
-    <div @click="" class="transition w-full z-30 md:hidden">
+    <div
+      class="transition w-full md:hidden"
+      :class="showNav === true ? 'max-full' : 'max-h-0'"
+    >
       <div
         id="mobile-menu"
         data-cy="mobile menu"
-        class="flex flex-col w-full relative p-4 bg-gray-100 dark:text-white dark:bg-gray-800 border-b dark:border-gray-500"
+        class="md:hidden flex flex-col w-full relative p-4 bg-gray-100 dark:text-white dark:bg-gray-800 border-b dark:border-gray-500"
         :style="{ top: `-${useMobileMenuHeight}px` }"
       >
         <div class="flex justify-center p-4 gap-2">
