@@ -25,8 +25,11 @@ const emits = defineEmits(['closeModal'])
         <div class="flex justify-center w-full border-b-2 border-gray-200">
           <p class="font-bold text-gray-800 py-2">{{props.title}}</p>
         </div>
-        <div class="py-2">
+        <div class="py-4 ">
           <slot />
+        </div>
+        <div class="border-2 w-full">
+
           <div class="flex justify-center py-3 z-20">
             <button
               data-cy="close-modal"
