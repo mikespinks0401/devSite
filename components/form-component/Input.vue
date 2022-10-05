@@ -4,12 +4,15 @@ const props = defineProps<{
   fieldName: string
   ariaLabel?: string
   inputType: string
-  classes?: string
+  inputClasses?: string
   required?: boolean
 }>()
 const input = ref(null)
 const textValue = ref('')
 const isFocused = ref(false)
+const hasTyped = ref(false)
+
+
 
 const placeholderText = computed(() => {
   return `Input your ${props.fieldName}`
@@ -27,6 +30,13 @@ const focusInput = () => {
     input.value.focus()
   }, 150)
 }
+
+const stateChanged = () => {
+  if(hasTyped.value === false){
+    hasTyped.value = true
+  }
+}
+
 </script>
 
 <template>
@@ -47,8 +57,10 @@ const focusInput = () => {
       @blur="isFocused = false"
       @focus="isFocused = true"
       @input="emits('updateText', textValue), (isFocused = true)"
+      @keyup="stateChanged"
       class="w-full focus:ring-0 dark:text-black z-50"
-      :class="props.classes"
+      :class="props.inputClasses"
+      :style="hasTyped === true ? 'border: red-200 ' : ''"
       :type="props.inputType"
       :name="props.fieldName"
       :aria-label="props.ariaLabel"
