@@ -64,7 +64,7 @@
         </div>
       </div>
       <!-- RIght Side of Hero-->
-      <div class="w-full flex flex-col order-1 md:order-2" data-cy="hero-right">
+      <div class="w-full flex flex-col order-1  md:order-2" data-cy="hero-right">
         <div
           class="h-full w-full flex-1 flex flex-col justify-center items-center -mt-4 bg-primaryAccent2 dark:bg-primaryAccentDark transition-all overflow-hidden md:mt-0"
         >
