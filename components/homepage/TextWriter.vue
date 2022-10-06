@@ -1,20 +1,17 @@
 <script setup lang="ts">
-  const displayText = ref('')
-  const currentIndex = ref(0)
-
-
-  const props = defineProps({
-    title: String,
-    titles: {
-      type: Array<string>,
-    },
-    loop: {
-      type: Boolean,
-      default: false,
-    },
-    timeToStart: Number,
-    pauseTime: Number
+  
+  interface Props{
+     titles: Array<string>
+      loop?: boolean
+      timeToStart?: number
+      pauseTime?: number
+  }  
+  
+  const props = withDefaults(defineProps<Props>(), {
+    loop: false
   })
+    const displayText = ref('')
+    const currentIndex = ref(0)
 
   function writeText(stringArray: Array<string>, interval: number = 100) {
     const length = stringArray.length
@@ -30,7 +27,7 @@
         clearInterval(write)
         currentIndex.value++
         if (currentIndex.value === length) {
-          if (props.loop === true) {
+          if (props.loop) {
             currentIndex.value = 0
             writeText(stringArray)
           }
@@ -49,7 +46,9 @@
     }, interval)
   }
   onMounted(() => {
-    setTimeout(()=>{writeText(props.titles)}, props.timeToStart)
+    setTimeout(() => {
+      writeText(props.titles)
+    }, props.timeToStart)
   })
 </script>
 

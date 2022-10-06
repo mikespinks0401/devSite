@@ -1,8 +1,8 @@
 <script setup lang="ts">
-  const props = defineProps({
-    name: String,
-    heroImgUrl: String,
-  })
+  const props = defineProps<{
+    name: String
+    heroImgUrl: String
+  }>()
   const titles = [
     'Thinker',
     'Creator',
@@ -11,8 +11,6 @@
     'Back-End Developer',
     'Full-Stack Developer',
   ]
-
-  console.log(props.heroImgUrl)
 </script>
 
 <template>
@@ -25,7 +23,6 @@
     >
       <!--Left Side Of Hero-->
       <div
-        data-cy="hero-left"
         class="order-2 md:order-1 py-12 h-full flex flex-col justify-center gap-2 md:p-4 lg:p-0 tracking-widest text-center md:text-left"
       >
         <h1
@@ -46,7 +43,7 @@
             <!--Custom Text Writer Component-->
             <homepage-text-writer
               :titles="titles"
-              :loop="false"
+              :loop=false
               :timeToStart="800"
               :pauseTime="900"
             />
@@ -62,12 +59,12 @@
           <nuxt-link
             to="/contact"
             class="px-4 p-2 bg-primaryAccent2 hover:bg-opacity-90 text-white text-lg font-semibold"
-            >Get In Touch</nuxt-link
-          >
+            >Get In Touch
+          </nuxt-link>
         </div>
       </div>
       <!-- RIght Side of Hero-->
-      <div class="w-full flex flex-col order-1 md:order-2" data-cy="hero-right">
+      <div class="w-full flex flex-col order-1  md:order-2" data-cy="hero-right">
         <div
           class="h-full w-full flex-1 flex flex-col justify-center items-center -mt-4 bg-primaryAccent2 dark:bg-primaryAccentDark transition-all overflow-hidden md:mt-0"
         >

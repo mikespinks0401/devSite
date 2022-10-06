@@ -8,7 +8,6 @@ export const useThemeStore = defineStore('themeStore', () => {
         isLightMode.value = false
         resolve(true)
       } else {
-        console.log('dark mode off')
         resolve(false)
       }
     })
