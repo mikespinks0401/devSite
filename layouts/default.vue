@@ -14,13 +14,10 @@
     mobileMenuHeight.value = v
   }
   function menuClosed() {
-    console.log(useFloatingDivHeight.value)
     navBarOpen.value = false
   }
 
   function menuOpen() {
-    console.log(mobileMenuHeight.value)
-    console.log(useFloatingDivHeight.value)
     navBarOpen.value = true
   }
 </script>
@@ -42,6 +39,7 @@
       class="z-10"
     />
     <div
+      data-cy="body"
       class="z-0 flex flex-col flex-1 bg-slate-50 dark:bg-gray-900 dark:text-gray-100 transition"
       :class="bodyMarginTopClass"
     >

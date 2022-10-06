@@ -1,12 +1,11 @@
 <script setup lang="ts">
-  const props = defineProps({
-    iconName: String,
-    iconSize: Number,
-  })
+  const props = defineProps<{
+    iconName: string
+    iconSize: number
+  }>()
 
   const icon = props.iconName
   const sizeClass = `w-${props.iconSize} h-${props.iconSize}`
-
 </script>
 
 <template>
@@ -31,7 +30,6 @@
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
-      
       v-bind:class="sizeClass"
     >
       <path d="M10.5 18.75a.75.75 0 000 1.5h3a.75.75 0 000-1.5h-3z" />

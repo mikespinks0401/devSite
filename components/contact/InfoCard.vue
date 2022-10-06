@@ -26,7 +26,6 @@
         :item-title="item.itemTitle"
         :item-icon="item.itemIcon"
         :item-descriptions="item.itemDescriptions"
-        :icon-size="5"
       />
     </template>
   </div>
