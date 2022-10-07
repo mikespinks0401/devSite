@@ -26,7 +26,7 @@ const clearAndCheckForInputErrors = (data) => {
 
 const handleSubmit = async (data) => {
   clearAndCheckForInputErrors(data)
-  if(inputErrorsList.value.length > 0){
+  if (inputErrorsList.value.length > 0) {
     return
   }
   try {
