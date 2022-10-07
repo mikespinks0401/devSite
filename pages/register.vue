@@ -2,7 +2,7 @@
 import z from 'zod'
 
 const registerUserSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
+  email: z.string().email({ message: 'Invalid email address' }).trim(),
   password: z.string().min(7, { message: 'Password Must Be More Than 7 Characters Long' }).trim(),
   passwordConfirm: z.string().nullable()
 }).
