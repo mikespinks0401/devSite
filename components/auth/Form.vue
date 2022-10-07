@@ -33,7 +33,7 @@ const inputClasses = "border focus:border-color-primaryAccent2"
       <h1 class=" text-center text-2xl  font-semibold p-4">{{props.formTitle}}</h1>
       <p
         v-if="props.formTitle !== 'Sign Up'"
-        class="font-semibold text-xl text-gray-600"
+        class="font-semibold pt-8 pb-2 text-xl text-gray-600"
       >Welcome Back</p>
     </div>
     <form
@@ -44,6 +44,7 @@ const inputClasses = "border focus:border-color-primaryAccent2"
         <form-component-input
           @update-text="updateEmail"
           :required="true"
+          data-cy="email"
           field-name="email"
           inputType="string"
           v-model="userData.email"
@@ -52,6 +53,7 @@ const inputClasses = "border focus:border-color-primaryAccent2"
         <form-component-input
           @update-text="updatePassword"
           :required="true"
+          data-cy="password"
           field-name="password"
           inputType="string"
           v-model="userData.password"
