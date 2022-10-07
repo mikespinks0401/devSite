@@ -1,6 +1,6 @@
 import z from 'zod'
 import { prisma } from '../../../db'
-
+import { userTransformer } from '~~/server/transforms/users'
 
 export default defineEventHandler( async event => {
     
@@ -32,6 +32,7 @@ export default defineEventHandler( async event => {
     }
 
     //Check If Email Already Exist In DB
+    try{
     const emailExists = await prisma.user.findUnique({
         where: {
             email: body.email
@@ -42,6 +43,8 @@ export default defineEventHandler( async event => {
             statusCode: 409,
             statusMessage: 'Email Already Exists'
         }))
+    }}catch(err){
+        return
     }
 
     const user = await prisma.user.create({
@@ -61,7 +64,7 @@ export default defineEventHandler( async event => {
 
 
     return {
-        data: user
+        data: userTransformer(user)
     }
 
 

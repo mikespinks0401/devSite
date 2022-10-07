@@ -38,6 +38,17 @@ describe('responds correctly with requests', ()=>{
         })
     })
 
+    it('contains only 2 items in the response - email | id', ()=>{
+         cy.request({method: 'POST', url:'/api/v1/auth/register', body: sampleUser}).then( res => {
+
+        const data = res.body.data
+        const dataItems = Object.keys(data).length
+        assert.equal(dataItems, 2, 'Only two items should exist on return object')
+         })
+    })
+
+
+
     it('responds with 409 when trying to create a user with data that already exists',  ()=>{
           cy.request({method: 'POST', url:'/api/v1/auth/register', body: sampleUser})
           cy.request({method: 'POST', url:'/api/v1/auth/register', body: sampleUser, failOnStatusCode: false}).then(res => {
