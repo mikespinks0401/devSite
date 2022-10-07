@@ -1,29 +1,16 @@
-import z from 'zod'
-import { prisma } from '../../../db'
 import { userTransformer } from '~~/server/transforms/users'
+import { H3Event } from 'h3'
+import { UserSchema, createUser, getUserByEmail } from '~~/server/db/user'
 
-export default defineEventHandler( async event => {
-    
-    const UserSchema = z.object({
-      email: z.string().email({ message: 'Invalid email address' }),
-      password: z.string().min(7, { message: 'Password Must Be More Than 7 Characters Long' }).trim(),
-      passwordConfirm: z.string()
-    }).
-      refine(data => data.password === data.passwordConfirm,
-        { message: 'Password Confirm Must Match Password' })
-
-    
-    
+export default defineEventHandler( async event => {  
     const body = await useBody(event)
     //Return error if form is empty
-    if(!body){
-        sendError(event, createError({
-            statusCode: 400,
-            statusMessage: 'all fields required'
-        }))
-    }
+    isBodyEmpty(event, body)
+
     //Make sure data is shaped properly following UserSchema
-    const result = UserSchema.safeParse(body)
+     const result = UserSchema.safeParse(body)
+
+     //Send error if fields are incorrect
     if(!result.success){
         sendError(event, createError({
             statusCode: 400,
@@ -32,36 +19,19 @@ export default defineEventHandler( async event => {
     }
 
     //Check If Email Already Exist In DB
-    try{
-    const emailExists = await prisma.user.findUnique({
-        where: {
-            email: body.email
-        }
-    })
+    const emailExists = await getUserByEmail(body.email)
+    
+    //Send errror if Email already exists
     if(emailExists){
         sendError(event, createError({
             statusCode: 409,
             statusMessage: 'Email Already Exists'
         }))
-    }}catch(err){
-        return
     }
 
-    const user = await prisma.user.create({
-        data: {
-            email: body.email,
-            password: body.password,
-            passwords: {
-                create: {
-                    password: body.password
-                }
-            }
-        }
-    })
-
+    const user = await createUser(body)
 
     event.res.statusCode = 201
-
 
     return {
         data: userTransformer(user)
@@ -73,3 +43,12 @@ export default defineEventHandler( async event => {
 
     
 })
+
+function isBodyEmpty(event: H3Event, body){
+    if(!body){
+        sendError(event, createError({
+            statusCode: 400,
+            statusMessage: 'all fields required'
+        }))
+    }
+}
