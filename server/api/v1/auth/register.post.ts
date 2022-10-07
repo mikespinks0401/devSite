@@ -1,14 +1,13 @@
 import { userTransformer } from '~~/server/transforms/users'
 import { H3Event } from 'h3'
-import { UserSchema, createUser, getUserByEmail } from '~~/server/db/user'
+import { registerUserSchema, createUser, getUserByEmail } from '~~/server/db/user'
 
 export default defineEventHandler( async event => {  
     const body = await useBody(event)
     //Return error if form is empty
     isBodyEmpty(event, body)
-
-    //Make sure data is shaped properly following UserSchema
-     const result = UserSchema.safeParse(body)
+    //Make sure data is shaped properly following registerUserSchema
+     const result = registerUserSchema.safeParse(body)
 
      //Send error if fields are incorrect
     if(!result.success){
@@ -17,7 +16,7 @@ export default defineEventHandler( async event => {
             statusMessage: 'All fields Required'
         }))
     }
-
+    
     //Check If Email Already Exist In DB
     const emailExists = await getUserByEmail(body.email)
     
