@@ -3,7 +3,6 @@ import { hashSync } from 'bcrypt'
 
 const prisma = new PrismaClient()
 
-const admin_username = process.env.ADMIN_USERNAME
 const admin_email = process.env.ADMIN_EMAIL
 const admin_password = hashSync(process.env.ADMIN_PASSWORD, 10)
 
@@ -15,7 +14,6 @@ const main = async() => {
 
             email: admin_email,
             password: admin_password,
-            username: admin_username,
             role: 'ADMIN',
             passwords: {
                 create:{
