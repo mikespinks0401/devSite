@@ -15,7 +15,7 @@ export default defineEventHandler( async event => {
     
     
     const body = await useBody(event)
-    //Return Error is sumbmission is empty
+    //Return error if form is empty
     if(!body){
         sendError(event, createError({
             statusCode: 400,
