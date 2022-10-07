@@ -29,6 +29,7 @@
   "dependencies": {
     "@pinia/nuxt": "^0.4.2",
     "@prisma/client": "^4.4.0",
+    "@types/bcrypt": "^5.0.0",
     "bcrypt": "^5.1.0",
     "jsonwebtoken": "^8.5.1",
     "pinia": "^2.0.22",
