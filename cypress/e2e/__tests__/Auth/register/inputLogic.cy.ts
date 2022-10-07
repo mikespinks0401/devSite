@@ -2,9 +2,6 @@
 
 describe('Input Errors Work', ()=>{
     
-
-
-    
     context('Alert Pops Up For Invalid Inputs', ()=>{
       beforeEach(()=>{
         cy.visit('/register')
