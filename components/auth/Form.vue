@@ -30,8 +30,11 @@ const inputClasses = "border focus:border-color-primaryAccent2"
 <template>
   <div class="z-40 px-4 pb-8 border-2 bg-white w-full md:max-w-lg dark:text-black">
     <div class="border-b-2 mb-8">
-      <h2 class=" text-center text-2xl  font-semibold p-4">{{props.formTitle}}</h2>
-      <p v-if="props.formTitle !== 'Sign Up'" class="font-semibold text-xl text-gray-600">Welcome Back</p>
+      <h1 class=" text-center text-2xl  font-semibold p-4">{{props.formTitle}}</h1>
+      <p
+        v-if="props.formTitle !== 'Sign Up'"
+        class="font-semibold text-xl text-gray-600"
+      >Welcome Back</p>
     </div>
     <form
       @submit.prevent="submitForm"
@@ -54,7 +57,7 @@ const inputClasses = "border focus:border-color-primaryAccent2"
           v-model="userData.password"
           :inputClasses="inputClasses"
         />
-        
+
         <form-component-input
           v-if="props.formTitle === 'Sign Up'"
           @update-text="updatePasswordConfirm"
