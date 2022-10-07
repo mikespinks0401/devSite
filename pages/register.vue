@@ -14,21 +14,34 @@ const registerUserSchema = z.object({
 const showAlert = ref(false)
 const inputErrorsList = ref([])
 
-const clearAndCheckForInputErrors = (v) => {
+const clearAndCheckForInputErrors = (data) => {
   inputErrorsList.value = []
-  const result = registerUserSchema.safeParse(v)
+  const result = registerUserSchema.safeParse(data)
   if (!result.success) {
     console.log(result.error.issues)
     Object.keys(result.error.issues).forEach(item => inputErrorsList.value.push(result.error.issues[item].message))
     showAlert.value = true
   }
-  else {
-    alert('success')
-  }
 }
 
-const handleSubmit = async (v) => {
-  clearAndCheckForInputErrors(v)
+const handleSubmit = async (data) => {
+  clearAndCheckForInputErrors(data)
+  if(inputErrorsList.value.length > 0){
+    return
+  }
+  try {
+    const response = await $fetch('/api/v1/auth/register', {
+      method: "POST",
+      body: data
+    })
+
+    console.log(response)
+  }
+  catch (err) {
+    inputErrorsList.value.push('Email Already Exists')
+    showAlert.value = true
+  }
+
 }
 function closeModal() {
   showAlert.value = false
