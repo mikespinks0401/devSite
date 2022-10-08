@@ -7,28 +7,38 @@ export default defineEventHandler(async event => {
     //grab data
     const body = await useBody(event)
     //validate data
-    const zodBody = loginUserSchema.parse(body)
-    if(!loginUserSchema.safeParse(body)){
+    const result = loginUserSchema.safeParse(body)
+    if(!result.success){
         sendError(event, createError({
             statusCode: 401,
             statusMessage: 'Invalid Credentials'
         }))
     }
 
-    const user = await getUserByEmail(zodBody.email)
+    const user = await getUserByEmail(body.email)
     if(!user){
         sendError(event, createError({
             statusCode: 401,
             statusMessage: 'Invalid Credentials'
         }))
     }
+    if(user.lockedOut === true){
+        sendError(event, createError({
+            statusCode: 403,
+            statusMessage: 'Account Currently Locked Out, Please Reset Password'
+        }))
+    }
+    
 
-
-    const authorized = verifyUser(zodBody.password, user.password)
+    const authorized = verifyUser(body.password, user.password)
     if(!authorized){
-        const user = await updateUserPasswordAttempts(zodBody.email)
+        const user = await updateUserPasswordAttempts(body.email)
         if(user.attempts >= 3){
-           const lockedOut = lockOutUser(zodBody.email)
+           await lockOutUser(body.email)
+           return {
+            ...userTransformer(user),
+            lockedOut: true
+           }
         }
         sendError(event, createError({
             statusCode: 401,
