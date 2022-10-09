@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import z from 'zod'
 
+const router = useRouter()
+const showAlert = ref(false)
+const inputErrorsList = ref([])
+
 const registerUserSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }).trim(),
   password: z.string().min(7, { message: 'Password Must Be More Than 7 Characters Long' }).trim(),
   passwordConfirm: z.string().nullable()
-}).
-  refine(data => data.password === data.passwordConfirm,
+}).refine(data => data.password === data.passwordConfirm,
     { message: 'Password Confirm Must Match Password' })
-
-
-
-const showAlert = ref(false)
-const inputErrorsList = ref([])
 
 const clearAndCheckForInputErrors = (data) => {
   inputErrorsList.value = []
@@ -34,8 +32,7 @@ const handleSubmit = async (data) => {
       method: "POST",
       body: data
     })
-
-    console.log(response)
+    router.push('/')
   }
   catch (err) {
     inputErrorsList.value.push('Email Already Exists')
