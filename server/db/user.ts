@@ -49,17 +49,28 @@ export const getUserByEmail = (email: string) => {
     })
 }
 
-export const verifyUser = (password: string, hashedPassword) => {
+export const verifyUser = async (password: string, hashedPassword) => {
     return bcrypt.compareSync(password, hashedPassword)
 }
 
-export const updateUserPasswordAttempts = (email: string) => {
+export const incrementUserPasswordAttempts = (userId: string) => {
     return prisma.user.update({
         where: {
-            email: email
+            id: userId
         }, data: {
-            attempts:{
+            attempts: {
                 increment: 1
+            }
+        }
+    })
+}
+export const resetUserPasswordAttempts = (userId: string) => {
+    return prisma.user.update({
+        where: {
+            id: userId
+        }, data: {
+            attempts: {
+                set: 0
             }
         }
     })
