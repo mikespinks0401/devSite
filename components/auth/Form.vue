@@ -72,6 +72,15 @@ const inputClasses = "border focus:border-color-primaryAccent2"
       </div>
       <div class="flex items-center">
         <div
+          v-if="props.formTitle === 'Login'"
+          class="flex gap-2 relative -top-2"
+        >
+          <nuxt-link to="#"><span
+              class="text-gray-600 text-sm font-medium hover:text-gray-400"
+              data-cy="forgot password"
+            >Forgot Password</span></nuxt-link>
+        </div>
+        <div
           v-if="props.formTitle === 'Sign Up'"
           class="flex"
         >
@@ -83,7 +92,7 @@ const inputClasses = "border focus:border-color-primaryAccent2"
             conditions.</p>
         </div>
       </div>
-      <div class="mt-6 flex justify-center bt-2">
+      <div class="mt-2 flex justify-center bt-2">
         <input
           data-cy="formSubmit"
           class="cursor-pointer bg-primaryAccent2 text-white font-semibold w-full"
