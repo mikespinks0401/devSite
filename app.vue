@@ -24,11 +24,13 @@
     <div class="fixed top-1/2 right-1/2" :class=splashClass>
       <splash />
     </div>
-    <div class="transition-all duration-300" :style="loading === true ? 'opacity: 0;' : 'opacity: 100;' " :class="themeStore.isLightMode === true ? '' : 'dark'">
-      <NuxtLayout>
-        <NuxtLoadingIndicator />
+    <div class="transition-all duration-200" :style="loading === true ? 'opacity: 0;' : 'opacity: 100;' " :class="themeStore.isLightMode === true ? '' : 'dark'">
+      <div >
+        <NuxtLayout>
+          <NuxtLoadingIndicator />
         <NuxtPage />
       </NuxtLayout>
+      </div>
     </div>
   </div>
 </template>
