@@ -12,19 +12,12 @@ const registerUserSchema = z.object({
 }).refine(data => data.password === data.passwordConfirm,
     { message: 'Password Confirm Must Match Password' })
 
-const clearAndCheckForInputErrors = (data) => {
-  inputErrorsList.value = []
-  const result = registerUserSchema.safeParse(data)
-  if (!result.success) {
-    console.log(result.error.issues)
-    Object.keys(result.error.issues).forEach(item => inputErrorsList.value.push(result.error.issues[item].message))
-    showAlert.value = true
-  }
-}
-
+    
 const handleSubmit = async (data) => {
-  clearAndCheckForInputErrors(data)
-  if (inputErrorsList.value.length > 0) {
+
+  clearAndCheckForParseErrors(data)
+
+  if(hasErrors()){
     return
   }
   try {
@@ -40,9 +33,28 @@ const handleSubmit = async (data) => {
   }
 
 }
+
+const hasErrors = () => {
+  return inputErrorsList.value.length > 0 ? true : false
+}
+
+const clearAndCheckForParseErrors = (data) => {
+  inputErrorsList.value = []
+  if(data.email === "" || data.password === "" || data.passwordConfirm === ""){
+    inputErrorsList.value.push('All Fields Required')
+    showAlert.value = true
+    return
+  }
+  const result = registerUserSchema.safeParse(data)
+  if (!result.success) {
+    Object.keys(result.error.issues).forEach(item => inputErrorsList.value.push(result.error.issues[item].message))
+    showAlert.value = true
+  }
+}
 function closeModal() {
   showAlert.value = false
 }
+
 </script>
 
 <template>
