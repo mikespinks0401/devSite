@@ -2,7 +2,7 @@
 import z from 'zod'
 
 const authStore = useAuthStore()
-
+const router = useRouter()
 
 const showAlert = ref(false)
 const formErrors = ref([])
@@ -12,20 +12,48 @@ const userSchema = z.object({
   password: z.string().min(1)
 })
 
-const handleSubmit = async ({ email, password }) => {
-  clearAndCheckForErrors(email, password)
-  const {data, error} = await authStore.login(email, password)
-  if(error){
-    formErrors.value.push('Invalid Credentials')
-  }
 
-  
+
+const handleSubmit = async ({ email, password }) => {
+  clearAndCheckFormErrors(email, password)
+  if(hasErrors()){
+    displayFormIfErrors()
+    return
+  }
+  const { data, error, refresh } = await authStore.login(email, password)
+  if(error.value){   
+        checkForErrorAndIncludeInModal(error.value, 'Invalid Credentials')
+        checkForErrorAndIncludeInModal(error.value, 'Locked Out', "Account Currently Locked Out\nPlease Reset Password")
+        displayFormIfErrors()
+
+  }
+  const user = getUser(data)
+  console.log(user)
+
 }
+
+const hasErrors = () => {
+  return formErrors.value.length > 0 ? true : false
+}
+const displayFormIfErrors = () => {
+     showAlert.value = true
+}
+const checkForErrorAndIncludeInModal = (errorObject: object, needle: string, displayMessage: string = needle) => {
+  const errorString = errorObject.toString().toLowerCase()
+  console.log(errorObject)
+
+  if (errorString.includes(needle.toLowerCase())) {
+    formErrors.value.push(displayMessage)
+    showAlert.value = true
+  }
+}
+
 const closeModal = () => {
   showAlert.value = false
+  formErrors.value = []
 }
 
-function clearAndCheckForErrors(email, password) {
+const clearAndCheckFormErrors = (email, password) => {
   formErrors.value = []
   const result = userSchema.safeParse({ email: email.value, password: password.value })
   if (!result.success) {
@@ -38,6 +66,17 @@ function clearAndCheckForErrors(email, password) {
     if (formErrors.value.length > 0) {
       showAlert.value = true
     }
+  }
+}
+
+const getUser = (dataObject) => {
+  return dataObject?.value?.data?.user ? dataObject.value.data.user : null
+}
+const redirectUser = () => {
+  if (router.back) {
+    router.back()
+  } else {
+    router.push('/')
   }
 }
 
