@@ -21,7 +21,15 @@ const updatePasswordConfirm = (v: string) => {
   userData.passwordConfirm = v
 }
 const submitForm = () => {
+  if(props.formTitle === 'Login'){
+    const loginData = {
+      email: userData.email,
+      password: userData.password
+    }
+    emits('sendFormData', loginData)
+  } else {
   emits('sendFormData', userData)
+  }
 }
 
 const inputClasses = "border focus:border-color-primaryAccent2"
@@ -73,12 +81,23 @@ const inputClasses = "border focus:border-color-primaryAccent2"
       <div class="flex items-center">
         <div
           v-if="props.formTitle === 'Login'"
-          class="flex gap-2 relative -top-2"
+          class="flex w-full gap-2 relative -top-2"
         >
-          <nuxt-link to="#"><span
-              class="text-gray-600 text-sm font-medium hover:text-gray-400"
-              data-cy="forgot password"
-            >Forgot Password</span></nuxt-link>
+          <div class="flex-1 flex w-full items-center justify-between ">
+            <div class="flex items-center gap-1">
+              <input
+              
+                type="checkbox"
+                name="remember me"
+                data-cy="remember me"
+              />
+              <label class="font-medium text-sm text-gray-600" for="remember me">Remember Me</label>
+            </div>
+            <nuxt-link class="self-end" to="#"><span
+                class="text-gray-600 text-sm font-medium hover:text-gray-400"
+                data-cy="forgot password"
+              >Forgot Password</span></nuxt-link>
+          </div>
         </div>
         <div
           v-if="props.formTitle === 'Sign Up'"
