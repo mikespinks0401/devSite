@@ -14,11 +14,15 @@ describe('login form contains proper inputs and shows modal on errors', ()=>{
     it('contains password input box', ()=>{
         cy.get('[data-cy="password"]')
     })
+    it('contains Remember Me Checkbox', ()=> {
+        cy.get('[data-cy="remember me"]')
+    })
     it('contains Forgot Password Link', ()=>{
         cy.get('[data-cy="forgot password"]')
     })
     it('shows fields required if submitted with empty inputs', ()=>{
-        cy.get('[data-cy="formSubmit"]').click().then(()=>{
+
+        cy.get('[data-cy="formSubmit"]').should('be.visible').click().then(()=>{
             cy.get('[data-cy="modal"]').contains('Required')
         })
     })
