@@ -13,7 +13,8 @@ export const registerUserSchema = z.object({
 
 export const loginUserSchema = z.object({
     email: z.string().min(1),
-    password: z.string().min(1)
+    password: z.string().min(1),
+    rememberMe: z.boolean().default(false)
 })
 interface NewUser{
     email: string,
