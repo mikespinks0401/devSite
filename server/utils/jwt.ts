@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken'
-import jwt_decode from 'jwt-decode'
+import jwt_decode, { JwtPayload } from 'jwt-decode'
+
+const refreshTokenTime = "1h"
 
 const generateAccessToken = (user) => {
 
@@ -10,7 +12,7 @@ const generateAccessToken = (user) => {
 
 const generateRefreshToken = (user, rememberMe = false) => {
     //Set Token Expirty Time To 7 Days if remember me is checked
-    const expiresInTime = rememberMe === true ? '7d' : '-2000'
+    const expiresInTime = rememberMe === true ? '7d' : refreshTokenTime
     const config = useRuntimeConfig()
 
     return jwt.sign({user: user.id}, config.jwtRefreshSecret, {expiresIn: expiresInTime})
@@ -26,7 +28,7 @@ export const decodeRefreshToken = (token) => {
     }
 }
 
-export const generateTokens = (user, rememberMe:boolean) => {
+export const generateTokens = (user, rememberMe:boolean = false) => {
     const accessToken = generateAccessToken(user)
     const refreshToken = generateRefreshToken(user, rememberMe)
 
@@ -39,10 +41,11 @@ export const generateTokens = (user, rememberMe:boolean) => {
 
 export const sendRefreshToken = (event, token) => {
     //decode token to get the time diff to set cookie 
-    const decoded = jwt_decode(token)
+    const decoded:JwtPayload = jwt_decode(token)
     //add the maxAge value when the token is set to remember me
-    if(decoded.exp > decoded.iat){
-        const timeDiff = decoded.exp - decoded.iat
+    const timeDiff = decoded.exp - decoded.iat
+
+    if(timeDiff > 3000){
         setCookie(event.res, 'refresh_token', token, {
             maxAge: timeDiff,
             httpOnly: true,
