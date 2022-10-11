@@ -14,17 +14,17 @@ const userSchema = z.object({
 
 
 
-const handleSubmit = async ({ email, password }) => {
+const handleSubmit = async ({ email, password, rememberMe }) => {
   clearAndCheckFormErrors(email, password)
-  if(hasErrors()){
+  if (hasErrors()) {
     displayFormIfErrors()
     return
   }
-  const { data, error, refresh } = await authStore.login(email, password)
-  if(error.value){   
-        checkForErrorAndIncludeInModal(error.value, 'Invalid Credentials')
-        checkForErrorAndIncludeInModal(error.value, 'Locked Out', "Account Currently Locked Out\nPlease Reset Password")
-        displayFormIfErrors()
+  const { data, error, refresh } = await authStore.login(email, password, rememberMe)
+  if (error.value) {
+    checkForErrorAndIncludeInModal(error.value, 'Invalid Credentials')
+    checkForErrorAndIncludeInModal(error.value, 'Locked Out', "Account Currently Locked Out\nPlease Reset Password")
+    displayFormIfErrors()
 
   }
   const user = getUser(data)
@@ -36,7 +36,7 @@ const hasErrors = () => {
   return formErrors.value.length > 0 ? true : false
 }
 const displayFormIfErrors = () => {
-     showAlert.value = true
+  showAlert.value = true
 }
 const checkForErrorAndIncludeInModal = (errorObject: object, needle: string, displayMessage: string = needle) => {
   const errorString = errorObject.toString().toLowerCase()
