@@ -1,6 +1,9 @@
+import { sendRefreshToken } from './../../../utils/jwt';
 import { resetUserPasswordAttempts } from './../../../db/user';
 import { loginUserSchema, getUserByEmail, incrementUserPasswordAttempts, verifyUser, lockOutUser } from "~~/server/db/user"
 import { userTransformer } from '~~/server/transforms/users'
+import { generateTokens } from '~~/server/utils/jwt';
+import { createRefreshToken } from '~~/server/db/refreshTokens';
 
 
 export default defineEventHandler(async event => {
@@ -48,11 +51,21 @@ export default defineEventHandler(async event => {
         }))
         return
     }
-
+    //reset user login attempts
     await resetUserPasswordAttempts(user.id)
+
+    //generate tokens with user and remember Me option
+    const {accessToken, refreshToken} = generateTokens(user, body.rememberMe)
+
+    //add RefreshToken To Database
+    await createRefreshToken(refreshToken, user.id)
+
+
+    sendRefreshToken(event, refreshToken)    
     return {
         data: {
-        user: userTransformer(user)
+            accessToken: accessToken,
+            user: userTransformer(user)
         }
         }
     
