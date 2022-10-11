@@ -1,11 +1,17 @@
 
 export const useAuthStore = defineStore('authStore', () => {
-  const name = ref('John Doe')
-  const admin = ref(true)
   const accessToken = ref("")
+  const userName = ref("")
+  const updateToken = (newToken: string):void => {
+    accessToken.value = newToken
+  }
+  const updateUserName = (newName: string ):void => {
+    userName.value = newName
+  }
 
-  function updateName(newName: string){
-    name.value = newName
+  const updateUser = (user, token) => {
+    updateUserName(user)
+    updateToken(token)
   }
 
   const login = async (email: string, password: string, rememberMe: boolean = false) => {
@@ -22,5 +28,5 @@ export const useAuthStore = defineStore('authStore', () => {
 
   
 
-  return { name, admin, updateName, login }
+  return { login, updateUser }
 })
