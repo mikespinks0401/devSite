@@ -8,7 +8,8 @@ const emits = defineEmits(['error']['sendFormData'])
 const userData = reactive({
   email: '',
   password: '',
-  passwordConfirm: ''
+  passwordConfirm: '',
+  rememberMe: false
 })
 
 const updateEmail = (v: string) => {
@@ -21,14 +22,20 @@ const updatePasswordConfirm = (v: string) => {
   userData.passwordConfirm = v
 }
 const submitForm = () => {
-  if(props.formTitle === 'Login'){
+  if (props.formTitle === 'Login') {
     const loginData = {
       email: userData.email,
-      password: userData.password
+      password: userData.password,
+      rememberMe: userData.rememberMe
     }
     emits('sendFormData', loginData)
   } else {
-  emits('sendFormData', userData)
+    const loginData = {
+      email: userData.email,
+      password: userData.password,
+      passwordConfirm: userData.passwordConfirm
+    }
+    emits('sendFormData', loginData)
   }
 }
 
@@ -86,14 +93,20 @@ const inputClasses = "border focus:border-color-primaryAccent2"
           <div class="flex-1 flex w-full items-center justify-between ">
             <div class="flex items-center gap-1">
               <input
-              
+                v-model="userData.rememberMe"
                 type="checkbox"
                 name="remember me"
                 data-cy="remember me"
               />
-              <label class="font-medium text-sm text-gray-600" for="remember me">Remember Me</label>
+              <label
+                class="font-medium text-sm text-gray-600"
+                for="remember me"
+              >Remember Me</label>
             </div>
-            <nuxt-link class="self-end" to="#"><span
+            <nuxt-link
+              class="self-end"
+              to="#"
+            ><span
                 class="text-gray-600 text-sm font-medium hover:text-gray-400"
                 data-cy="forgot password"
               >Forgot Password</span></nuxt-link>
