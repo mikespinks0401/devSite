@@ -4,6 +4,7 @@ import z from 'zod'
 const router = useRouter()
 const showAlert = ref(false)
 const inputErrorsList = ref([])
+const authStore = useAuthStore()
 
 const registerUserSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }).trim(),
@@ -12,7 +13,7 @@ const registerUserSchema = z.object({
 }).refine(data => data.password === data.passwordConfirm,
     { message: 'Password Confirm Must Match Password' })
 
-    
+
 const handleSubmit = async (data) => {
 
   clearAndCheckForParseErrors(data)
@@ -25,6 +26,7 @@ const handleSubmit = async (data) => {
       method: "POST",
       body: data
     })
+    
     router.push('/')
   }
   catch (err) {
@@ -51,7 +53,7 @@ const clearAndCheckForParseErrors = (data) => {
     showAlert.value = true
   }
 }
-function closeModal() {
+const closeModal = () => {
   showAlert.value = false
 }
 
