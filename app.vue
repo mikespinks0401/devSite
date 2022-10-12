@@ -5,22 +5,28 @@
   const loading = ref(true)
   const splashClass = ref("")
 
+  
+
 //shows splash screen while loading user info
   onMounted(async() => {
-    await themeStore.init()
-    setTimeout(()=>{
+    try{
+      await themeStore.init()
+      await authStore.init()
+    }catch(err){
+      console.log(err)
+    } finally{
       loading.value = false
-    }, 500)
-    setTimeout(()=>{
-      splashClass.value = "hidden"
-    }, 1500)
-    
+      setTimeout(() => {
+        splashClass.value = "hidden"
+      }, 600)
+    }
   })
 
 </script>
 
 <template>
   <div>
+    
     <div class="fixed top-1/2 right-1/2" :class=splashClass>
       <splash />
     </div>
