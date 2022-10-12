@@ -26,7 +26,10 @@ describe('User Can Log In', ()=>{
     })
 
     it('creates a refresh_token cookie on successful login', ()=>{
-        cy.request({method: 'POST', url:'/api/v1/auth/register',body: sampleUser})
+        cy.request({method: 'POST', url:'/api/v1/auth/register',body: sampleUser}).then(res => {
+            cy.clearCookies()
+        })
+        
         cy.visit('/')
         cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample@gmail.com', password: 'password'}}).then(res => {
             cy.getCookie('refresh_token').should('exist')
