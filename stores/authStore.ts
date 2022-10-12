@@ -1,32 +1,103 @@
+import { JwtPayload } from 'jsonwebtoken';
+import jwt_decode from 'jwt-decode';
+
 
 export const useAuthStore = defineStore('authStore', () => {
   const accessToken = ref("")
-  const userName = ref("")
+  const email = ref("")
+  const isLoggedIn = computed(()=> {
+    return accessToken.value.length > 0 ? true : false
+  })
   const updateToken = (newToken: string):void => {
     accessToken.value = newToken
   }
-  const updateUserName = (newName: string ):void => {
-    userName.value = newName
+  const updateEmail = (newName: string ):void => {
+    email.value = newName
+  }
+
+  const authFetch = (url: string, options = {}) => {
+    return $fetch(url, {
+      ...options,
+      headers: {
+        ...options?.headers,
+        authorization: `Bearer: ${accessToken}`
+      }
+    })
+  }
+
+  const refreshToken = async() => {
+       try{
+        const res = await $fetch('api/v1/tokens/refresh')
+        if(res.data.access_Token){
+          updateToken(res.data.access_Token)
+        }   
+       }catch(err){
+       }
+      return
+  }
+
+  const tokenReRefresher = () => {
+    if(!accessToken.value){
+      return
+    }
+    const decoded = jwt_decode(accessToken.value) as JwtPayload
+    const waitTime = (decoded.exp - decoded.iat) * 1000 - 60000
+    console.log('wait time - ' + waitTime)
+    setTimeout(async ()=>{
+      await refreshToken(),
+      tokenReRefresher()
+    },waitTime)
+
   }
 
   const updateUser = (user, token) => {
-    updateUserName(user)
-    updateToken(token)
+    return new Promise((resolve, reject)=>{
+      try{
+      updateEmail(user.email)
+      updateToken(token)
+      resolve(true)
+      }catch(err){
+      resolve(false)
+      }
+    })
   }
 
-  const login = async (email: string, password: string, rememberMe: boolean = false) => {
-      return useAsyncData(
-        'login', 
-        ()=> $fetch('/api/v1/auth/login', {
+  const login = async (email: string, password: string, rememberMe: boolean) => {
+
+      const { data, error} = await useAsyncData(
+          'login', 
+          ()=> $fetch('/api/v1/auth/login', {
           method: 'POST', 
           body: {email: email, password: password, rememberMe: rememberMe}
           }), {initialCache:false},
         )
 
+        if(error.value){
+          return {
+            error: error.value
+          }
+        } else {
+            await updateUser(data.value.data.user, data.value.data.accessToken) 
+          return data
+        }  
   }
     
-
+  const init = () => {
   
+  return new Promise(async (resolve, reject)=>{
+    
+    try{
+          await refreshToken()
+          if(accessToken.value){
+            tokenReRefresher()
+          }
+          resolve(true)
+        }
+        catch (error){
+          reject(error)
+        }
+       })
+  }
 
-  return { login, updateUser }
+  return {isLoggedIn, login, updateUser, init }
 })
