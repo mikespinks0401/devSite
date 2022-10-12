@@ -8,10 +8,13 @@ const showAlert = ref(false)
 const formErrors = ref([])
 
 const userSchema = z.object({
-  email: z.string().min(1),
+  email: z.string().min(1).email(),
   password: z.string().min(1)
 })
 
+const emailSchema = z.object({
+  email: z.string().min(1).email()
+})
 
 
 const handleSubmit = async ({ email, password, rememberMe }) => {
@@ -20,16 +23,15 @@ const handleSubmit = async ({ email, password, rememberMe }) => {
     displayFormIfErrors()
     return
   }
-  const { data, error, refresh } = await authStore.login(email, password, rememberMe)
-  if (error.value) {
-    checkForErrorAndIncludeInModal(error.value, 'Invalid Credentials')
-    checkForErrorAndIncludeInModal(error.value, 'Locked Out', "Account Currently Locked Out\nPlease Reset Password")
-    displayFormIfErrors()
+  const response:any  = await authStore.login(email, password, rememberMe)
+    if(response.error){
+        const error = response.error
+        checkForErrorAndIncludeInModal(error, 'Invalid Credentials')
+        checkForErrorAndIncludeInModal(error, 'Locked Out', "Account Currently Locked Out\nPlease Reset Password")
+        displayFormIfErrors()
+    }
 
-  }
-  const user = getUser(data)
-  console.log(user)
-
+  redirectUser()
 }
 
 const hasErrors = () => {
@@ -38,10 +40,9 @@ const hasErrors = () => {
 const displayFormIfErrors = () => {
   showAlert.value = true
 }
+//takes apart the error response object from the server and adds it to form errors
 const checkForErrorAndIncludeInModal = (errorObject: object, needle: string, displayMessage: string = needle) => {
   const errorString = errorObject.toString().toLowerCase()
-  console.log(errorObject)
-
   if (errorString.includes(needle.toLowerCase())) {
     formErrors.value.push(displayMessage)
     showAlert.value = true
@@ -56,9 +57,15 @@ const closeModal = () => {
 const clearAndCheckFormErrors = (email, password) => {
   formErrors.value = []
   const result = userSchema.safeParse({ email: email.value, password: password.value })
+
   if (!result.success) {
     if (email.length === 0) {
       formErrors.value.push('Email Required')
+    } else {
+      const emailResult = emailSchema.safeParse({email: email})
+      if(!emailResult.success){
+        formErrors.value.push('Invalid Email Format')
+      }
     }
     if (password.length === 0) {
       formErrors.value.push('Password Required')
@@ -69,13 +76,11 @@ const clearAndCheckFormErrors = (email, password) => {
   }
 }
 
-const getUser = (dataObject) => {
-  return dataObject?.value?.data?.user ? dataObject.value.data.user : null
-}
-const redirectUser = () => {
-  if (router.back) {
-    router.back()
-  } else {
+
+const redirectUser = (previous: string = null) => {
+ if(previous){
+  router.push(previous)
+ } else {
     router.push('/')
   }
 }
