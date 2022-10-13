@@ -91,7 +91,7 @@ const inputClasses = "border focus:border-color-primaryAccent2"
           v-if="props.formTitle === 'Login'"
           class="flex w-full gap-2 relative -top-2"
         >
-          <div class="flex-1 flex w-full items-center justify-between ">
+          <div class="flex-1 flex w-full items-center justify-between pt-2">
             <div class="flex items-center gap-1">
               <input
                 v-model="userData.rememberMe"
