@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
-describe('contact form', ()=>{
-    it('contains captcha', ()=>{
-        cy.get('[data-cy="captcha]')
+describe('can send email', ()=>{
+    it('successfully sends email', ()=> {
+        
     })
 })
