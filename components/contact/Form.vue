@@ -13,6 +13,7 @@ const inputErrorsList = ref([])
 const inputErrorsMsg = ref('')
 
 const showAlert = ref(false)
+const showSuccess = ref(false)
 
 const requiredFieldClass =
   'font-medium absolute -top-6 text-danger dark:text-dangerDark transition'
@@ -53,11 +54,21 @@ function submitContactForm() {
   clearErrorData()
   checkRequiredInputs()
   alertIfErrors()
-  showAlert.value = true
+  showSuccess.value = true
+
 }
+
+
 function clearErrorData(): void {
   inputErrorsList.value = []
   inputErrorsMsg.value = ''
+}
+
+const clearForm = () => {
+  name.value = ''
+  email.value = ''
+  message.value = ''
+  phoneNumber.value = ''
 }
 function checkRequiredInputs() {
   if (name.value === '') {
@@ -77,7 +88,7 @@ function alertIfErrors() {
   if (
     showNameRequired.value === true ||
     showEmailRequired.value === true ||
-    showMessageRequired.value == true
+    showMessageRequired.value === true
   ) {
     let current = 0
     for (let error of inputErrorsList.value) {
@@ -95,6 +106,7 @@ function alertIfErrors() {
 
 <template>
   <div class="w-full mb-8">
+    <!--Show error Alert Below-->
     <teleport
       v-if="showAlert"
       to="#modal"
@@ -110,6 +122,20 @@ function alertIfErrors() {
         >
           <p class="block text-center text-danger font-medium">{{ error }}</p>
         </div>
+      </modals-alert>
+    </teleport>
+    <!--Show Success Alert Below-->
+    <teleport
+      v-if="showSuccess"
+      to="#modal"
+    >
+      <modals-alert
+        @closeModal="showSuccess = false"
+        title="Success"
+        buttonText="Close"
+        buttonColor="bg-primaryAccent2 hover:bg-primaryAccent2Hover"
+      >
+        <p class="block text-center  font-medium">Form Successfully Submitted</p>
       </modals-alert>
     </teleport>
     <form
@@ -131,6 +157,7 @@ function alertIfErrors() {
             inputType="text"
             ariaLabel="Input your name"
             :required="true"
+            data-cy="name"
           />
         </div>
         <div class="relative">
@@ -147,6 +174,7 @@ function alertIfErrors() {
             inputType="email"
             ariaLabel="Input your email"
             :required="true"
+            data-cy="email"
           />
         </div>
         <div class="md:col-span-2">
@@ -157,6 +185,7 @@ function alertIfErrors() {
             inputType="text"
             ariaLabel="Input your phone number"
             :required="false"
+            data-cy="phoneNumber"
           />
         </div>
         <div class="md:col-span-2 relative">
@@ -172,14 +201,16 @@ function alertIfErrors() {
             rows="6"
             placeholder="Please Enter Your Message"
             v-model="message"
+            data-cy="message"
           ></textarea>
         </div>
         <input
           @click="submitContactForm"
-          class="bg-primaryAccent2 px-4 py-1 font-semibold text-center text-white cursor-pointer"
+          class="bg-primaryAccent2 px-4 py-1 font-semibold text-center text-white cursor-pointer hover:bg-primaryAccent2Hover"
           inputType="submit"
           value="Submit Form"
           aria-label="Submit Form"
+          data-cy="submit"
         />
       </div>
     </form>
