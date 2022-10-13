@@ -20,11 +20,11 @@ const generateRefreshToken = (user, rememberMe = false) => {
 
 export const decodeRefreshToken = (token) => {
     const config = useRuntimeConfig()
-
     try{
-        return jwt.verify(token, config.jwtRefreshSecret)
+        const decoded =  jwt.verify(token, config.jwtRefreshSecret)
+        return decoded
     }catch (err){
-        return null
+
     }
 }
 
@@ -44,8 +44,7 @@ export const sendRefreshToken = (event, token) => {
     const decoded:JwtPayload = jwt_decode(token)
     //add the maxAge value when the token is set to remember me
     const timeDiff = decoded.exp - decoded.iat
-
-    if(timeDiff > 3000){
+    if(timeDiff > 3600){
         setCookie(event.res, 'refresh_token', token, {
             maxAge: timeDiff,
             httpOnly: true,
@@ -53,6 +52,7 @@ export const sendRefreshToken = (event, token) => {
         })
     } else {
         setCookie(event.res, 'refresh_token', token, {
+            maxAge: timeDiff,
             httpOnly: true,
             sameSite: true,
         })
