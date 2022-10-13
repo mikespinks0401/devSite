@@ -10,17 +10,17 @@ export const registerUserSchema = z.object({
     }).
     refine(data => data.password === data.passwordConfirm,
     { message: 'Password Confirm Must Match Password' })
+interface NewUser{
+    email: string,
+    password: string,
+    passwordConfirm: string
+}
 
 export const loginUserSchema = z.object({
     email: z.string().min(1),
     password: z.string().min(1),
     rememberMe: z.boolean().default(false)
 })
-interface NewUser{
-    email: string,
-    password: string,
-    passwordConfirm: string
-}
 
 export const createUser = (userData: NewUser) =>{
     const finalUserData = {
@@ -46,6 +46,14 @@ export const getUserByEmail = (email: string) => {
     return prisma.user.findUnique({
         where: {
             email: email
+        }
+    })
+}
+
+export const getUserById = (id: string) => {
+    return prisma.user.findUnique({
+        where: {
+            id: id
         }
     })
 }
