@@ -3,18 +3,19 @@ import hbs from 'nodemailer-express-handlebars'
 import path from 'path'
 const user = process.env.EMAIL_EMAIL
 const pass = process.env.PASSWORD_PASSWORD
-const host = process.env.EMAIL_HOST
-const port = process.env.EMAIL_PORT
 const name = process.env.EMAIL_NAME
 
 const from = `"${name}" <${user}>`
 
+const dev = true;
+const host = dev === true ? 'localhost' : process.env.EMAIL_HOST
+const port = dev === true ? '7778' : process.env.EMAIL_PORT
 
 
 export const email = async (to, subject, msg) => {
     let transporter = nodemailer.createTransport({
         host: host,
-        port: 587,
+        port: port,
         secure: false,
         auth: {
             user: user,
