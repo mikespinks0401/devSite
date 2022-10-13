@@ -22,6 +22,7 @@ describe('The Header', () => {
 
     it('aria-Expanded true when hamburger icon clicked', () => {
       cy.get('[data-cy="hamburger"]')
+        .should('be.visible')
         .click()
         .should('have.attr', 'aria-expanded', 'true')
     })
@@ -35,12 +36,12 @@ describe('The Header', () => {
     })
 
     it('mobile menu visible when clicked', () => {
-      cy.get('[data-cy="hamburger"]').wait(50).click()
+      cy.get('[data-cy="hamburger"]').should('be.visible').click()
       cy.get('[data-cy="mobile menu"]').should('be.visible')
     })
 
     it('Mobile menu closes when A Button / Page is clicked', () => {
-      cy.get('[data-cy="hamburger"]').wait(50).click()
+      cy.get('[data-cy="hamburger"]').should('be.visible').click()
       cy.get('[data-cy="mobile menu"]').should('be.visible')
       cy.get('[data-cy="navList"] li').should('have.length.above', 1)
     })
