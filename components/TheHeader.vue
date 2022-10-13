@@ -191,7 +191,7 @@ onMounted(() => {
             aria-label="toggle nav menu"
             class="md:hidden px-3 py-2"
             data-cy="hamburger"
-            :aria-expanded="showNav"
+            :aria-expanded="showNav === true ? true : false"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
