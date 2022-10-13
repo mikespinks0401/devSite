@@ -29,9 +29,10 @@ const handleSubmit = async ({ email, password, rememberMe }) => {
         checkForErrorAndIncludeInModal(error, 'Invalid Credentials')
         checkForErrorAndIncludeInModal(error, 'Locked Out', "Account Currently Locked Out\nPlease Reset Password")
         displayFormIfErrors()
+    } else { 
+      redirectUser()
     }
 
-  redirectUser()
 }
 
 const hasErrors = () => {
