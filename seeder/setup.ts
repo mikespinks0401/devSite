@@ -9,6 +9,9 @@ type User = {
 }
 
 export const createUsers = async (numberOfUsers: number = 10) => {
+    if(process.env.ENVIRONMENT !== 'development'){
+        return
+    }
     const users = []
     for(let i = 0; i <= numberOfUsers; i++){
         let user: User = {
