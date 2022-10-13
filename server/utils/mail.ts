@@ -1,14 +1,19 @@
 import nodemailer from 'nodemailer'
 import hbs from 'nodemailer-express-handlebars'
 import path from 'path'
-const user = process.env.IONOS_EMAIL
-const pass = process.env.IONOS_PASSWORD
+const user = process.env.EMAIL_EMAIL
+const pass = process.env.PASSWORD_PASSWORD
+const host = process.env.EMAIL_HOST
+const port = process.env.EMAIL_PORT
+const name = process.env.EMAIL_NAME
+
+const from = `"${name}" <${user}>`
 
 
 
 export const email = async (to, subject, msg) => {
     let transporter = nodemailer.createTransport({
-        host: "smtp.ionos.com",
+        host: host,
         port: 587,
         secure: false,
         auth: {
@@ -30,7 +35,7 @@ export const email = async (to, subject, msg) => {
 
 
     let info = await transporter.sendMail({
-        from: '"Michael Spinks" <michael.spinks@mikespinks.dev>',
+        from: from,
         to: to,
         subject: "Formatted #2",
         text: `${msg}`,
