@@ -16,3 +16,11 @@ export const createRefreshToken = (token, id) => {
         }
     })
 }
+
+export const deleteToken = (token) => {
+    return prisma.refreshToken.delete({
+        where: {
+            token
+        }
+    })
+}
