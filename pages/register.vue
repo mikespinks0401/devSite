@@ -11,14 +11,14 @@ const registerUserSchema = z.object({
   password: z.string().min(7, { message: 'Password Must Be More Than 7 Characters Long' }).trim(),
   passwordConfirm: z.string().nullable()
 }).refine(data => data.password === data.passwordConfirm,
-    { message: 'Password Confirm Must Match Password' })
+  { message: 'Password Confirm Must Match Password' })
 
 
 const handleSubmit = async (data) => {
 
   clearAndCheckForParseErrors(data)
 
-  if(hasErrors()){
+  if (hasErrors()) {
     return
   }
   try {
@@ -26,7 +26,10 @@ const handleSubmit = async (data) => {
       method: "POST",
       body: data
     })
-    
+    if (response.data.user && response.data.accessToken) {
+      authStore.updateUser(response.data.user, response.data.accessToken)
+    }
+
     router.push('/')
   }
   catch (err) {
@@ -42,7 +45,7 @@ const hasErrors = () => {
 
 const clearAndCheckForParseErrors = (data) => {
   inputErrorsList.value = []
-  if(data.email === "" || data.password === "" || data.passwordConfirm === ""){
+  if (data.email === "" || data.password === "" || data.passwordConfirm === "") {
     inputErrorsList.value.push('All Fields Required')
     showAlert.value = true
     return
