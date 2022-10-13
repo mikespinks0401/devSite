@@ -14,13 +14,16 @@ export const useAuthStore = defineStore('authStore', () => {
   const updateEmail = (newName: string ):void => {
     email.value = newName
   }
-
+  const clearUser = () => {
+    accessToken.value = "",
+    email.value = ""
+  }
   const authFetch = (url: string, options = {}) => {
     return $fetch(url, {
       ...options,
       headers: {
         ...options?.headers,
-        authorization: `Bearer: ${accessToken}`
+        Authorization: `Bearer: ${accessToken.value}`
       }
     })
   }
@@ -42,7 +45,6 @@ export const useAuthStore = defineStore('authStore', () => {
     }
     const decoded = jwt_decode(accessToken.value) as JwtPayload
     const waitTime = (decoded.exp - decoded.iat) * 1000 - 60000
-    console.log('wait time - ' + waitTime)
     setTimeout(async ()=>{
       await refreshToken(),
       tokenReRefresher()
@@ -51,15 +53,8 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
   const updateUser = (user, token) => {
-    return new Promise((resolve, reject)=>{
-      try{
       updateEmail(user.email)
       updateToken(token)
-      resolve(true)
-      }catch(err){
-      resolve(false)
-      }
-    })
   }
 
   const login = async (email: string, password: string, rememberMe: boolean) => {
@@ -81,6 +76,15 @@ export const useAuthStore = defineStore('authStore', () => {
           return data
         }  
   }
+
+  const logout = async() => {
+    try{
+      await authFetch('/api/v1/auth/logout')
+      clearUser()
+    } catch (err){
+      console.log('there was an error')
+    }
+  }
     
   const init = () => {
   
@@ -99,5 +103,5 @@ export const useAuthStore = defineStore('authStore', () => {
        })
   }
 
-  return {isLoggedIn, login, updateUser, init }
+  return {isLoggedIn, login, updateUser, init, logout }
 })
