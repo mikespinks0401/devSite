@@ -1,5 +1,5 @@
 import z from 'zod'
-import { email } from '~~/server/utils/mail'
+import { email, mainEmail, siteEmail } from '~~/server/utils/mail'
 
 export default defineEventHandler(async event => {
 
@@ -30,8 +30,9 @@ export default defineEventHandler(async event => {
         emailName: name as string,
         emailPhone: phoneNumber as string
     }
+    
     const msgInfo = {
-        to: 'mikespinks0401@gmail.com, michael.spinks@mikespinks.dev',
+        to: `${mainEmail}, ${siteEmail}`,
         subject: 'Contact Form Submission',
         msg: emailMessage,
         template: 'contact'
