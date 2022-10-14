@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import z from 'zod'
 
+
 const router = useRouter()
 const showAlert = ref(false)
 const inputErrorsList = ref([])
@@ -50,12 +51,18 @@ const clearAndCheckForParseErrors = (data) => {
     showAlert.value = true
     return
   }
+
+
+
   const result = registerUserSchema.safeParse(data)
-  if (!result.success) {
-    Object.keys(result.error.issues).forEach(item => inputErrorsList.value.push(result.error.issues[item].message))
+  if (result.success === false) {
+    const { error } = result
+    Object.keys(error.issues).forEach(item => inputErrorsList.value.push(error.issues[item].message))
     showAlert.value = true
   }
 }
+
+
 const closeModal = () => {
   showAlert.value = false
 }
