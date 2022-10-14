@@ -27,6 +27,12 @@ interface Email{
     
 }
 
+const config = useRuntimeConfig();
+
+//get email info from .env 
+export const mainEmail = config.mainEmail;
+export const siteEmail = config.siteEmail;
+
 export const email:(msgInfo: Email) => Promise<void> = async (msgInfo: Email) => {
     if(!msgInfo){
         return
