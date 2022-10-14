@@ -6,12 +6,16 @@ const props = defineProps<{
   inputType: string
   inputClasses?: string
   required?: boolean
+  clearData?: boolean
 }>()
 const input = ref(null)
 const textValue = ref('')
 const isFocused = ref(false)
 const hasTyped = ref(false)
 
+watch(()=>props.clearData, ()=>{
+textValue.value = ''
+})
 
 
 const placeholderText = computed(() => {
@@ -58,7 +62,7 @@ const stateChanged = () => {
       @focus="isFocused = true"
       @input="emits('updateText', textValue), (isFocused = true)"
       @keyup="stateChanged"
-      class="w-full focus:ring-0 dark:text-black z-50"
+      class="w-full ring-0 dark:text-black z-50 focus:border focus:border-primaryAccent2 "
       :class="props.inputClasses"
       :style="hasTyped === true ? 'border: red-200 ' : ''"
       :type="props.inputType"
