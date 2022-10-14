@@ -1,8 +1,10 @@
 <script setup lang="ts">
+
+import z from 'zod'
+
 const name = ref('')
 const email = ref('')
 const phoneNumber = ref('')
-
 const message = ref('')
 
 const showNameRequired = ref(false)
@@ -14,9 +16,15 @@ const inputErrorsMsg = ref('')
 
 const showAlert = ref(false)
 const showSuccess = ref(false)
+const clearData = ref(false)
+const messageArea = ref(null)
+const messageAreaFocused = ref(false)
 
 const requiredFieldClass =
   'font-medium absolute -top-6 text-danger dark:text-dangerDark transition'
+
+const emailSchema = z.string().email()
+
 const updateName = (v: string) => {
   name.value = v
   if (showNameRequired.value === true && name.value !== '') {
@@ -50,11 +58,39 @@ const updateMessage = () => {
   }
 }
 
-function submitContactForm() {
+const submitContactForm= async () => {
+
   clearErrorData()
   checkRequiredInputs()
   alertIfErrors()
-  showSuccess.value = true
+  const result = emailSchema.safeParse(email.value)
+
+  if(result.success === false){
+    inputErrorsList.value.push('Invalid Email Format')
+    showAlert.value = true
+    return
+  }
+
+ //Submit form to backend
+ try{
+
+  const response = await $fetch('/api/v1/contact/submit', {
+    method: 'POST',
+    body: {
+      name: name.value,
+      emailAddress: email.value,
+      phoneNumber: phoneNumber.value,
+      message: message.value
+
+    }
+  })
+  if(response){
+    showSuccess.value = true
+    clearForm()
+  }
+ } catch (err){
+  console.log(err)
+ }
 
 }
 
@@ -65,10 +101,14 @@ function clearErrorData(): void {
 }
 
 const clearForm = () => {
-  name.value = ''
-  email.value = ''
-  message.value = ''
+  name.value = '',
+  email.value = '',
+  message.value = '',
   phoneNumber.value = ''
+  clearData.value = true
+  setTimeout(()=>{
+    clearData.value = false
+  }, 150)
 }
 function checkRequiredInputs() {
   if (name.value === '') {
@@ -101,6 +141,10 @@ function alertIfErrors() {
       }
     }
   }
+}
+
+const focusMessage = () => {
+  messageArea.value.focus()
 }
 </script>
 
@@ -157,6 +201,7 @@ function alertIfErrors() {
             inputType="text"
             ariaLabel="Input your name"
             :required="true"
+            :clearData=clearData
             data-cy="name"
           />
         </div>
@@ -174,6 +219,7 @@ function alertIfErrors() {
             inputType="email"
             ariaLabel="Input your email"
             :required="true"
+            :clearData=clearData
             data-cy="email"
           />
         </div>
@@ -185,6 +231,7 @@ function alertIfErrors() {
             inputType="text"
             ariaLabel="Input your phone number"
             :required="false"
+            :clearData=clearData
             data-cy="phoneNumber"
           />
         </div>
@@ -196,13 +243,16 @@ function alertIfErrors() {
             Message Required*
           </p>
           <textarea
+            ref="messageArea"
+            @focus="messageAreaFocused = true"
+            @blur="messageAreaFocused = false"
             @input="updateMessage"
-            class="text-black resize-none w-full hover:ring-0 focus:border-primaryAccent2"
+            class="relative text-black resize-none ring-0 w-full focus:border-primaryAccent2"
             rows="6"
-            placeholder="Please Enter Your Message"
             v-model="message"
             data-cy="message"
           ></textarea>
+          <p @click="focusMessage" v-if="message === '' && messageAreaFocused === false" class="absolute top-2 left-3 pt-[1px] text-gray-700">Please Enter Your Message<span class="text-danger">*</span></p>
         </div>
         <input
           @click="submitContactForm"
@@ -220,5 +270,8 @@ function alertIfErrors() {
 <style lang="postcss" scoped>
 form>input {
   @apply focus:border-primaryAccent2;
+}
+::placeholder:last-child {
+  color: red
 }
 </style>
