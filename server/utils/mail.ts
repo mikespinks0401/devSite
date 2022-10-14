@@ -61,8 +61,15 @@ export const email:(msgInfo: Email) => Promise<void> = async (msgInfo: Email) =>
 
     }, ))
 
+    let useContext;
     if (msgInfo.template === 'contact'){
-
+        useContext =    {
+            emailAddress: msgInfo.msg.emailAddress,
+            emailMsg: msgInfo.msg.emailMsg,
+            emailName: msgInfo.msg.emailName,
+            emailSubject: msgInfo.msg.emailSubject,
+            emailPhone: msgInfo.msg.emailPhone
+        }
     }
 
 
@@ -71,13 +78,7 @@ export const email:(msgInfo: Email) => Promise<void> = async (msgInfo: Email) =>
         to: msgInfo.to,
         subject: msgInfo.subject,
         template:msgInfo.template,
-        context:{
-            emailAddress: msgInfo.msg.emailAddress,
-            emailMsg: msgInfo.msg.emailMsg,
-            emailName: msgInfo.msg.emailName,
-            emailSubject: msgInfo.msg.emailSubject,
-            emailPhone: msgInfo.msg.emailPhone
-        }
+        context:useContext
     })
 
     console.log("Message Sent: %s", info.messageId)
