@@ -11,6 +11,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        'spin-loading': 'spin 1s ease infinite',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
