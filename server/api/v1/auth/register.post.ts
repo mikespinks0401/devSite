@@ -1,11 +1,12 @@
 import { userTransformer } from '~~/server/transforms/users'
 import { generateTokens, sendRefreshToken } from '~~/server/utils/jwt'
-import { H3Event } from 'h3'
 import { registerUserSchema, createUser, getUserByEmail } from '~~/server/db/user'
 import { createRefreshToken } from '~~/server/db/refreshTokens'
+import { sleep } from '~~/server/utils/functions'
 
 export default defineEventHandler( async event => {  
     const body = await useBody(event)
+    await sleep(500)
     //Return error if form is empty
     isBodyEmpty(event, body)
     //Make sure data is shaped properly following registerUserSchema
@@ -57,7 +58,7 @@ export default defineEventHandler( async event => {
 
 
 
-function isBodyEmpty(event: H3Event, body){
+function isBodyEmpty(event, body){
     if(!body){
         sendError(event, createError({
             statusCode: 400,
