@@ -111,7 +111,7 @@ onMounted(() => {
               data-cy="login"
               to="/login"
               class="auth font-semibold dark:text-gray-100 dark:hover:text-gray-50"
-            >Login</nuxt-link>
+            >Log In</nuxt-link>
 
             <nuxt-link
               data-cy="main sign up"
@@ -264,7 +264,7 @@ onMounted(() => {
               @click="closeMenu"
               class="auth"
               to="/login"
-            >Login</nuxt-link>
+            >Log In</nuxt-link>
             <nuxt-link
               @click="closeMenu"
               data-cy="mobile sign up"
@@ -295,9 +295,10 @@ onMounted(() => {
                 />
               </svg>
             </nuxt-link>
-            <button 
-            @click="logout"
-            class="flex flex-row-reverse gap-1">
+            <button
+              @click="logout"
+              class="flex flex-row-reverse gap-1"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
