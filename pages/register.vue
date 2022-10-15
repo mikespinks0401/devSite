@@ -6,6 +6,7 @@ const router = useRouter()
 const showAlert = ref(false)
 const inputErrorsList = ref([])
 const authStore = useAuthStore()
+const loading = ref(false)
 
 const registerUserSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }).trim(),
@@ -14,8 +15,15 @@ const registerUserSchema = z.object({
 }).refine(data => data.password === data.passwordConfirm,
   { message: 'Password Confirm Must Match Password' })
 
+  interface User{
+    email: string,
+    password: string,
+    passwordConfirm: string
+  }
 
-const handleSubmit = async (data) => {
+const handleSubmit = async (data: User):Promise<void> => {
+
+  loading.value = true
 
   clearAndCheckForParseErrors(data)
 
@@ -36,6 +44,9 @@ const handleSubmit = async (data) => {
   catch (err) {
     inputErrorsList.value.push('Email Already Exists')
     showAlert.value = true
+  }
+  finally{
+    loading.value = false
   }
 
 }
@@ -97,6 +108,8 @@ const closeModal = () => {
         class="shadow"
         @sendFormData="handleSubmit"
         formTitle="Sign Up"
+        :loading=loading
+        submitValue='Sign Up'
       />
     </div>
   </div>
