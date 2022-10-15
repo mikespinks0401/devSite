@@ -15,7 +15,7 @@ const emits = defineEmits(['closeModal'])
   <div class="">
     <div
       @click="emits('closeModal')"
-      class="absolute bg-black bg-opacity-80 inset-0 z-40"
+      class="absolute bg-black bg-opacity-90 inset-0 z-40"
     ></div>
     <div
       class="absolute z-50 inset-0 flex flex-col items-center justify-center"
