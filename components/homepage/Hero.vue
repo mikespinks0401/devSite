@@ -35,7 +35,7 @@
             >{{ props.name }}</span
           >
         </h1>
-        <p class="text-3xl">
+        <p class="text-3xl -top-1">
           I am a
           <span
             class="block text-3xl font-black md:text-4xl md:font-semibold md:inline-block"
