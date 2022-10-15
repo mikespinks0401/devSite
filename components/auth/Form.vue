@@ -3,7 +3,9 @@ const props = defineProps<{
   handleSubmit?: Function
   formTitle: String
 }>()
-const emits = defineEmits(['error']['sendFormData'])
+ const emits = defineEmits(['error', 'forgotPassword' ,'sendFormData'])
+
+
 
 const userData = reactive({
   email: '',
@@ -52,7 +54,7 @@ const inputClasses = "border focus:border-color-primaryAccent2"
       >Welcome Back</p>
     </div>
     <form
-      @submit.prevent="submitForm"
+      @submit.prevent=""
       data-cy="auth form"
     >
       <div class="flex flex-col gap-4 mb-2">
@@ -104,13 +106,13 @@ const inputClasses = "border focus:border-color-primaryAccent2"
                 for="remember me"
               >Remember Me</label>
             </div>
-            <nuxt-link
+            <button
+              @click="emits('forgotPassword')"
               class="self-end"
-              to="#"
             ><span
                 class="text-gray-600 text-sm font-medium hover:text-gray-400"
                 data-cy="forgot password"
-              >Forgot Password</span></nuxt-link>
+              >Forgot Password</span></button>
           </div>
         </div>
         <div
@@ -127,6 +129,7 @@ const inputClasses = "border focus:border-color-primaryAccent2"
       </div>
       <div class="mt-2 flex justify-center bt-2">
         <input
+          @click="submitForm"
           data-cy="formSubmit"
           class="cursor-pointer bg-primaryAccent2 text-white font-semibold w-full"
           type="submit"
