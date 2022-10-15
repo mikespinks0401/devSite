@@ -5,6 +5,7 @@ const authStore = useAuthStore()
 const router = useRouter()
 
 const showAlert = ref(false)
+const showForgotPassword = ref(false)
 const formErrors = ref([])
 
 const userSchema = z.object({
@@ -86,6 +87,14 @@ const redirectUser = (previous: string = null) => {
   }
 }
 
+const showForgotPasswordModal = () => {
+  showForgotPassword.value = true
+  return
+}
+const closeForgotPasswordModal = () => {
+  showForgotPassword.value =  false
+}
+
 </script>
 
 <template>
@@ -97,7 +106,7 @@ const redirectUser = (previous: string = null) => {
       v-if="showAlert"
       to="#modal"
     >
-      <!--Alert Model-->
+      <!--Alert Modal-->
       <modals-alert
         @closeModal="closeModal"
         title="Alert"
@@ -108,9 +117,25 @@ const redirectUser = (previous: string = null) => {
         </div>
       </modals-alert>
     </teleport>
+    <teleport
+      v-if="showForgotPassword"
+      to="#modal"
+    >
+      <!--ForgotPassword Modal-->
+      <modals-forgot-password
+
+        @closeModal="closeForgotPasswordModal"
+        title="Forgot Password"
+        buttonText="Reset Password"
+      >
+      </modals-forgot-password>
+    </teleport>
+
     <auth-form
       form-title="Login"
       @sendFormData="handleSubmit"
-    />
+      @forgot-password="showForgotPasswordModal"
+      />
   </div>
 </template>
+  
