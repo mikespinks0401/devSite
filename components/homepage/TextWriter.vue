@@ -13,7 +13,7 @@
     const displayText = ref('')
     const currentIndex = ref(0)
 
-  function writeText(stringArray: Array<string>, interval: number = 100) {
+  const writeText = (stringArray: Array<string>, interval: number = 100):void => {
     const length = stringArray.length
     if (currentIndex.value === length) {
       return
