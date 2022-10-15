@@ -19,7 +19,7 @@
     data-cy="hero"
   >
     <div
-      class="w-full flex-1 container max-w-6xl mx-auto grid md:grid-cols-2 md:px-2"
+      class="w-full flex-1 container max-w-6xl mx-auto grid md:grid-cols-2 md:pl-2"
     >
       <!--Left Side Of Hero-->
       <div
