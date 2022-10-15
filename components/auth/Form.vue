@@ -2,10 +2,17 @@
 const props = defineProps<{
   handleSubmit?: Function
   formTitle: String
+  loading?: boolean
+  submitValue: string
 }>()
- const emits = defineEmits(['error', 'forgotPassword' ,'sendFormData'])
 
+const emits = defineEmits(['error', 'forgotPassword' ,'sendFormData'])
 
+const loading = ref(false)
+
+watch(()=>props.loading, ()=>{
+  loading.value = props.loading
+})
 
 const userData = reactive({
   email: '',
@@ -23,6 +30,8 @@ const updatePassword = (v: string) => {
 const updatePasswordConfirm = (v: string) => {
   userData.passwordConfirm = v
 }
+
+
 const submitForm = () => {
   if (props.formTitle === 'Login') {
     const loginData = {
@@ -127,15 +136,22 @@ const inputClasses = "border focus:border-color-primaryAccent2"
             conditions.</p>
         </div>
       </div>
-      <div class="mt-2 flex justify-center bt-2">
-        <input
+      <div class="mt-2 flex justify-center bt-2 relative">
+
+        <button
           @click="submitForm"
+          :disabled="loading"
           data-cy="formSubmit"
-          class="cursor-pointer bg-primaryAccent2 text-white font-semibold w-full"
-          type="submit"
+          class=" relative cursor-pointer bg-primaryAccent2 text-white font-semibold w-full py-2"
           aria-label="submit registration"
-          value="Submit"
-        />
+        >
+        <span class="relative">
+          <utility-loading v-if="loading === true" class="inline-block absolute -left-5 top-[4px]" />
+          {{props.submitValue}}
+        </span>
+      
+      </button>
+
       </div>
     </form>
   </div>
