@@ -6,7 +6,6 @@ import { sleep } from '~~/server/utils/functions'
 
 export default defineEventHandler( async event => {  
     const body = await useBody(event)
-    await sleep(500)
     //Return error if form is empty
     isBodyEmpty(event, body)
     //Make sure data is shaped properly following registerUserSchema
