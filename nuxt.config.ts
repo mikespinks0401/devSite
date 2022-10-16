@@ -6,6 +6,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxtjs/tailwindcss',
+    'nuxt-turnstile',
     [
       '@pinia/nuxt',
       {
@@ -26,6 +27,12 @@ export default defineNuxtConfig({
     jwtAccessSecret: process.env.JWT_ACCESS_TOKEN_SECRET,
     jwtRefreshSecret: process.env.JWT_REFRESH_TOKEN_SECRET,
     mainEmail: process.env.ADMIN_EMAIL,
-    siteEmail: process.env.EMAIL_EMAIL
+    siteEmail: process.env.EMAIL_EMAIL,
+     turnstile: {
+      secretKey: process.env.ENVIRONMENT === 'development' ? '1x0000000000000000000000000000000AA' : process.env.CLOUDFLARE_SECRET_KEY,
+    },
+  },
+  turnstile: {
+    siteKey: process.env.ENVIRONMENT === 'development' ? '1x00000000000000000000AA' : process.env.CLOUDFLARE_SECRET_KEY,
   },
 })
