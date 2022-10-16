@@ -8,7 +8,8 @@ describe('User Can Log In', ()=>{
     const sampleUser = {
         email: 'sample@gmail.com',
         password: 'password',
-        passwordConfirm: 'password'
+        passwordConfirm: 'password',
+        token: 'XXXX.DUMMY.TOKEN.XXXX'
     }
 
     beforeEach(()=>{
@@ -19,7 +20,7 @@ describe('User Can Log In', ()=>{
     it('returns status 200 with proper credentials', ()=>{
         cy.request({method: 'POST', url:'/api/v1/auth/register',body: sampleUser})
         cy.visit('/')
-        cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample@gmail.com', password: 'password'}}).then(res => {
+        cy.request({method: 'POST', url: '/api/v1/auth/login', body: sampleUser}).then(res => {
         const code = res.status
         assert.equal(code, 200, '200 should be recieved on successful login')
         })
@@ -31,7 +32,7 @@ describe('User Can Log In', ()=>{
         })
         
         cy.visit('/')
-        cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample@gmail.com', password: 'password'}}).then(res => {
+        cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample@gmail.com', password: 'password', token: sampleUser.token}}).then(res => {
             cy.getCookie('refresh_token').should('exist')
         })
 
@@ -41,7 +42,7 @@ describe('User Can Log In', ()=>{
     it('refresh token cookie is gone on refreshing the browser when not remembered', ()=>{
         cy.request({method: 'POST', url:'/api/v1/auth/register',body: sampleUser})
         cy.visit('/')
-        cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample@gmail.com', password: 'password'}}).then(res => {
+        cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample@gmail.com', password: 'password', token: sampleUser.token}}).then(res => {
         cy.getCookie('refresh_token').should(cookie => {
                 cy.getCookie('refresh_token').should('exist').then(()=> {
                 cy.visit('/')
@@ -54,7 +55,7 @@ describe('User Can Log In', ()=>{
 
     it('refresh token last for 7 days when remember me is clicked', ()=>{
         cy.request({method: 'POST', url:'/api/v1/auth/register',body: sampleUser}).then(res => {
-           cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample@gmail.com', password: 'password', rememberMe: true}}).then(res => {
+           cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: sampleUser.email, password: sampleUser.password, rememberMe: true, token: sampleUser.token}}).then(res => {
             cy.getCookie('refresh_token').should(cookie => {
                 const token:JwtPayload = jwt_decode(cookie.value)
 
@@ -68,7 +69,7 @@ describe('User Can Log In', ()=>{
     })
     it('refresh token persist after refreshing the browser when remember me is true', ()=>{
         cy.request({method: 'POST', url:'/api/v1/auth/register',body: sampleUser}).then(res => {
-           cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample@gmail.com', password: 'password', rememberMe: true}}).then(res => {
+           cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample@gmail.com', password: 'password', rememberMe: true, token: sampleUser.token}}).then(res => {
             cy.getCookie('refresh_token').should('exist').then(()=>{
                 cy.request('/')
                 cy.getCookie('refresh_token').should('exist')
