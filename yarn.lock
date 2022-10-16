@@ -648,7 +648,7 @@
   "resolved" "https://registry.npmjs.org/@nuxt/devalue/-/devalue-2.0.0.tgz"
   "version" "2.0.0"
 
-"@nuxt/kit@^3.0.0-rc.9", "@nuxt/kit@3.0.0-rc.11":
+"@nuxt/kit@^3.0.0-rc.11", "@nuxt/kit@^3.0.0-rc.9", "@nuxt/kit@3.0.0-rc.11":
   "integrity" "sha512-o0E/k635Lzcxp4K5t0ToHC6WwQ1wyN0EIqMAQEzgiUexoAhzdURr21QI0D6e6U461u4KP7x92wYM87VxhMFXmQ=="
   "resolved" "https://registry.npmjs.org/@nuxt/kit/-/kit-3.0.0-rc.11.tgz"
   "version" "3.0.0-rc.11"
@@ -5408,6 +5408,15 @@
   "version" "3.0.0-rc.11"
   optionalDependencies:
     "fsevents" "~2.3.2"
+
+"nuxt-turnstile@^0.0.7":
+  "integrity" "sha512-lw1CKsa4fmAeQBBBVFhNzftzhB9GyUjxPZYfKbwGO8pYGGZ5y/Okn+6rxJcp5znjeS9OILqlNjVhV0K1/5Idhg=="
+  "resolved" "https://registry.npmjs.org/nuxt-turnstile/-/nuxt-turnstile-0.0.7.tgz"
+  "version" "0.0.7"
+  dependencies:
+    "@nuxt/kit" "^3.0.0-rc.11"
+    "defu" "^6.1.0"
+    "pathe" "^0.3.8"
 
 "nuxt@3.0.0-rc.11":
   "integrity" "sha512-I0wyxPHnUoJBWoROKUx91PLKaAFZ/TsxSpcm3/jn/Ysq2RGU5Q3o9AzqT0YcXW4rgH35QPFvGpqopU9X0vS7Qw=="
