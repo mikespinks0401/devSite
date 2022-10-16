@@ -11,48 +11,53 @@ const loading = ref(false)
 const registerUserSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }).trim(),
   password: z.string().min(7, { message: 'Password Must Be More Than 7 Characters Long' }).trim(),
-  passwordConfirm: z.string().nullable()
+  passwordConfirm: z.string().nullable(),
+  token: z.string()
 }).refine(data => data.password === data.passwordConfirm,
   { message: 'Password Confirm Must Match Password' })
 
-  interface User{
-    email: string,
-    password: string,
-    passwordConfirm: string
-  }
+
+interface User{
+  email: string,
+  password: string,
+  passwordConfirm: string,
+  token: string
+}
 
 const handleSubmit = async (data: User):Promise<void> => {
 
-  loading.value = true
-
   clearAndCheckForParseErrors(data)
-
   if (hasErrors()) {
     return
   }
-  try {
-    const response = await $fetch('/api/v1/auth/register', {
-      method: "POST",
-      body: data
-    })
-    if (response.data.user && response.data.accessToken) {
-      authStore.updateUser(response.data.user, response.data.accessToken)
+  loading.value = true
+  const response = await authStore.register(data)
+  if(!response.success){
+    console.log('we have errors')
+    const error = response.error
+    checkForErrorAndIncludeInModal(error, 'Captcha', 'Server Error - Please Try Again')
+    checkForErrorAndIncludeInModal(error, 'Email', "Email Already Exist")
+    if(hasErrors()){
+      showAlert.value = true
+      loading.value = false
+      return
     }
-
+  } else {
     router.push('/')
   }
-  catch (err) {
-    inputErrorsList.value.push('Email Already Exists')
-    showAlert.value = true
-  }
-  finally{
-    loading.value = false
-  }
+  loading.value = false
 
 }
 
+
+const checkForErrorAndIncludeInModal = (errorObject: object, needle: string, displayMessage: string = needle) => {
+  const errorString = errorObject.toString().toLowerCase()
+  if (errorString.includes(needle.toLowerCase())) {
+    inputErrorsList.value.push(displayMessage)
+  }
+}
 const hasErrors = () => {
-  return inputErrorsList.value.length > 0 ? true : false
+  return inputErrorsList.value.length > 0 
 }
 
 const clearAndCheckForParseErrors = (data) => {
