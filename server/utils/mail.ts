@@ -7,9 +7,13 @@ const name = process.env.EMAIL_NAME
 
 const from = `"${name}" <${user}>`
 
-const testingServer = false
-const host = testingServer ? 'localhost' : process.env.EMAIL_HOST
-const port = testingServer ? '7778' : process.env.EMAIL_PORT
+const config = useRuntimeConfig();
+
+export const mainEmail = config.mainEmail;
+export const siteEmail = config.siteEmail;
+const testingServer = config.testingServer
+const host = testingServer ? 'localhost' : config.host
+const port = testingServer ? '7778' : config.port
 
 interface MessageDetails{
     emailAddress: string,
@@ -27,11 +31,6 @@ interface Email{
     
 }
 
-const config = useRuntimeConfig();
-
-//get email info from .env 
-export const mainEmail = config.mainEmail;
-export const siteEmail = config.siteEmail;
 
 export const email:(msgInfo: Email) => Promise<void> = async (msgInfo: Email) => {
     if(!msgInfo){
