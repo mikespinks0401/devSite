@@ -18,7 +18,15 @@ export const useAuthStore = defineStore('authStore', () => {
     accessToken.value = "",
     email.value = ""
   }
-  const authFetch = (url: string, options = {}) => {
+
+
+  type FetchOptions = {
+    options?: string[],
+    headers?: string[]
+  }
+
+
+  const authFetch = (url: string, options:FetchOptions = {}) => {
     return $fetch(url, {
       ...options,
       headers: {
@@ -30,11 +38,12 @@ export const useAuthStore = defineStore('authStore', () => {
 
   const refreshToken = async() => {
        try{
-        const res = await $fetch('api/v1/tokens/refresh')
-        if(res.data.access_Token){
+          const res = await $fetch('api/v1/tokens/refresh')
+         if(res.data.access_Token){
           updateToken(res.data.access_Token)
-        }   
+         }
        }catch(err){
+        
        }
       return
   }
@@ -57,23 +66,48 @@ export const useAuthStore = defineStore('authStore', () => {
       updateToken(token)
   }
 
-  const login = async (email: string, password: string, rememberMe: boolean) => {
+
+
+  const login = async (email: string, password: string, rememberMe: boolean, token: string) => {
 
       const { data, error} = await useAsyncData(
           'login', 
           ()=> $fetch('/api/v1/auth/login', {
           method: 'POST', 
-          body: {email: email, password: password, rememberMe: rememberMe}
+          body: {email: email, password: password, rememberMe: rememberMe, token: token}
           }), {initialCache:false},
-        )
+        ) as any
 
         if(error.value){
           return {
             error: error.value
           }
         } else {
-            await updateUser(data.value.data.user, data.value.data.accessToken) 
+            updateUser(data.value.data.user, data.value.data.accessToken) 
           return data
+        }  
+  }
+
+  const register = async ({email, password, passwordConfirm, token}) => {
+
+      const { data, error} = await useAsyncData(
+          'register', 
+          ()=> $fetch('/api/v1/auth/register', {
+          method: 'POST', 
+          body: {email: email, password: password, passwordConfirm: passwordConfirm, token: token}
+          }), {initialCache:false},
+        ) as any
+
+        if(error.value){
+          return {
+            success: false,
+            error: error.value
+          }
+        } else {
+            updateUser(data.value.data.user, data.value.data.accessToken) 
+          return {
+            success: true
+          }
         }  
   }
 
@@ -91,17 +125,17 @@ export const useAuthStore = defineStore('authStore', () => {
   return new Promise(async (resolve, reject)=>{
     
     try{
-          await refreshToken()
+          const response = await refreshToken()
           if(accessToken.value){
             tokenReRefresher()
           }
           resolve(true)
         }
-        catch (error){
-          reject(error)
-        }
-       })
+    catch (error){
+            reject(error)
+          }
+        })
   }
 
-  return {isLoggedIn, login, updateUser, init, logout }
+  return {isLoggedIn, login, register, updateUser, init, logout }
 })
