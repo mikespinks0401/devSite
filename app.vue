@@ -1,27 +1,43 @@
 <script setup lang="ts">
   const authStore = useAuthStore()
   const themeStore = useThemeStore()
+  const showDark = ref('')
+  const loading = ref(true)
+  const splashClass = ref("")
 
-  const loaded = ref(false)
+  
 
-  onBeforeMount(async () => {
-    const isOn = await themeStore.init()
-    if (isOn) {
-      themeStore.$patch({ isLightMode: false })
+//shows splash screen while loading user info
+  onMounted(async() => {
+    try{
+      await themeStore.init()
+      await authStore.init()
+    }catch(err){
+      console.log(err)
+    } finally{
+      loading.value = false
+      setTimeout(() => {
+        splashClass.value = "hidden"
+      }, 600)
     }
-    loaded.value = true
   })
-  const isDarkMode = computed(() => {
-    return themeStore.isLightMode === true ? '' : 'dark'
-  })
+
 </script>
 
 <template>
-  <div v-if="loaded === true" :class="isDarkMode">
-    <NuxtLayout>
-      <NuxtLoadingIndicator />
-      <NuxtPage />
-    </NuxtLayout>
+  <div>
+    
+    <div class="fixed top-1/2 right-1/2" :class=splashClass>
+      <splash />
+    </div>
+    <div class="transition-all duration-200" :style="loading === true ? 'opacity: 0;' : 'opacity: 100;' " :class="themeStore.isLightMode === true ? '' : 'dark'">
+      <div >
+        <NuxtLayout>
+          <NuxtLoadingIndicator />
+        <NuxtPage />
+      </NuxtLayout>
+      </div>
+    </div>
   </div>
 </template>
 

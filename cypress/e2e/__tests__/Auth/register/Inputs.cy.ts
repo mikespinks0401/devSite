@@ -11,7 +11,7 @@ describe('Auth System Works', () => {
 
   it('displays registration form', () => {
     cy.visit('/register')
-    cy.get('h1').contains('Register')
+    cy.get('h1').contains('Sign Up')
     cy.get('[data-cy="auth form"]')
   })
 
@@ -27,10 +27,10 @@ describe('Auth System Works', () => {
       cy.get('input[name="password"]')
     })
     it('contains passwordConfirm field', ()=>{
-      cy.get('input[name="passwordConfirm"]')
+      cy.get('input[name="confirm password"]')
     })
     it('contains submit button', ()=>{
-      cy.get('input[type="submit"]')
+      cy.get('button[type="submit"]')
     })
   })
 
@@ -41,11 +41,11 @@ describe('Auth System Works', () => {
     })
     it('Goes To Register Page when Mobile Menu Nav Signup button is clicked', () => {
       cy.visit('/')
-      cy.get('[data-cy="hamburger"]').click()
+      cy.get('[data-cy="hamburger"]').should('be.visible').click()
       cy.get('[data-cy="mobile sign up"]')
         .click()
         .get('h1')
-        .should('contain', 'Register')
+        .should('contain', 'Sign Up')
     })
   })
 })

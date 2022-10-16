@@ -1,7 +1,6 @@
 <script setup lang="ts">
   const navBarOpen = ref(false)
   const mobileMenuHeight = ref(0)
-  const floatingDivHeight = ref(0)
   const bodyMarginTopClass = computed(() => {
     return navBarOpen.value === true ? ' ' : 'mt-10 md:mt-12'
   })

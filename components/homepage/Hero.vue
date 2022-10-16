@@ -19,7 +19,7 @@
     data-cy="hero"
   >
     <div
-      class="w-full flex-1 container max-w-6xl mx-auto grid md:grid-cols-2 md:px-2"
+      class="w-full flex-1 container max-w-6xl mx-auto grid md:grid-cols-2 md:pl-2"
     >
       <!--Left Side Of Hero-->
       <div
@@ -35,7 +35,7 @@
             >{{ props.name }}</span
           >
         </h1>
-        <p class="text-3xl">
+        <p class="text-3xl -top-1">
           I am a
           <span
             class="block text-3xl font-black md:text-4xl md:font-semibold md:inline-block"

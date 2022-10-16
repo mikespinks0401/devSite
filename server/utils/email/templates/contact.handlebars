@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Document</title>
+   <style>
+        td{
+            padding: 0px 0px;
+        }
+        #footer{
+            padding-top: 20px;
+        }
+   </style>
+</head>
+<body>
+
+    <table>
+        {{#if emailSubject}}
+        <tr>
+            <td>
+                Subject:
+            </td>
+            <td>{{emailSubject}}</td>
+        </tr>
+        {{/if}}
+        <tr>
+            <td>{{emailMsg}}</td>
+            <td></td>
+        </tr>
+        <tr>
+
+            <td id="footer">{{emailName}}</td>
+            <td></td>
+        </tr>
+        <tr>
+
+            <td>{{emailAddress}}</td>
+            <td></td>
+        </tr>
+
+        {{#if emailPhone}}
+        <tr>
+
+            <td>{{emailPhone}}</td>
+            <td></td>
+        </tr>
+        {{/if}}
+    </table>
+
+</body>
+</html>

@@ -5,27 +5,28 @@ import { getHeight } from '~~/composables/utils/useDimensions'
 const emits = defineEmits(['sendMenuHeight', 'menuOpen', 'menuClose'])
 const themeStore = useThemeStore()
 const showNav = ref(false)
-const loggedIn = ref(false)
 const mobileMenuHeight = ref(0)
 const useMobileMenuHeight = ref(0)
+const authStore = useAuthStore()
 
+const router = useRouter()
 const links = [
   { to: 'Home', href: '/' },
   { to: 'Blog', href: '/blog' },
   { to: 'About', href: '/about' },
   { to: 'Contact', href: '/contact' },
 ]
-function closeMenu() {
+const closeMenu = () => {
   showNav.value = false
   useMobileMenuHeight.value = mobileMenuHeight.value
   emits('menuClose')
 }
-function openMenu() {
+const openMenu = () => {
   showNav.value = true
   useMobileMenuHeight.value = 0
   emits('menuOpen')
 }
-function toggleMenu() {
+const toggleMenu = () => {
   if (showNav.value === false) {
     openMenu()
   } else {
@@ -33,8 +34,10 @@ function toggleMenu() {
   }
 }
 
-function test(event) {
-  console.log(event)
+const logout = () => {
+  authStore.logout()
+  closeMenu()
+  router.push('/')
 }
 
 onMounted(() => {
@@ -98,15 +101,42 @@ onMounted(() => {
           </nav>
         </div>
         <div class="hidden md:flex flex-1 justify-end items-center gap-4 font-medium pr-3">
-          <nuxt-link
-            to="/login"
-            class="auth font-semibold dark:text-gray-100 dark:hover:text-gray-50"
-          >Login</nuxt-link>
-          <nuxt-link
-            data-cy="main sign up"
-            class="auth px-4 py-1 bg-primaryAccent2 text-white transition font-semibold hover:bg-opacity-90"
-            to="/register"
-          >Sign Up</nuxt-link>
+
+          <!--Show LogIn and Sign Up Buttons If User Is Not Logged In-->
+          <div
+            v-if="authStore.isLoggedIn === false"
+            class="flex gap-2 items-center"
+          >
+            <nuxt-link
+              data-cy="login"
+              to="/login"
+              class="auth font-semibold dark:text-gray-100 dark:hover:text-gray-50"
+            >Log In</nuxt-link>
+
+            <nuxt-link
+              data-cy="main sign up"
+              class="auth px-4 py-1 bg-primaryAccent2 text-white transition font-semibold hover:bg-opacity-90"
+              to="/register"
+            >Sign Up</nuxt-link>
+          </div>
+          <!--Show Profiel Link and Logout button if logged in-->
+          <div
+            v-else
+            class="flex gap-2 items-center"
+          >
+            <nuxt-link
+              to="/profile"
+              class="auth font-semibold dark:text-gray-100 dark:hover:text-gray-50"
+            >Profile</nuxt-link>
+
+            <button
+              @click="logout"
+              data-cy="logout"
+              class="auth px-4 py-1 bg-primaryAccent2 text-white transition font-semibold hover:bg-opacity-90"
+              to="/logout"
+            >Log Out</button>
+          </div>
+
           <nuxt-link
             to="https://github.com/mikespinks0401"
             aria-label="Go to Michael Spinks Github Profile"
@@ -161,7 +191,7 @@ onMounted(() => {
             aria-label="toggle nav menu"
             class="md:hidden px-3 py-2"
             data-cy="hamburger"
-            :aria-expanded="showNav"
+            :aria-expanded="showNav === true ? true : false"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -193,7 +223,9 @@ onMounted(() => {
         :style="{ top: `-${useMobileMenuHeight}px` }"
       >
         <div class="flex justify-center p-4 gap-2">
-          <div class="w-14 h-14 rounded-full overflow-clip relative flex items-center bg-primaryAccent2 dark:bg-primaryAccentDark">
+          <div
+            class="w-14 h-14 rounded-full overflow-clip relative flex items-center bg-primaryAccent2 dark:bg-primaryAccentDark"
+          >
             <img
               class="h-auto w-full relative"
               src="/avatar.png"
@@ -224,14 +256,15 @@ onMounted(() => {
             </li>
           </ul>
           <div
-            v-if="!loggedIn"
+            v-if="authStore.isLoggedIn !== true"
             class="w-full flex flex-col items-center gap-2 divide-y font-medium"
           >
             <nuxt-link
+              data-cy="login"
               @click="closeMenu"
               class="auth"
               to="/login"
-            >Login</nuxt-link>
+            >Log In</nuxt-link>
             <nuxt-link
               @click="closeMenu"
               data-cy="mobile sign up"
@@ -241,7 +274,7 @@ onMounted(() => {
           </div>
           <div
             v-else
-            class="mt-6 w-full flex flex-col bg-green-100 items-center justify-center"
+            class="mt-6 w-full flex flex-col items-center justify-center divide-y"
           >
             <nuxt-link
               to="/profile"
@@ -262,7 +295,10 @@ onMounted(() => {
                 />
               </svg>
             </nuxt-link>
-            <button class="flex flex-row-reverse gap-1">
+            <button
+              @click="logout"
+              class="flex flex-row-reverse gap-1"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

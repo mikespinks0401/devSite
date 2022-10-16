@@ -1,7 +1,12 @@
 <script setup lang="ts">
-const props = defineProps({
-  title: String,
-  buttonText: String
+interface Props {
+  title: string,
+  buttonText: string,
+  buttonColor?: string
+}
+
+const props = withDefaults(defineProps<Props>(),{
+  buttonColor: 'bg-slate-600 hover:bg-slate-500'
 })
 const emits = defineEmits(['closeModal'])
 </script>
@@ -10,7 +15,7 @@ const emits = defineEmits(['closeModal'])
   <div class="">
     <div
       @click="emits('closeModal')"
-      class="absolute bg-black bg-opacity-80 inset-0 z-40"
+      class="absolute bg-black bg-opacity-90 inset-0 z-40"
     ></div>
     <div
       class="absolute z-50 inset-0 flex flex-col items-center justify-center"
@@ -34,7 +39,8 @@ const emits = defineEmits(['closeModal'])
             <button
               data-cy="close-modal"
               @click="emits('closeModal')"
-              class="text-white px-4 py-1 bg-slate-600 cursor-pointer hover:bg-slate-500 text-semibold"
+              class="text-white px-4 py-1 text-semibold"
+              :class="props.buttonColor"
             >
               {{props.buttonText}}
             </button>

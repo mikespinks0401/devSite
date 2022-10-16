@@ -38,7 +38,7 @@
             <span class="font-bold">NEVER TRUST USER INPUT</span>. Working with
             <span class="font-semibold">MySQL</span>, I learned database design
             principles such as ACID(Atomocity, Consistency, Isolation, and
-            Durablity) and database nomalization(each table's columns should be broken down and only contain
+            Durablity) and database normalization(each table's columns should be broken down and only contain
             information pertaining to that table).
           </p>
           <br />
