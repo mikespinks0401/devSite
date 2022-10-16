@@ -18,17 +18,18 @@ const emailSchema = z.object({
 })
 
 
-const handleSubmit = async ({ email, password, rememberMe }) => {
+const handleSubmit = async ({ email, password, rememberMe, token }) => {
   clearAndCheckFormErrors(email, password)
   if (hasErrors()) {
     displayFormIfErrors()
     return
   }
-  const response:any  = await authStore.login(email, password, rememberMe)
+  const response:any = await authStore.login(email, password, rememberMe, token)
     if(response.error){
         const error = response.error
         checkForErrorAndIncludeInModal(error, 'Invalid Credentials')
         checkForErrorAndIncludeInModal(error, 'Locked Out', "Account Currently Locked Out\nPlease Reset Password")
+        checkForErrorAndIncludeInModal(error, 'Failed', "Server Error: Please Try Again Later")
         displayFormIfErrors()
     } else { 
       redirectUser()
@@ -132,9 +133,10 @@ const closeForgotPasswordModal = () => {
     </teleport>
 
     <auth-form
-      form-title="Login"
+      form-title="Log In"
       @sendFormData="handleSubmit"
       @forgot-password="showForgotPasswordModal"
+      submit-value="Log In"
       />
   </div>
 </template>
