@@ -2,7 +2,7 @@ import { userTransformer } from '~~/server/transforms/users'
 import { generateTokens, sendRefreshToken } from '~~/server/utils/jwt'
 import { registerUserSchema, createUser, getUserByEmail } from '~~/server/db/user'
 import { createRefreshToken } from '~~/server/db/refreshTokens'
-import { sleep } from '~~/server/utils/functions'
+import { validateCaptcha } from '~~/server/utils/captcha'
 
 export default defineEventHandler( async event => {  
     const body = await useBody(event)
@@ -18,7 +18,18 @@ export default defineEventHandler( async event => {
             statusMessage: 'All fields Required'
         }))
     }
-    
+
+    ///////////TOKEN-VALIDATION//////////////////
+    const token = body.token
+    const captchaResponse = await validateCaptcha(token)
+    if(!captchaResponse.success){
+        return sendError(event, createError({
+            statusCode: 401,
+            statusMessage: 'Captcha Failed'
+        }))
+    }
+    ////////////////////////////////////////////////
+
     //Check If Email Already Exist In DB
     const emailExists = await getUserByEmail(body.email)
     

@@ -2,9 +2,7 @@
 const config = useRuntimeConfig()
 const secret = config.turnstile.secretKey
 
-
-
-
+//Validate Captcha with cloudflare
 export const validateCaptcha = async (token:string) => {
     let formData = new FormData()
     formData.append('secret', secret)
@@ -13,5 +11,5 @@ export const validateCaptcha = async (token:string) => {
          method: 'POST',
          body: formData,
         })
-        return response
+    return response
 }

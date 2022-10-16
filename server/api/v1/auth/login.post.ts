@@ -4,6 +4,7 @@ import { loginUserSchema, getUserByEmail, incrementUserPasswordAttempts, verifyU
 import { userTransformer } from '~~/server/transforms/users'
 import { generateTokens } from '~~/server/utils/jwt';
 import { createRefreshToken } from '~~/server/db/refreshTokens';
+import { validateCaptcha } from '~~/server/utils/captcha';
 
 
 export default defineEventHandler(async event => {
@@ -20,6 +21,16 @@ export default defineEventHandler(async event => {
         return
     }
 
+/////////////////CAPTCHA VALIDATION///////////////    
+    const token = body.token
+    const captchaResponse = await validateCaptcha(token)
+    if(!captchaResponse.success){
+        return sendError(event, createError({
+            statusCode: 401,
+            statusMessage: 'Captcha Failed'
+        }))
+    }
+//////////////////////////////////////////////////
     const user = await getUserByEmail(body.email)
     //check if email address exists
     if(!user){
