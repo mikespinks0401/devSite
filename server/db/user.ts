@@ -6,7 +6,8 @@ import * as bcrypt  from 'bcrypt'
 export const registerUserSchema = z.object({
     email: z.string().email({ message: 'Invalid email address' }),
     password: z.string().min(7, { message: 'Password Must Be More Than 7 Characters Long' }).trim(),
-    passwordConfirm: z.string()
+    passwordConfirm: z.string(),
+    token: z.string()
     }).
     refine(data => data.password === data.passwordConfirm,
     { message: 'Password Confirm Must Match Password' })
@@ -19,7 +20,8 @@ interface NewUser{
 export const loginUserSchema = z.object({
     email: z.string().min(1),
     password: z.string().min(1),
-    rememberMe: z.boolean().default(false)
+    rememberMe: z.boolean().default(false),
+    token: z.string().min(1)
 })
 
 export const createUser = (userData: NewUser) =>{
