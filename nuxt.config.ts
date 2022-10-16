@@ -28,6 +28,10 @@ export default defineNuxtConfig({
     jwtRefreshSecret: process.env.JWT_REFRESH_TOKEN_SECRET,
     mainEmail: process.env.ADMIN_EMAIL,
     siteEmail: process.env.EMAIL_EMAIL,
+    testingServer: process.env.ENVIRONMENT === 'development' ? true : false,
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+
      turnstile: {
       secretKey: process.env.ENVIRONMENT === 'development' ? '1x0000000000000000000000000000000AA' : process.env.CLOUDFLARE_SECRET_KEY,
     },
