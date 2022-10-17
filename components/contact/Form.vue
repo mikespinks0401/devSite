@@ -6,6 +6,7 @@ const name = ref('')
 const email = ref('')
 const phoneNumber = ref('')
 const message = ref('')
+const token = ref()
 
 const showNameRequired = ref(false)
 const showEmailRequired = ref(false)
@@ -80,7 +81,8 @@ const submitContactForm= async () => {
       name: name.value,
       emailAddress: email.value,
       phoneNumber: phoneNumber.value,
-      message: message.value
+      message: message.value,
+      token: token.value
 
     }
   })
@@ -183,7 +185,7 @@ const focusMessage = () => {
       </modals-alert>
     </teleport>
     <form
-      @submit.prevent
+      @submit.prevent=""
       autocomplete="off"
     >
       <div class="z-30 grid md:grid-cols-2 gap-6 w-full mt-8">
@@ -254,14 +256,24 @@ const focusMessage = () => {
           ></textarea>
           <p @click="focusMessage" v-if="message === '' && messageAreaFocused === false" class="absolute top-2 left-3 pt-[1px] text-gray-700">Please Enter Your Message<span class="text-danger">*</span></p>
         </div>
-        <input
+
+        <!--Captcha and Submit Button Div-->
+        <div class="flex flex-col-reverse md:flex-row w-full gap-4 md:col-span-2 relative -top-3 md:-top-2">
+          <input
           @click="submitContactForm"
-          class="bg-primaryAccent2 px-4 py-1 font-semibold text-center text-white cursor-pointer hover:bg-primaryAccent2Hover"
+          class="bg-primaryAccent2  w-full px-4 py-3 font-semibold text-center text-white cursor-pointer hover:bg-primaryAccent2Hover"
           inputType="submit"
           value="Submit Form"
           aria-label="Submit Form"
           data-cy="submit"
-        />
+          />
+          <div class="flex w-full justify-center">
+            <turnstile
+            class=""
+            v-model="token"
+            />
+          </div>
+      </div>
       </div>
     </form>
   </div>
