@@ -20,6 +20,7 @@ const showSuccess = ref(false)
 const clearData = ref(false)
 const messageArea = ref(null)
 const messageAreaFocused = ref(false)
+const themeStore = useThemeStore()
 
 const requiredFieldClass =
   'font-medium absolute -top-6 text-danger dark:text-dangerDark transition'
@@ -59,40 +60,40 @@ const updateMessage = () => {
   }
 }
 
-const submitContactForm= async () => {
+const submitContactForm = async () => {
 
   clearErrorData()
   checkRequiredInputs()
   alertIfErrors()
   const result = emailSchema.safeParse(email.value)
 
-  if(result.success === false){
+  if (result.success === false) {
     inputErrorsList.value.push('Invalid Email Format')
     showAlert.value = true
     return
   }
 
- //Submit form to backend
- try{
+  //Submit form to backend
+  try {
 
-  const response = await $fetch('/api/v1/contact/submit', {
-    method: 'POST',
-    body: {
-      name: name.value,
-      emailAddress: email.value,
-      phoneNumber: phoneNumber.value,
-      message: message.value,
-      token: token.value
+    const response = await $fetch('/api/v1/contact/submit', {
+      method: 'POST',
+      body: {
+        name: name.value,
+        emailAddress: email.value,
+        phoneNumber: phoneNumber.value,
+        message: message.value,
+        token: token.value
 
+      }
+    })
+    if (response) {
+      showSuccess.value = true
+      clearForm()
     }
-  })
-  if(response){
-    showSuccess.value = true
-    clearForm()
+  } catch (err) {
+    console.log(err)
   }
- } catch (err){
-  console.log(err)
- }
 
 }
 
@@ -104,11 +105,11 @@ function clearErrorData(): void {
 
 const clearForm = () => {
   name.value = '',
-  email.value = '',
-  message.value = '',
-  phoneNumber.value = ''
+    email.value = '',
+    message.value = '',
+    phoneNumber.value = ''
   clearData.value = true
-  setTimeout(()=>{
+  setTimeout(() => {
     clearData.value = false
   }, 150)
 }
@@ -148,6 +149,9 @@ function alertIfErrors() {
 const focusMessage = () => {
   messageArea.value.focus()
 }
+const turnStileColor = themeStore.isLightMode === true ? 'light' : 'dark'
+const turnStileRenderOptions = { theme: turnStileColor }
+
 </script>
 
 <template>
@@ -254,26 +258,30 @@ const focusMessage = () => {
             v-model="message"
             data-cy="message"
           ></textarea>
-          <p @click="focusMessage" v-if="message === '' && messageAreaFocused === false" class="absolute top-2 left-3 pt-[1px] text-gray-700">Please Enter Your Message<span class="text-danger">*</span></p>
+          <p
+            @click="focusMessage"
+            v-if="message === '' && messageAreaFocused === false"
+            class="absolute top-2 left-3 pt-[1px] text-gray-700"
+          >Please Enter Your Message<span class="text-danger">*</span></p>
         </div>
 
         <!--Captcha and Submit Button Div-->
         <div class="flex flex-col-reverse md:flex-row w-full gap-4 md:col-span-2 relative -top-3 md:-top-2">
           <input
-          @click="submitContactForm"
-          class="bg-primaryAccent2  w-full px-4 py-3 font-semibold text-center text-white cursor-pointer hover:bg-primaryAccent2Hover"
-          inputType="submit"
-          value="Submit Form"
-          aria-label="Submit Form"
-          data-cy="submit"
+            @click="submitContactForm"
+            class="bg-primaryAccent2  w-full px-4 py-3 font-semibold text-center text-white cursor-pointer hover:bg-primaryAccent2Hover"
+            inputType="submit"
+            value="Submit Form"
+            aria-label="Submit Form"
+            data-cy="submit"
           />
           <div class="flex w-full justify-center">
             <turnstile
-            class=""
-            v-model="token"
+              :options=turnStileRenderOptions
+              v-model="token"
             />
           </div>
-      </div>
+        </div>
       </div>
     </form>
   </div>
@@ -283,7 +291,8 @@ const focusMessage = () => {
 form>input {
   @apply focus:border-primaryAccent2;
 }
+
 ::placeholder:last-child {
-  color: red
+  color:red
 }
 </style>
