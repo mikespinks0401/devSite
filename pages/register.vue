@@ -19,6 +19,7 @@ const registerUserSchema = z.object({
 
 interface User{
   email: string,
+  username: string,
   password: string,
   passwordConfirm: string,
   token: string
@@ -33,10 +34,10 @@ const handleSubmit = async (data: User):Promise<void> => {
   loading.value = true
   const response = await authStore.register(data)
   if(!response.success){
-    console.log('we have errors')
     const error = response.error
     checkForErrorAndIncludeInModal(error, 'Captcha', 'Server Error - Please Try Again')
     checkForErrorAndIncludeInModal(error, 'Email', "Email Already Exist")
+    checkForErrorAndIncludeInModal(error, 'Username', "Username Already Exist")
     if(hasErrors()){
       showAlert.value = true
       loading.value = false
@@ -62,7 +63,7 @@ const hasErrors = () => {
 
 const clearAndCheckForParseErrors = (data) => {
   inputErrorsList.value = []
-  if (data.email === "" || data.password === "" || data.passwordConfirm === "") {
+  if (data.email === "" || data.password === "" || data.passwordConfirm === "" || data.username === "") {
     inputErrorsList.value.push('All Fields Required')
     showAlert.value = true
     return
