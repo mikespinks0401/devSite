@@ -12,11 +12,18 @@
 //
 // -- This is a parent command --
 // Cypress.Commands.add('login', (email, password) => { ... })
-   Cypress.Commands.add<any>('register', (email, password, token) => {
-    cy.request({method: 'POST', url:'/api/v1/auth/register', body: {email: email, password: password, passwordConfirm: password, token: token}})
+interface NewUser {
+  email: string,
+  username: string,
+  password: string,
+  token: string,
+}
+
+   Cypress.Commands.add<any>('register', (user:NewUser) => {
+    cy.request({method: 'POST', url:'/api/v1/auth/register', body: {email: user.email, username: user.username,  password: user.password, passwordConfirm: user.password, token: user.token}})
      })
-   Cypress.Commands.add<any>('login', (email, password, rememberMe:boolean = false) => {
-    cy.request({method: 'POST', url:'/api/v1/auth/login', body: {email: email, password: password, rememberMe}})
+   Cypress.Commands.add<any>('login', (user:NewUser) => {
+    cy.request({method: 'POST', url:'/api/v1/auth/login', body: {email: user.email, password: user.password, rememberMe: true, token:user.token}})
      })
 //
 //
@@ -36,7 +43,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
         login(email: string, password: string, rememberMe, token: string): Chainable<Cypress.Response<any>>
-        register(email: string, password: string, token: string): Chainable<Cypress.Response<any>>
+        register(user: NewUser): Chainable<Cypress.Response<any>>
 //       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
 //       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
 //       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
