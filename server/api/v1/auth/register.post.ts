@@ -1,6 +1,6 @@
 import { userTransformer } from '~~/server/transforms/users'
 import { generateTokens, sendRefreshToken } from '~~/server/utils/jwt'
-import { registerUserSchema, createUser, getUserByEmail } from '~~/server/db/user'
+import { registerUserSchema, createUser, getUserByEmail, getUserByUsername } from '~~/server/db/user'
 import { createRefreshToken } from '~~/server/db/refreshTokens'
 import { validateCaptcha } from '~~/server/utils/captcha'
 
@@ -33,13 +33,24 @@ export default defineEventHandler( async event => {
     //Check If Email Already Exist In DB
     const emailExists = await getUserByEmail(body.email)
     
-    //Send errror if Email already exists
     if(emailExists){
         sendError(event, createError({
             statusCode: 409,
             statusMessage: 'Email Already Exists'
         }))
     }
+
+    //Check If Email Already Exist In DB
+    const usernameExists = await getUserByUsername(body.email)
+    
+    if(usernameExists){
+        sendError(event, createError({
+            statusCode: 409,
+            statusMessage: 'Username Already Exists'
+        }))
+    }
+    
+
     //Put User into DB
     const user = await createUser(body)
 
@@ -68,9 +79,9 @@ export default defineEventHandler( async event => {
 
 
 
-function isBodyEmpty(event, body){
+const isBodyEmpty = (event, body) => {
     if(!body){
-        sendError(event, createError({
+        return sendError(event, createError({
             statusCode: 400,
             statusMessage: 'all fields required'
         }))
