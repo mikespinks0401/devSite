@@ -18,6 +18,24 @@ const generateRefreshToken = (user, rememberMe = false) => {
     return jwt.sign({user: user.id}, config.jwtRefreshSecret, {expiresIn: expiresInTime})
 }
 
+//create token 
+export const genarateForgotPasswordToken = (user, secret) => {
+    const config = useRuntimeConfig()
+    const token = jwt.sign({user: user.id, s: secret}, config.jwtForgotSecret, {expiresIn: '10min'})
+
+    return token
+}
+
+export const decodeForgotPasswordToken = (token) => {
+    const config = useRuntimeConfig()
+    try{
+        return jwt.verify(token, config.jwtForgotSecret)
+    }catch(err){
+        
+    }
+}
+
+
 export const decodeRefreshToken = (token) => {
     const config = useRuntimeConfig()
     try{
