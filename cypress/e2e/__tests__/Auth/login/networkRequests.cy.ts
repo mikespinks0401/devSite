@@ -7,6 +7,7 @@ describe('User Can Log In', ()=>{
 
     const sampleUser = {
         email: 'sample@gmail.com',
+        username: 'mrSimp01',
         password: 'password',
         passwordConfirm: 'password',
         token: 'XXXX.DUMMY.TOKEN.XXXX'

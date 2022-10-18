@@ -2,6 +2,7 @@
 
 const sampleUser = {
     email: 'sample@gmail.com',
+    username: 'msSimp',
     password: 'password',
     passwordConfirm: 'password',
     token: 'XXXX.DUMMY.TOKEN.XXXX'
@@ -32,8 +33,8 @@ describe('responds correctly with requests', ()=>{
     })
 
     it('responds with 201 when data is shaped correctly', ()=>{
-        //cy.request({method: 'POST', url:'/api/v1/auth/register', body: sampleUser}).then( res => {
-        cy.register(sampleUser.email, sampleUser.password, sampleUser.token).then( res => {
+        cy.request({method: 'POST', url:'/api/v1/auth/register', body: sampleUser}).then( res => {
+        // cy.register(sampleUser).then( res => {
 
         const statusCode = res.status
         assert.equal(statusCode, 201, 'Status should be 201 when user created') 
