@@ -5,6 +5,7 @@ import * as bcrypt  from 'bcrypt'
 // the shape we want the new user to be
 export const registerUserSchema = z.object({
     email: z.string().email({ message: 'Invalid email address' }),
+    username: z.string().min(1),
     password: z.string().min(7, { message: 'Password Must Be More Than 7 Characters Long' }).trim(),
     passwordConfirm: z.string(),
     token: z.string()
@@ -13,6 +14,7 @@ export const registerUserSchema = z.object({
     { message: 'Password Confirm Must Match Password' })
 interface NewUser{
     email: string,
+    username: string,
     password: string,
     passwordConfirm: string
 }
@@ -27,12 +29,14 @@ export const loginUserSchema = z.object({
 export const createUser = (userData: NewUser) =>{
     const finalUserData = {
         email: userData.email,
+        username: userData.username,
         password: bcrypt.hashSync(userData.password, 10)        
     }
 
     return prisma.user.create({
         data: {
             email: finalUserData.email,
+            username: finalUserData.username,
             password: finalUserData.password,
             passwords: {
                 create:{
@@ -48,6 +52,14 @@ export const getUserByEmail = (email: string) => {
     return prisma.user.findUnique({
         where: {
             email: email
+        }
+    })
+}
+
+export const getUserByUsername = (username: string) => {
+    return prisma.user.findUnique({
+        where: {
+            username: username
         }
     })
 }

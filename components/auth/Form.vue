@@ -19,12 +19,17 @@ const userData = reactive({
   password: '',
   passwordConfirm: '',
   rememberMe: false,
+  username: '',
   token: null
 })
 
 const updateEmail = (v: string) => {
   userData.email = v
 }
+const updateUsername = (v:string)=>{
+  userData.username = v
+}
+
 const updatePassword = (v: string) => {
   userData.password = v
 }
@@ -45,6 +50,7 @@ const submitForm = () => {
   } else {
     const loginData = {
       email: userData.email,
+      username: userData.username,
       password: userData.password,
       passwordConfirm: userData.passwordConfirm,
       token: userData.token
@@ -79,6 +85,16 @@ const inputClasses = "border focus:border-color-primaryAccent2"
           field-name="email"
           inputType="string"
           v-model="userData.email"
+          :inputClasses="inputClasses"
+        />
+        <form-component-input
+          v-if="props.formTitle === 'Sign Up'"
+          @update-text="updateUsername"
+          :required="true"
+          data-cy="username"
+          field-name="username"
+          inputType="string"
+          v-model="userData.username"
           :inputClasses="inputClasses"
         />
         <form-component-input
