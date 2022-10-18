@@ -88,13 +88,13 @@ export const useAuthStore = defineStore('authStore', () => {
         }  
   }
 
-  const register = async ({email, password, passwordConfirm, token}) => {
+  const register = async ({email, username, password, passwordConfirm, token}) => {
 
       const { data, error} = await useAsyncData(
           'register', 
           ()=> $fetch('/api/v1/auth/register', {
           method: 'POST', 
-          body: {email: email, password: password, passwordConfirm: passwordConfirm, token: token}
+          body: {email: email, username: username, password: password, passwordConfirm: passwordConfirm, token: token}
           }), {initialCache:false},
         ) as any
 
