@@ -26,8 +26,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     jwtAccessSecret: process.env.JWT_ACCESS_TOKEN_SECRET,
     jwtRefreshSecret: process.env.JWT_REFRESH_TOKEN_SECRET,
+    jwtForgotSecret: process.env.JWT_FORGOT_TOKEN_SECRET,
     mainEmail: process.env.ADMIN_EMAIL,
     siteEmail: process.env.EMAIL_EMAIL,
+    siteUsername: process.env.ADMIN_USERNAME,
+    siteName: process.env.ENVIRONMENT === 'development' ? 'localhost:3000': process.env.SITE_NAME,
     testingServer: process.env.ENVIRONMENT === 'development' ? true : false,
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
