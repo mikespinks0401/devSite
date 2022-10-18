@@ -15,20 +15,29 @@ const testingServer = config.testingServer
 const host = testingServer ? 'localhost' : config.host
 const port = testingServer ? '7778' : config.port
 
-interface MessageDetails{
+// interface MessageDetails{
+//     data: ContactInfo | ResetPassword
+// }
+interface Email{
+    
+    to: string,
+    subject: string,
+    msg: ContactInfo | ResetPassword,
+}
+
+export interface ContactInfo {
+    template: 'contact'
     emailAddress: string,
     emailMsg: string,
     emailName: string,
     emailSubject: string,
     emailPhone?: string
 }
-interface Email{
-    
-    to: string,
-    subject: string,
-    msg: MessageDetails,
-    template:string
-    
+
+export interface ResetPassword {
+    template: 'resetPassword'
+    emailUsername: string,
+    resetPasswordLink: string
 }
 
 
@@ -36,7 +45,7 @@ export const email:(msgInfo: Email) => Promise<void> = async (msgInfo: Email) =>
     if(!msgInfo){
         return
     }
-    if(!msgInfo.template){
+    if(!msgInfo.msg.template){
         return
     }
     let transporter = nodemailer.createTransport({
@@ -61,13 +70,21 @@ export const email:(msgInfo: Email) => Promise<void> = async (msgInfo: Email) =>
     }, ))
 
     let useContext;
-    if (msgInfo.template === 'contact'){
-        useContext =    {
+
+
+    if (msgInfo.msg.template === 'contact'){
+        useContext = {
             emailAddress: msgInfo.msg.emailAddress,
             emailMsg: msgInfo.msg.emailMsg,
             emailName: msgInfo.msg.emailName,
             emailSubject: msgInfo.msg.emailSubject,
             emailPhone: msgInfo.msg.emailPhone
+        }
+    }
+    if (msgInfo.msg.template === 'resetPassword'){
+        useContext = {
+            emailUsername: msgInfo.msg.emailUsername,
+            resetPasswordLink: msgInfo.msg.resetPasswordLink
         }
     }
 
@@ -76,7 +93,7 @@ export const email:(msgInfo: Email) => Promise<void> = async (msgInfo: Email) =>
         from: from,
         to: msgInfo.to,
         subject: msgInfo.subject,
-        template:msgInfo.template,
+        template:msgInfo.msg.template,
         context:useContext
     })
 
