@@ -5,6 +5,7 @@ const prisma = new PrismaClient()
 
 const admin_email = process.env.ADMIN_EMAIL
 const admin_password = hashSync(process.env.ADMIN_PASSWORD, 10)
+const admin_username = process.env.ADMIN_USERNAME
 
 
 //Seeds DB with admin user
@@ -13,6 +14,7 @@ const main = async() => {
         data: {
 
             email: admin_email,
+            username: admin_username,
             password: admin_password,
             role: 'ADMIN',
             passwords: {
