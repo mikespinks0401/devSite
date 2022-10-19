@@ -26,7 +26,7 @@ const userData = reactive({
 const updateEmail = (v: string) => {
   userData.email = v
 }
-const updateUsername = (v:string)=>{
+const updateUsername = (v: string) => {
   userData.username = v
 }
 
@@ -60,7 +60,7 @@ const submitForm = () => {
 }
 
 
-const turnStileRenderOptions = {theme: 'light'}
+const turnStileRenderOptions = { theme: 'light' }
 const inputClasses = "border focus:border-color-primaryAccent2"
 </script>
 
@@ -153,17 +153,20 @@ const inputClasses = "border focus:border-color-primaryAccent2"
             class="mr-2"
             type="checkbox"
           />
-          <p class="text-xs text-gray-500">By clicking here, I state that I have read and understood the terms and
-            conditions.</p>
+          <p class="text-xs text-gray-500">By clicking here, I state that I have read and understood the <NuxtLink
+              class="inline-block font-medium"
+              to="/terms"
+            >terms and
+              conditions</NuxtLink>.</p>
         </div>
       </div>
       <div class="mt-2 flex flex-col justify-center border-t-2 relative">
         <ClientOnly>
           <div class="align-center my-3 flex justify-center">
-          <Turnstile 
-            :options="turnStileRenderOptions"
-            v-model="userData.token"
-          />
+            <Turnstile
+              :options="turnStileRenderOptions"
+              v-model="userData.token"
+            />
           </div>
         </ClientOnly>
         <button
