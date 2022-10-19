@@ -1,6 +1,6 @@
 import z from 'zod'
 import { validateCaptcha } from '~~/server/utils/captcha'
-import { email, mainEmail, siteEmail } from '~~/server/utils/mail'
+import { email, mainEmail, siteEmail, ContactInfo } from '~~/server/utils/mail'
 
 export default defineEventHandler(async event => {
 
@@ -34,19 +34,19 @@ export default defineEventHandler(async event => {
     }
     ///////////////////////////////////////////////////
 
-    const emailMessage = {
+    const emailMessage:ContactInfo= {
+        template: 'contact',
         emailSubject: '',
         emailAddress:emailAddress,
-        emailMsg: message as string,
-        emailName: name as string,
-        emailPhone: phoneNumber as string
+        emailMsg: message, 
+        emailName: name,
+        emailPhone: phoneNumber
     }
     
     const msgInfo = {
         to: `${mainEmail}, ${siteEmail}`,
         subject: 'Contact Form Submission',
-        msg: emailMessage,
-        template: 'contact'
+        msg: emailMessage
     }
     try{
          await email(msgInfo)
