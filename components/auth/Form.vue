@@ -26,11 +26,10 @@ const userData = reactive({
 const updateEmail = (v: string) => {
   userData.email = v
 }
-<<<<<<< HEAD
+
+
 const updateUsername = (v: string) => {
-=======
-const updateUsername = (v:string)=>{
->>>>>>> 03cb3351137b4097648a20d1e81dc07e6780e68b
+
   userData.username = v
 }
 
