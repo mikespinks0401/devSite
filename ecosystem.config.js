@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'MikeSpinks.Dev',
+      name: 'mikespinks.Dev',
       script: '.output/server/index.mjs',
       instances: 0,
       autorestart: true,
