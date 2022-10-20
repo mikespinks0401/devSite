@@ -13,6 +13,6 @@ jobs:
     steps:
     - uses:  actions/checkout@v2.5.0
     - run: |
-        yarn
+        npm i
         npm run build
         npm run start
