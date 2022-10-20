@@ -143,7 +143,7 @@ const inputClasses = "border focus:border-color-primaryAccent2"
               @click="emits('forgotPassword')"
               class="self-end"
             ><span
-                class="text-gray-600 text-sm font-medium hover:text-gray-400"
+                class="text-gray-600 text-sm font-semibold hover:text-gray-400"
                 data-cy="forgot password"
               >Forgot Password</span></button>
           </div>
@@ -156,17 +156,29 @@ const inputClasses = "border focus:border-color-primaryAccent2"
             class="mr-2"
             type="checkbox"
           />
-          <p class="text-xs text-gray-500">By clicking here, I state that I have read and understood the <NuxtLink
-              class="inline-block font-medium"
+          <p class="text-xs font- tracking-tighter text-gray-500">By clicking here, I state that I have read and
+            understood the <NuxtLink
+              class="inline-block text-gray-600 text-sm font-medium hover:text-gray-400"
               to="/terms"
-            >terms and
-              conditions</NuxtLink>.</p>
+            >terms</NuxtLink> and
+            <NuxtLink
+              class="inline-block text-gray-600 text-sm font-semibold hover:text-gray-400"
+              to="/terms"
+            >conditions</NuxtLink>.
+          </p>
         </div>
       </div>
       <div class="mt-2 flex flex-col justify-center border-t-2 relative">
         <ClientOnly>
-          <div class="align-center my-3 flex justify-center">
+          <div class="align-center my-3 flex justify-center relative">
+            <div
+              class="h-[66px]"
+              aria-role="none"
+            >
+
+            </div>
             <Turnstile
+              class="absolute"
               :options="turnStileRenderOptions"
               v-model="userData.token"
             />
