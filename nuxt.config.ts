@@ -30,16 +30,16 @@ export default defineNuxtConfig({
     mainEmail: process.env.ADMIN_EMAIL,
     siteEmail: process.env.EMAIL_EMAIL,
     siteUsername: process.env.ADMIN_USERNAME,
-    siteName: process.env.ENVIRONMENT === 'development' ? 'localhost:3000': process.env.SITE_NAME,
-    testingServer: process.env.ENVIRONMENT === 'development' ? true : false,
+    siteName: process.env.NODE_ENV === 'development' ? 'localhost:3000': process.env.SITE_NAME,
+    testingServer: process.env.NODE_ENV === 'development' ? true : false,
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
 
      turnstile: {
-      secretKey: process.env.ENVIRONMENT === 'development' ? '1x0000000000000000000000000000000AA' : process.env.CLOUDFLARE_SECRET_KEY,
+      secretKey: process.env.NODE_ENV === 'development' ? '1x0000000000000000000000000000000AA' : process.env.CLOUDFLARE_SECRET_KEY,
     },
   },
   turnstile: {
-    siteKey: process.env.ENVIRONMENT === 'development' ? '1x00000000000000000000AA' : process.env.CLOUDFLARE_SECRET_KEY,
+    siteKey: process.env.NODE_ENV === 'development' ? '1x00000000000000000000AA' : process.env.CLOUDFLARE_SECRET_KEY,
   },
 })
