@@ -57,7 +57,6 @@ export default defineEventHandler( async event => {
 
     //Create Tokens for user to be logged in
     const {accessToken, refreshToken} = generateTokens(user)
-    console.log(`refreshToken: ${refreshToken} \nUserId: ${user.id}` )
     try{
         await createRefreshToken(refreshToken, user.id)
         sendRefreshToken(event, refreshToken)
