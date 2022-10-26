@@ -63,13 +63,13 @@ export const sendRefreshToken = (event, token) => {
     //add the maxAge value when the token is set to remember me
     const timeDiff = decoded.exp - decoded.iat
     if(timeDiff > 3600){
-        setCookie(event.res, 'refresh_token', token, {
+        setCookie(event, 'refresh_token', token, {
             maxAge: timeDiff,
             httpOnly: true,
             sameSite: true,
         })
     } else {
-        setCookie(event.res, 'refresh_token', token, {
+        setCookie(event, 'refresh_token', token, {
             maxAge: timeDiff,
             httpOnly: true,
             sameSite: true,
