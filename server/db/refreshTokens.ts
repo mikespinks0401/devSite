@@ -8,7 +8,7 @@ export const getTokenByToken = (token) =>{
     })
 }
 
-export const createRefreshToken = (token, id) => {
+export const createRefreshToken = (token:string, id:string) => {
     return prisma.refreshToken.create({
         data:{
             token: token,
