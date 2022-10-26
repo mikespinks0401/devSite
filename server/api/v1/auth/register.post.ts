@@ -21,8 +21,9 @@ export default defineEventHandler( async event => {
 
     ///////////TOKEN-VALIDATION//////////////////
     const token = body.token
-    const captchaResponse = await validateCaptcha(token)
+    const captchaResponse = await validateCaptcha(token) as any
     if(!captchaResponse.success){
+        console.log('captcha validation error: ' + captchaResponse)
         return sendError(event, createError({
             statusCode: 401,
             statusMessage: 'Captcha Failed'
@@ -56,10 +57,12 @@ export default defineEventHandler( async event => {
 
     //Create Tokens for user to be logged in
     const {accessToken, refreshToken} = generateTokens(user)
+    console.log(`refreshToken: ${refreshToken} \nUserId: ${user.id}` )
     try{
         await createRefreshToken(refreshToken, user.id)
         sendRefreshToken(event, refreshToken)
     } catch(err) {
+        console.log("error creating refresh token : " + err)
         return sendError(event, createError({
             statusCode: 500,
             statusMessage: 'There was a server error'
