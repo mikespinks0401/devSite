@@ -13,6 +13,14 @@ describe('User Can Log In', ()=>{
         token: 'XXXX.DUMMY.TOKEN.XXXX'
     }
 
+    const sampleUser1 = {
+        email: 'sample1@gmail.com',
+        username: 'mrSimp01',
+        password: 'password',
+        passwordConfirm: 'password',
+        token: 'XXXX.DUMMY.TOKEN.XXXX'
+    }
+
     beforeEach(()=>{
         cy.task('removeUsers')
         cy.clearCookies()
@@ -41,11 +49,12 @@ describe('User Can Log In', ()=>{
 
 
     it('refresh token cookie is gone on refreshing the browser when not remembered', ()=>{
-        cy.request({method: 'POST', url:'/api/v1/auth/register',body: sampleUser})
+        cy.request({method: 'POST', url:'/api/v1/auth/register',body: sampleUser1})
         cy.visit('/')
-        cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample@gmail.com', password: 'password', token: sampleUser.token}}).then(res => {
+        cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample1@gmail.com', password: 'password', token: sampleUser.token}}).then(res => {
         cy.getCookie('refresh_token').should(cookie => {
                 cy.getCookie('refresh_token').should('exist').then(()=> {
+                cy.wait(300)
                 cy.visit('/')
                 cy.getCookie('refreh_token').should('not.exist')
                    

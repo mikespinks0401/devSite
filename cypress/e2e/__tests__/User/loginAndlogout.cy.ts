@@ -63,7 +63,8 @@ describe('User Activity', () => {
                 cy.get('[data-cy="password"]').type(sampleUser.password)
                 cy.get('[data-cy="confirm password"]').type(sampleUser.passwordConfirm)
                 cy.get('[data-cy="formSubmit"]').wait(2200).click()
-            cy.get('[data-cy="logout"]').click()
+                cy.get('[data-cy="logout"]').click().wait(500)
+                cy.get('[data-cy="close-modal"]').click()
             cy.get('[data-cy="login"]').should('be.visible')
         })
         it('Removes RefreshToken Cookie When Logout is Clicked', ()=>{
@@ -74,6 +75,7 @@ describe('User Activity', () => {
                 cy.get('[data-cy="confirm password"]').type(sampleUser.passwordConfirm)
                 cy.get('[data-cy="formSubmit"]').wait(2200).click()     
             cy.get('[data-cy="logout"]').click()
+            cy.get('[data-cy="close-modal"]').click()
             cy.getCookie('refresh_token').should('not.exist')
         }) 
 

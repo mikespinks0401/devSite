@@ -8,10 +8,9 @@ export default defineEventHandler(async  event => {
 
     
     //Get User Info From Auth Middleware
-    const {auth} = event.req.context
-    const user = auth
+    const user = event.context.auth.user
    
-
+  
     const accessTokenId = user.id
     const cookies = useCookies(event)
     const refreshToken = cookies.refresh_token

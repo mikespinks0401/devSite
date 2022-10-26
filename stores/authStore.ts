@@ -26,19 +26,20 @@ export const useAuthStore = defineStore('authStore', () => {
   }
 
 
+
   const authFetch = (url: string, options:FetchOptions = {}) => {
     return $fetch(url, {
       ...options,
       headers: {
         ...options?.headers,
         Authorization: `Bearer: ${accessToken.value}`
-      }
+      } as any
     })
   }
 
   const refreshToken = async() => {
        try{
-          const res = await $fetch('api/v1/tokens/refresh')
+          const res = await $fetch('api/v1/tokens/refresh') as any
          if(res.data.access_Token){
           updateToken(res.data.access_Token)
          }
@@ -113,7 +114,7 @@ export const useAuthStore = defineStore('authStore', () => {
 
   const logout = async() => {
     try{
-     const response =  await authFetch('/api/v1/auth/logout') as any
+     const response =  await authFetch('/api/v1/auth/logout') as {success: boolean}
       if(response.success){
         clearUser()
       }

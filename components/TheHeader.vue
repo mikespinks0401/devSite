@@ -3,13 +3,15 @@ import { ref, onMounted } from 'vue'
 import { getHeight } from '~~/composables/utils/useDimensions'
 
 const emits = defineEmits(['sendMenuHeight', 'menuOpen', 'menuClose'])
-const themeStore = useThemeStore()
 const showNav = ref(false)
 const mobileMenuHeight = ref(0)
 const useMobileMenuHeight = ref(0)
-const authStore = useAuthStore()
 
+const showLoggedOut = ref(false)
+
+const authStore = useAuthStore()
 const router = useRouter()
+const themeStore = useThemeStore()
 const links = [
   { to: 'Home', href: '/' },
   { to: 'Blog', href: '/blog' },
@@ -36,7 +38,12 @@ const toggleMenu = () => {
 
 const logout = () => {
   authStore.logout()
+  showLoggedOut.value = true
   closeMenu()
+}
+
+const closeLogoutModal = () => {
+  showLoggedOut.value = false
   router.push('/')
 }
 
@@ -51,10 +58,26 @@ onMounted(() => {
     }
   })
 })
+
+const logoutModalColor = "bg-primaryAccent2 hover:bg-primaryAccent2"
+
 </script>
 
 <template>
   <div class="w-full fixed top-0">
+    <Teleport v-if="showLoggedOut" to="#modal">
+      <modals-alert
+        @closeModal="closeLogoutModal"
+        title="Success"
+        buttonText="Exit"
+        :button-color=logoutModalColor
+      >
+        <div >
+          <p>Logged Out</p>
+        </div>
+      </modals-alert>
+
+    </Teleport>
     <div
       class="z-10 w-full relative border-b border-gray-200 bg-white dark:border-gray-500 dark:bg-black dark:text-white"
       data-cy="header"
@@ -322,7 +345,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style>
+<style lang="postcss">
 ul>li>div>.router-link-active {
   @apply border-opacity-100;
 }
