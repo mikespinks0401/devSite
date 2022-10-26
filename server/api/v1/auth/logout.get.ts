@@ -5,11 +5,13 @@ import { decodeRefreshToken, sendRefreshToken } from '~~/server/utils/jwt';
 
 export default defineEventHandler(async  event => {
     
-    //Make Sure Access Token User and Refresh Token User Are The Same
+
     
     //Get User Info From Auth Middleware
-    const user = event.context.auth.user
-    
+    const {auth} = event.req.context
+    const user = auth
+   
+
     const accessTokenId = user.id
     const cookies = useCookies(event)
     const refreshToken = cookies.refresh_token
@@ -39,6 +41,6 @@ export default defineEventHandler(async  event => {
     
     deleteCookie(event, 'refresh_token')
     return {
-        msg: 'Successfully Logged Out'
+        success: true
     }
 })

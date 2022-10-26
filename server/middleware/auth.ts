@@ -8,6 +8,7 @@ import { getUserById } from '../db/user';
 
 
 export default defineEventHandler( async event => {
+    
     const requestedUrl = event.req.url
     //Require all paths that are not login or Register with Auth in pathname to require Authorization Header
     if(!requestedUrl.includes('auth')){
@@ -18,6 +19,7 @@ export default defineEventHandler( async event => {
     }
     //Check For Required Authorization Header
     const authorization = event.req.headers.authorization
+    
     //Return If Header is missing
     if(!authorization){
         return
@@ -31,8 +33,10 @@ export default defineEventHandler( async event => {
         const decoded:JwtPayload = jwt_decode(authToken)
         const userId = decoded.userId
         const user = await getUserById(userId)
-        event.req.context.auth = {
-            user: user
+
+
+        event.req.context = {
+            auth: user
         }
     } catch (err){
         return

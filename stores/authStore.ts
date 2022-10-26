@@ -113,8 +113,11 @@ export const useAuthStore = defineStore('authStore', () => {
 
   const logout = async() => {
     try{
-      await authFetch('/api/v1/auth/logout')
-      clearUser()
+     const response =  await authFetch('/api/v1/auth/logout') as any
+      if(response.success){
+        clearUser()
+      }
+      
     } catch (err){
       console.log('there was an error')
     }
