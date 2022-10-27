@@ -25,7 +25,7 @@ export default defineEventHandler(async event => {
     const {name, emailAddress, message, phoneNumber, token} = body
 
     ///////////////Validate Captcha Token//////////////
-    const captchaResponse = await validateCaptcha(token)
+    const captchaResponse = await validateCaptcha(token) as any
     if(!captchaResponse.success){
         return sendError(event, createError({
             statusCode: 401,
@@ -49,7 +49,7 @@ export default defineEventHandler(async event => {
         msg: emailMessage
     }
     try{
-         await email(msgInfo)
+        email(msgInfo)
     }catch(err){
         console.log(err)
         sendError(event, createError({
