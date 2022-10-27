@@ -33,6 +33,7 @@ describe('User Can Log In', ()=>{
         const code = res.status
         assert.equal(code, 200, '200 should be recieved on successful login')
         })
+        
     })
 
     it('creates a refresh_token cookie on successful login', ()=>{
@@ -41,6 +42,7 @@ describe('User Can Log In', ()=>{
         })
         
         cy.visit('/')
+        cy.wait(2000)
         cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample@gmail.com', password: 'password', token: sampleUser.token}}).then(res => {
             cy.getCookie('refresh_token').should('exist')
         })
@@ -49,8 +51,10 @@ describe('User Can Log In', ()=>{
 
 
     it('refresh token cookie is gone on refreshing the browser when not remembered', ()=>{
+        cy.task('removeUsers')
         cy.request({method: 'POST', url:'/api/v1/auth/register',body: sampleUser1})
         cy.visit('/')
+        cy.wait(2500)
         cy.request({method: 'POST', url: '/api/v1/auth/login', body: {email: 'sample1@gmail.com', password: 'password', token: sampleUser.token}}).then(res => {
         cy.getCookie('refresh_token').should(cookie => {
                 cy.getCookie('refresh_token').should('exist').then(()=> {
