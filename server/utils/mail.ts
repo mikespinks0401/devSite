@@ -56,7 +56,7 @@ export const email:(msgInfo: Email) => Promise<void> = async (msgInfo: Email) =>
             user: user,
             pass: pass
         }
-    });
+    } as any);
 
     transporter.use('compile', hbs({
         viewEngine: {
@@ -95,7 +95,7 @@ export const email:(msgInfo: Email) => Promise<void> = async (msgInfo: Email) =>
         subject: msgInfo.subject,
         template:msgInfo.msg.template,
         context:useContext
-    })
+    } as any)
 
     console.log("Message Sent: %s", info.messageId)
 
