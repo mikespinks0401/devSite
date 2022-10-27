@@ -23,7 +23,7 @@ export default defineEventHandler(async event => {
 
 /////////////////CAPTCHA VALIDATION///////////////    
     const token = body.token
-    const captchaResponse = await validateCaptcha(token)
+    const captchaResponse = await validateCaptcha(token) as any
     if(!captchaResponse.success){
         return sendError(event, createError({
             statusCode: 401,
