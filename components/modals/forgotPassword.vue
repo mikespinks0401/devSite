@@ -5,6 +5,8 @@ interface Props {
     buttonColor?: string
 }
 
+const emailSent = ref(false)
+
 const emailAddress = ref('')
 
 const props = withDefaults(defineProps<Props>(), {
@@ -12,6 +14,13 @@ const props = withDefaults(defineProps<Props>(), {
 })
 const emits = defineEmits(['closeModal'])
 const sendForgotPassword = () => {
+    $fetch('api/v1/users/forgotPassword', {
+    method: 'POST',
+    body: {
+        email: emailAddress.value
+    }
+    })
+
 
 }
 </script>
@@ -39,7 +48,7 @@ const sendForgotPassword = () => {
                 <!--Center of Modal-->
                 <div class="py-4 w-full">
                     <form class="flex flex-col w-3/4 mx-auto">
-                        <input  class="w-full ring-0 border-1 focus:ring-0 focus:border-black" type="text" placeholder="Enter Your Email Address">
+                        <input  class="w-full ring-0 border-1 focus:ring-0 focus:border-black" type="text" placeholder="Enter Your Email Address" v-model="emailAddress">
                     </form>
                 </div>
 
