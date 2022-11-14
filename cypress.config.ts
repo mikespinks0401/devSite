@@ -16,9 +16,17 @@ export default defineConfig({
         console.log('mail server at port %d', port)
 
         // process all emails
-        mailServer.bind((addr, id, email) => {
+       let lastEmail:any = {}
+
+
+        mailServer.bind((addr: string, id:number, email: any) => {
           console.log('--- email ---')
           console.log(addr, id, email)
+          lastEmail[email.headers.to] = {
+            to: email.headers.to,
+            html: email.html,
+            body: email.body
+          }
         })
       
       //add seeder setup and breakdown commands
@@ -37,6 +45,9 @@ export default defineConfig({
             await teardown.clearUsers()
             resolve('removed')
           })
+        },
+        getLastEmail : (email: string) => {
+          return lastEmail[email] || null
         }
       })
       // implement node event listeners here
