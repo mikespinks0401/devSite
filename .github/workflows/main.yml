@@ -9,7 +9,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    environment: githubCi
+    environment: devSite
     env:        
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
